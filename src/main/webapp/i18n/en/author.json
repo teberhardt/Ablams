@@ -16,7 +16,6 @@
                 "title": "Author"
             },
             "name": "Name",
-            "lastName": "Last Name",
             "audioBook": "Audio Book",
             "audioSeries": "Audio Series",
             "image": "Image"

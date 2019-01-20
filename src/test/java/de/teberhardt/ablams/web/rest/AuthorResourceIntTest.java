@@ -46,9 +46,6 @@ public class AuthorResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
-
     @Autowired
     private AuthorRepository authorRepository;
 
@@ -97,8 +94,7 @@ public class AuthorResourceIntTest {
      */
     public static Author createEntity(EntityManager em) {
         Author author = new Author()
-            .name(DEFAULT_NAME)
-            .lastName(DEFAULT_LAST_NAME);
+            .name(DEFAULT_NAME);
         return author;
     }
 
@@ -124,7 +120,6 @@ public class AuthorResourceIntTest {
         assertThat(authorList).hasSize(databaseSizeBeforeCreate + 1);
         Author testAuthor = authorList.get(authorList.size() - 1);
         assertThat(testAuthor.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testAuthor.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
     }
 
     @Test
@@ -158,8 +153,7 @@ public class AuthorResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(author.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
     
     @Test
@@ -173,8 +167,7 @@ public class AuthorResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(author.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
     @Test
@@ -198,8 +191,7 @@ public class AuthorResourceIntTest {
         // Disconnect from session so that the updates on updatedAuthor are not directly saved in db
         em.detach(updatedAuthor);
         updatedAuthor
-            .name(UPDATED_NAME)
-            .lastName(UPDATED_LAST_NAME);
+            .name(UPDATED_NAME);
         AuthorDTO authorDTO = authorMapper.toDto(updatedAuthor);
 
         restAuthorMockMvc.perform(put("/api/authors")
@@ -212,7 +204,6 @@ public class AuthorResourceIntTest {
         assertThat(authorList).hasSize(databaseSizeBeforeUpdate);
         Author testAuthor = authorList.get(authorList.size() - 1);
         assertThat(testAuthor.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testAuthor.getLastName()).isEqualTo(UPDATED_LAST_NAME);
     }
 
     @Test

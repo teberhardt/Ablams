@@ -29,9 +29,6 @@ public class Author implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "last_name")
-    private String lastName;
-
     @OneToMany(mappedBy = "author")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AudioBook> audioBooks = new HashSet<>();
@@ -62,19 +59,6 @@ public class Author implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Author lastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Set<AudioBook> getAudioBooks() {
@@ -166,7 +150,6 @@ public class Author implements Serializable {
         return "Author{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", lastName='" + getLastName() + "'" +
             "}";
     }
 }

@@ -4,10 +4,6 @@
         {
             "fieldName": "name",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "lastName",
-            "fieldType": "String"
         }
     ],
     "relationships": [

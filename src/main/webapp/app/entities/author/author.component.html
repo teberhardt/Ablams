@@ -16,7 +16,6 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ablamsApp.author.name">Name</span></th>
-            <th><span jhiTranslate="ablamsApp.author.lastName">Last Name</span></th>
             <th></th>
             </tr>
             </thead>
@@ -24,7 +23,6 @@
             <tr *ngFor="let author of authors ;trackBy: trackId">
                 <td><a [routerLink]="['/author', author.id, 'view' ]">{{author.id}}</a></td>
                 <td>{{author.name}}</td>
-                <td>{{author.lastName}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

@@ -12,8 +12,6 @@ public class AuthorDTO implements Serializable {
 
     private String name;
 
-    private String lastName;
-
     public Long getId() {
         return id;
     }
@@ -28,14 +26,6 @@ public class AuthorDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     @Override
@@ -64,7 +54,6 @@ public class AuthorDTO implements Serializable {
         return "AuthorDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", lastName='" + getLastName() + "'" +
             "}";
     }
 }

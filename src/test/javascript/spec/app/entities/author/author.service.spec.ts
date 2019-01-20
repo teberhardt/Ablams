@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(AuthorService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new Author(0, 'AAAAAAA', 'AAAAAAA');
+            elemDefault = new Author(0, 'AAAAAAA');
         });
 
         describe('Service methods', async () => {
@@ -55,8 +55,7 @@ describe('Service Tests', () => {
             it('should update a Author', async () => {
                 const returnedFromService = Object.assign(
                     {
-                        name: 'BBBBBB',
-                        lastName: 'BBBBBB'
+                        name: 'BBBBBB'
                     },
                     elemDefault
                 );
@@ -73,8 +72,7 @@ describe('Service Tests', () => {
             it('should return a list of Author', async () => {
                 const returnedFromService = Object.assign(
                     {
-                        name: 'BBBBBB',
-                        lastName: 'BBBBBB'
+                        name: 'BBBBBB'
                     },
                     elemDefault
                 );

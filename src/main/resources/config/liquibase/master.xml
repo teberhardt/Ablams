@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220220_added_entity_Author.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220221_added_entity_Image.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220222_added_entity_BookSeries.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220223_added_entity_AudioFile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220224_added_entity_AudioBook.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220225_added_entity_Progressable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119223258_added_entity_AudioLibrary.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20190119220221_added_entity_constraints_Image.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220222_added_entity_constraints_BookSeries.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220223_added_entity_constraints_AudioFile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190119220224_added_entity_constraints_AudioBook.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+</databaseChangeLog>

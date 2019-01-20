@@ -1,0 +1,10 @@
+{
+    "ablamsApp": {
+        "FileType": {
+            "null": "",
+            "MP3": "MP3",
+            "FLAC": "FLAC",
+            "M4B": "M4B"
+        }
+    }
+}

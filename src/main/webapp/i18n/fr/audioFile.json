@@ -1,0 +1,25 @@
+{
+    "ablamsApp": {
+        "audioFile": {
+            "home": {
+                "title": "AudioFiles",
+                "createLabel": "Créer un nouveau Audio File",
+                "createOrEditLabel": "Créer ou éditer un Audio File"
+            },
+            "created": "Un nouveau Audio File a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Audio File avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Audio File avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Audio File {{ id }} ?"
+            },
+            "detail": {
+                "title": "Audio File"
+            },
+            "fileType": "File Type",
+            "filePath": "File Path",
+            "audioLibrary": "Audio Library",
+            "audioBook": "Audio Book",
+            "progress": "Progress"
+        }
+    }
+}

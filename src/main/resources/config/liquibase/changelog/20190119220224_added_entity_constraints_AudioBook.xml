@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity AudioBook.
+    -->
+    <changeSet id="20190119220224-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="series_id"
+                                 baseTableName="audio_book"
+                                 constraintName="fk_audio_book_series_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book_series"/>
+
+        <addForeignKeyConstraint baseColumnNames="author_id"
+                                 baseTableName="audio_book"
+                                 constraintName="fk_audio_book_author_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="author"/>
+
+    </changeSet>
+</databaseChangeLog>

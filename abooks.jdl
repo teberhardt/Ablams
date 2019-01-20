@@ -1,0 +1,79 @@
+entity Author{
+ name String,
+ lastName String
+}
+
+entity Image{
+ filePath String
+}
+
+entity BookSeries{
+ seriesName String
+}
+
+entity AudioLibrary{
+ filepath String
+}
+
+entity AudioFile{
+ fileType FileType,
+ filePath String
+}
+
+entity AudioBook
+{
+ name String,
+ language Language
+}
+
+entity Progressable
+{
+ progress Float,
+ duration Float
+}
+
+enum FileType{
+ MP3, FLAC, M4B
+}
+
+enum Language {
+ GERMAN, FRENCH, ENGLISH, SPANISH
+}
+
+relationship OneToOne{
+ Image to AudioBook,
+ Image to Author
+}
+
+relationship OneToMany {
+ AudioLibrary to AudioFile{audioLibrary}
+ AudioBook to AudioFile{audioBook},
+ BookSeries to AudioBook{series},
+ Author to AudioBook{author},
+ Author to BookSeries{author},
+ Progressable to AudioFile{progress}
+}
+
+application {
+  config {
+    baseName ablams,
+    packageName de.teberhardt.ablams,
+    applicationType monolith,
+    prodDatabaseType postgresql,
+    buildTool maven
+  }
+  entities *
+}
+
+// Set pagination options
+//paginate JobHistory, Employee with infinite-scroll
+//paginate Job with pagination
+
+// Use Data Transfert Objects (DTO)
+ dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

@@ -1,0 +1,23 @@
+{
+    "ablamsApp": {
+        "progressable": {
+            "home": {
+                "title": "Progressables",
+                "createLabel": "Créer un nouveau Progressable",
+                "createOrEditLabel": "Créer ou éditer un Progressable"
+            },
+            "created": "Un nouveau Progressable a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Progressable avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Progressable avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Progressable {{ id }} ?"
+            },
+            "detail": {
+                "title": "Progressable"
+            },
+            "progress": "Progress",
+            "duration": "Duration",
+            "audioFile": "Audio File"
+        }
+    }
+}

@@ -1,0 +1,60 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="ablamsApp.bookSeries.home.title">Book Series</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-book-series" [routerLink]="['/book-series/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="ablamsApp.bookSeries.home.createLabel">
+            Create new Book Series
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="bookSeries">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="ablamsApp.bookSeries.seriesName">Series Name</span></th>
+            <th><span jhiTranslate="ablamsApp.bookSeries.author">Author</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let bookSeries of bookSeries ;trackBy: trackId">
+                <td><a [routerLink]="['/book-series', bookSeries.id, 'view' ]">{{bookSeries.id}}</a></td>
+                <td>{{bookSeries.seriesName}}</td>
+                <td>
+                    <div *ngIf="bookSeries.authorId">
+                        <a [routerLink]="['../author', bookSeries.authorId , 'view' ]" >{{bookSeries.authorId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/book-series', bookSeries.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/book-series', bookSeries.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'book-series/'+ bookSeries.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+{
+    "ablamsApp": {
+        "audioBook": {
+            "home": {
+                "title": "AudioBooks",
+                "createLabel": "Créer un nouveau Audio Book",
+                "createOrEditLabel": "Créer ou éditer un Audio Book"
+            },
+            "created": "Un nouveau Audio Book a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Audio Book avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Audio Book avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Audio Book {{ id }} ?"
+            },
+            "detail": {
+                "title": "Audio Book"
+            },
+            "name": "Name",
+            "language": "Language",
+            "audioFile": "Audio File",
+            "image": "Image",
+            "series": "Series",
+            "author": "Author"
+        }
+    }
+}

@@ -4,6 +4,8 @@ import de.teberhardt.ablams.domain.Author;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 /**
  * Spring Data  repository for the Author entity.
@@ -12,4 +14,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
+    public Optional<Author> findAuthorByName(String name);
 }

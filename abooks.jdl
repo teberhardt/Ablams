@@ -1,6 +1,5 @@
 entity Author{
- name String,
- lastName String
+ name String
 }
 
 entity Image{

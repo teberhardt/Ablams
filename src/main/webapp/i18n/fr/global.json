@@ -9,11 +9,11 @@
                 "main": "Entités",
                 "author": "Author",
                 "image": "Image",
-                "bookSeries": "Book Series",
+                "audioSeries": "Audio Series",
+                "audioLibrary": "Audio Library",
                 "audioFile": "Audio File",
                 "audioBook": "Audio Book",
                 "progressable": "Progressable",
-                "audioLibrary": "Audio Library",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

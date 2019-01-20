@@ -40,17 +40,17 @@ public class CacheConfiguration {
             cm.createCache(de.teberhardt.ablams.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.Author.class.getName(), jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.Author.class.getName() + ".audioBooks", jcacheConfiguration);
-            cm.createCache(de.teberhardt.ablams.domain.Author.class.getName() + ".bookSeries", jcacheConfiguration);
+            cm.createCache(de.teberhardt.ablams.domain.Author.class.getName() + ".audioSeries", jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.Image.class.getName(), jcacheConfiguration);
-            cm.createCache(de.teberhardt.ablams.domain.BookSeries.class.getName(), jcacheConfiguration);
-            cm.createCache(de.teberhardt.ablams.domain.BookSeries.class.getName() + ".audioBooks", jcacheConfiguration);
+            cm.createCache(de.teberhardt.ablams.domain.AudioSeries.class.getName(), jcacheConfiguration);
+            cm.createCache(de.teberhardt.ablams.domain.AudioSeries.class.getName() + ".audioBooks", jcacheConfiguration);
+            cm.createCache(de.teberhardt.ablams.domain.AudioLibrary.class.getName(), jcacheConfiguration);
+            cm.createCache(de.teberhardt.ablams.domain.AudioLibrary.class.getName() + ".audioFiles", jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.AudioFile.class.getName(), jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.AudioBook.class.getName(), jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.AudioBook.class.getName() + ".audioFiles", jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.Progressable.class.getName(), jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.Progressable.class.getName() + ".audioFiles", jcacheConfiguration);
-            cm.createCache(de.teberhardt.ablams.domain.AudioLibrary.class.getName(), jcacheConfiguration);
-            cm.createCache(de.teberhardt.ablams.domain.AudioLibrary.class.getName() + ".audioFiles", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

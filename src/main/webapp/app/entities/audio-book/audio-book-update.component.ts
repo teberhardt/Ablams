@@ -8,8 +8,8 @@ import { IAudioBook } from 'app/shared/model/audio-book.model';
 import { AudioBookService } from './audio-book.service';
 import { IImage } from 'app/shared/model/image.model';
 import { ImageService } from 'app/entities/image';
-import { IBookSeries } from 'app/shared/model/book-series.model';
-import { BookSeriesService } from 'app/entities/book-series';
+import { IAudioSeries } from 'app/shared/model/audio-series.model';
+import { AudioSeriesService } from 'app/entities/audio-series';
 import { IAuthor } from 'app/shared/model/author.model';
 import { AuthorService } from 'app/entities/author';
 
@@ -23,7 +23,7 @@ export class AudioBookUpdateComponent implements OnInit {
 
     images: IImage[];
 
-    bookseries: IBookSeries[];
+    audioseries: IAudioSeries[];
 
     authors: IAuthor[];
 
@@ -31,7 +31,7 @@ export class AudioBookUpdateComponent implements OnInit {
         protected jhiAlertService: JhiAlertService,
         protected audioBookService: AudioBookService,
         protected imageService: ImageService,
-        protected bookSeriesService: BookSeriesService,
+        protected audioSeriesService: AudioSeriesService,
         protected authorService: AuthorService,
         protected activatedRoute: ActivatedRoute
     ) {}
@@ -47,9 +47,9 @@ export class AudioBookUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
-        this.bookSeriesService.query().subscribe(
-            (res: HttpResponse<IBookSeries[]>) => {
-                this.bookseries = res.body;
+        this.audioSeriesService.query().subscribe(
+            (res: HttpResponse<IAudioSeries[]>) => {
+                this.audioseries = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -95,7 +95,7 @@ export class AudioBookUpdateComponent implements OnInit {
         return item.id;
     }
 
-    trackBookSeriesById(index: number, item: IBookSeries) {
+    trackAudioSeriesById(index: number, item: IAudioSeries) {
         return item.id;
     }
 

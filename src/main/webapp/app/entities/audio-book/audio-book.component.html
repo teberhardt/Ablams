@@ -29,7 +29,7 @@
                 <td jhiTranslate="{{'ablamsApp.Language.' + audioBook.language}}">{{audioBook.language}}</td>
                 <td>
                     <div *ngIf="audioBook.seriesId">
-                        <a [routerLink]="['../book-series', audioBook.seriesId , 'view' ]" >{{audioBook.seriesId}}</a>
+                        <a [routerLink]="['../audio-series', audioBook.seriesId , 'view' ]" >{{audioBook.seriesId}}</a>
                     </div>
                 </td>
                 <td>

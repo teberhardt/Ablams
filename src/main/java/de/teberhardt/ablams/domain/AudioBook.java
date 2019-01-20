@@ -45,7 +45,7 @@ public class AudioBook implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("audioBooks")
-    private BookSeries series;
+    private AudioSeries series;
 
     @ManyToOne
     @JsonIgnoreProperties("audioBooks")
@@ -124,17 +124,17 @@ public class AudioBook implements Serializable {
         this.image = image;
     }
 
-    public BookSeries getSeries() {
+    public AudioSeries getSeries() {
         return series;
     }
 
-    public AudioBook series(BookSeries bookSeries) {
-        this.series = bookSeries;
+    public AudioBook series(AudioSeries audioSeries) {
+        this.series = audioSeries;
         return this;
     }
 
-    public void setSeries(BookSeries bookSeries) {
-        this.series = bookSeries;
+    public void setSeries(AudioSeries audioSeries) {
+        this.series = audioSeries;
     }
 
     public Author getAuthor() {

@@ -47,8 +47,8 @@ public class AudioBookDTO implements Serializable {
         return seriesId;
     }
 
-    public void setSeriesId(Long bookSeriesId) {
-        this.seriesId = bookSeriesId;
+    public void setSeriesId(Long audioSeriesId) {
+        this.seriesId = audioSeriesId;
     }
 
     public Long getAuthorId() {

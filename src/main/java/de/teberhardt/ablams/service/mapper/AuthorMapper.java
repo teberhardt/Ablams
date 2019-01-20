@@ -13,7 +13,7 @@ public interface AuthorMapper extends EntityMapper<AuthorDTO, Author> {
 
 
     @Mapping(target = "audioBooks", ignore = true)
-    @Mapping(target = "bookSeries", ignore = true)
+    @Mapping(target = "audioSeries", ignore = true)
     @Mapping(target = "image", ignore = true)
     Author toEntity(AuthorDTO authorDTO);
 

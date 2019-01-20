@@ -1,0 +1,45 @@
+{
+    "name": "AudioFile",
+    "fields": [
+        {
+            "fieldName": "fileType",
+            "fieldType": "FileType",
+            "fieldValues": "MP3,FLAC,M4B"
+        },
+        {
+            "fieldName": "filePath",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "audioLibrary",
+            "otherEntityName": "audioLibrary",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "audioBook",
+            "otherEntityName": "audioBook",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "progress",
+            "otherEntityName": "progressable",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190120154703",
+    "entityTableName": "audio_file",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "ablams"
+    ]
+}

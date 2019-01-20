@@ -1,12 +1,12 @@
 import { IAudioBook } from 'app/shared/model//audio-book.model';
-import { IBookSeries } from 'app/shared/model//book-series.model';
+import { IAudioSeries } from 'app/shared/model//audio-series.model';
 
 export interface IAuthor {
     id?: number;
     name?: string;
     lastName?: string;
     audioBooks?: IAudioBook[];
-    bookSeries?: IBookSeries[];
+    audioSeries?: IAudioSeries[];
     imageId?: number;
 }
 
@@ -16,7 +16,7 @@ export class Author implements IAuthor {
         public name?: string,
         public lastName?: string,
         public audioBooks?: IAudioBook[],
-        public bookSeries?: IBookSeries[],
+        public audioSeries?: IAudioSeries[],
         public imageId?: number
     ) {}
 }

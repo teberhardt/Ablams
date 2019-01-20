@@ -37,7 +37,7 @@ public class Author implements Serializable {
     private Set<AudioBook> audioBooks = new HashSet<>();
     @OneToMany(mappedBy = "author")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<BookSeries> bookSeries = new HashSet<>();
+    private Set<AudioSeries> audioSeries = new HashSet<>();
     @OneToOne(mappedBy = "author")
     @JsonIgnore
     private Image image;
@@ -102,29 +102,29 @@ public class Author implements Serializable {
         this.audioBooks = audioBooks;
     }
 
-    public Set<BookSeries> getBookSeries() {
-        return bookSeries;
+    public Set<AudioSeries> getAudioSeries() {
+        return audioSeries;
     }
 
-    public Author bookSeries(Set<BookSeries> bookSeries) {
-        this.bookSeries = bookSeries;
+    public Author audioSeries(Set<AudioSeries> audioSeries) {
+        this.audioSeries = audioSeries;
         return this;
     }
 
-    public Author addBookSeries(BookSeries bookSeries) {
-        this.bookSeries.add(bookSeries);
-        bookSeries.setAuthor(this);
+    public Author addAudioSeries(AudioSeries audioSeries) {
+        this.audioSeries.add(audioSeries);
+        audioSeries.setAuthor(this);
         return this;
     }
 
-    public Author removeBookSeries(BookSeries bookSeries) {
-        this.bookSeries.remove(bookSeries);
-        bookSeries.setAuthor(null);
+    public Author removeAudioSeries(AudioSeries audioSeries) {
+        this.audioSeries.remove(audioSeries);
+        audioSeries.setAuthor(null);
         return this;
     }
 
-    public void setBookSeries(Set<BookSeries> bookSeries) {
-        this.bookSeries = bookSeries;
+    public void setAudioSeries(Set<AudioSeries> audioSeries) {
+        this.audioSeries = audioSeries;
     }
 
     public Image getImage() {

@@ -7,7 +7,7 @@ entity Image{
  filePath String
 }
 
-entity BookSeries{
+entity AudioSeries{
  seriesName String
 }
 
@@ -48,9 +48,9 @@ relationship OneToOne{
 relationship OneToMany {
  AudioLibrary to AudioFile{audioLibrary}
  AudioBook to AudioFile{audioBook},
- BookSeries to AudioBook{series},
+ AudioSeries to AudioBook{series},
  Author to AudioBook{author},
- Author to BookSeries{author},
+ Author to AudioSeries{author},
  Progressable to AudioFile{progress}
 }
 

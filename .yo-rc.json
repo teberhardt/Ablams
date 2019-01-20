@@ -29,8 +29,8 @@
         "clientFramework": "angularX",
         "serverPort": "8080",
         "useSass": true,
-        "jwtSecretKey": "NDIxY2I1ZGFjYTg1MmQ1ZjZkNDZiYWU5Njg1YTEyYjkxMjIxZDU3N2Y3ZjY3N2U5YzdmMjI0YzhlMDEyMDgxMmQyMTg0ZDQ2YTFjNGQ4NDBiNjU2ODI0OWFkNTg0YTJmMDBiMWE2YzYyZDI4M2RjYTU0ZWZkYjJlN2RiOWIyNDY=",
+        "jwtSecretKey": "M2VmM2UxMGFiMDM2YjllMjZlNjcwMzZiYTE5MDcyMGE5ZWU4Y2U1Y2RiZjFkOTUyYjBjNmY3NmQyNzZlNjNjNmJkNmJhNTA1MmI1OGJhMDljMjYxNWRiYzc4OTBiODkzODdiMmYzYzE3OTIyMGIyY2I2NmExN2FmMGEzMjEwYzM=",
         "otherModules": []
     },
-    "entities": ["Author", "Image", "BookSeries", "AudioLibrary", "AudioFile", "AudioBook", "Progressable"]
+    "entities": ["Author", "Image", "AudioSeries", "AudioLibrary", "AudioFile", "AudioBook", "Progressable"]
 }

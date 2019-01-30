@@ -4,6 +4,9 @@ entity Author{
 
 entity Image{
  filePath String
+ width Integer
+ height Integer
+ bitdepth Integer
 }
 
 entity AudioSeries{

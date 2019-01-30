@@ -46,6 +46,15 @@ public class ImageResourceIntTest {
     private static final String DEFAULT_FILE_PATH = "AAAAAAAAAA";
     private static final String UPDATED_FILE_PATH = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_WIDTH = 1;
+    private static final Integer UPDATED_WIDTH = 2;
+
+    private static final Integer DEFAULT_HEIGHT = 1;
+    private static final Integer UPDATED_HEIGHT = 2;
+
+    private static final Integer DEFAULT_BITDEPTH = 1;
+    private static final Integer UPDATED_BITDEPTH = 2;
+
     @Autowired
     private ImageRepository imageRepository;
 
@@ -94,7 +103,10 @@ public class ImageResourceIntTest {
      */
     public static Image createEntity(EntityManager em) {
         Image image = new Image()
-            .filePath(DEFAULT_FILE_PATH);
+            .filePath(DEFAULT_FILE_PATH)
+            .width(DEFAULT_WIDTH)
+            .height(DEFAULT_HEIGHT)
+            .bitdepth(DEFAULT_BITDEPTH);
         return image;
     }
 
@@ -120,6 +132,9 @@ public class ImageResourceIntTest {
         assertThat(imageList).hasSize(databaseSizeBeforeCreate + 1);
         Image testImage = imageList.get(imageList.size() - 1);
         assertThat(testImage.getFilePath()).isEqualTo(DEFAULT_FILE_PATH);
+        assertThat(testImage.getWidth()).isEqualTo(DEFAULT_WIDTH);
+        assertThat(testImage.getHeight()).isEqualTo(DEFAULT_HEIGHT);
+        assertThat(testImage.getBitdepth()).isEqualTo(DEFAULT_BITDEPTH);
     }
 
     @Test
@@ -153,7 +168,10 @@ public class ImageResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(image.getId().intValue())))
-            .andExpect(jsonPath("$.[*].filePath").value(hasItem(DEFAULT_FILE_PATH.toString())));
+            .andExpect(jsonPath("$.[*].filePath").value(hasItem(DEFAULT_FILE_PATH.toString())))
+            .andExpect(jsonPath("$.[*].width").value(hasItem(DEFAULT_WIDTH)))
+            .andExpect(jsonPath("$.[*].height").value(hasItem(DEFAULT_HEIGHT)))
+            .andExpect(jsonPath("$.[*].bitdepth").value(hasItem(DEFAULT_BITDEPTH)));
     }
     
     @Test
@@ -167,7 +185,10 @@ public class ImageResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(image.getId().intValue()))
-            .andExpect(jsonPath("$.filePath").value(DEFAULT_FILE_PATH.toString()));
+            .andExpect(jsonPath("$.filePath").value(DEFAULT_FILE_PATH.toString()))
+            .andExpect(jsonPath("$.width").value(DEFAULT_WIDTH))
+            .andExpect(jsonPath("$.height").value(DEFAULT_HEIGHT))
+            .andExpect(jsonPath("$.bitdepth").value(DEFAULT_BITDEPTH));
     }
 
     @Test
@@ -191,7 +212,10 @@ public class ImageResourceIntTest {
         // Disconnect from session so that the updates on updatedImage are not directly saved in db
         em.detach(updatedImage);
         updatedImage
-            .filePath(UPDATED_FILE_PATH);
+            .filePath(UPDATED_FILE_PATH)
+            .width(UPDATED_WIDTH)
+            .height(UPDATED_HEIGHT)
+            .bitdepth(UPDATED_BITDEPTH);
         ImageDTO imageDTO = imageMapper.toDto(updatedImage);
 
         restImageMockMvc.perform(put("/api/images")
@@ -204,6 +228,9 @@ public class ImageResourceIntTest {
         assertThat(imageList).hasSize(databaseSizeBeforeUpdate);
         Image testImage = imageList.get(imageList.size() - 1);
         assertThat(testImage.getFilePath()).isEqualTo(UPDATED_FILE_PATH);
+        assertThat(testImage.getWidth()).isEqualTo(UPDATED_WIDTH);
+        assertThat(testImage.getHeight()).isEqualTo(UPDATED_HEIGHT);
+        assertThat(testImage.getBitdepth()).isEqualTo(UPDATED_BITDEPTH);
     }
 
     @Test

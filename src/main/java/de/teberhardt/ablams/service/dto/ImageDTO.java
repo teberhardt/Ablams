@@ -12,6 +12,12 @@ public class ImageDTO implements Serializable {
 
     private String filePath;
 
+    private Integer width;
+
+    private Integer height;
+
+    private Integer bitdepth;
+
     private Long audioBookId;
 
     private Long authorId;
@@ -30,6 +36,30 @@ public class ImageDTO implements Serializable {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getBitdepth() {
+        return bitdepth;
+    }
+
+    public void setBitdepth(Integer bitdepth) {
+        this.bitdepth = bitdepth;
     }
 
     public Long getAudioBookId() {
@@ -74,6 +104,9 @@ public class ImageDTO implements Serializable {
         return "ImageDTO{" +
             "id=" + getId() +
             ", filePath='" + getFilePath() + "'" +
+            ", width=" + getWidth() +
+            ", height=" + getHeight() +
+            ", bitdepth=" + getBitdepth() +
             ", audioBook=" + getAudioBookId() +
             ", author=" + getAuthorId() +
             "}";

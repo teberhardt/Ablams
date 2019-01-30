@@ -16,6 +16,9 @@
                 "title": "Image"
             },
             "filePath": "File Path",
+            "width": "Width",
+            "height": "Height",
+            "bitdepth": "Bitdepth",
             "audioBook": "Audio Book",
             "author": "Author"
         }

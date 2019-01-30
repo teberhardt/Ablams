@@ -14,6 +14,21 @@
                     <input type="text" class="form-control" name="filePath" id="field_filePath"
                         [(ngModel)]="image.filePath" />
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.image.width" for="field_width">Width</label>
+                    <input type="number" class="form-control" name="width" id="field_width"
+                        [(ngModel)]="image.width" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.image.height" for="field_height">Height</label>
+                    <input type="number" class="form-control" name="height" id="field_height"
+                        [(ngModel)]="image.height" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.image.bitdepth" for="field_bitdepth">Bitdepth</label>
+                    <input type="number" class="form-control" name="bitdepth" id="field_bitdepth"
+                        [(ngModel)]="image.bitdepth" />
+                </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="ablamsApp.image.audioBook" for="field_audioBook">Audio Book</label>

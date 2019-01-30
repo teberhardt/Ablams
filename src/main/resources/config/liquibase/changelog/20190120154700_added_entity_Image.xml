@@ -24,6 +24,18 @@
             <column name="file_path" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+
+            <column name="width" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="height" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="bitdepth" type="integer">
+                <constraints nullable="true" />
+            </column>
             <column name="audio_book_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_image_audio_book_id" />
             </column>            <column name="author_id" type="bigint">

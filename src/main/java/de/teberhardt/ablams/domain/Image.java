@@ -26,6 +26,15 @@ public class Image implements Serializable {
     @Column(name = "file_path")
     private String filePath;
 
+    @Column(name = "width")
+    private Integer width;
+
+    @Column(name = "height")
+    private Integer height;
+
+    @Column(name = "bitdepth")
+    private Integer bitdepth;
+
     @OneToOne    @JoinColumn(unique = true)
     private AudioBook audioBook;
 
@@ -52,6 +61,45 @@ public class Image implements Serializable {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public Image width(Integer width) {
+        this.width = width;
+        return this;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public Image height(Integer height) {
+        this.height = height;
+        return this;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getBitdepth() {
+        return bitdepth;
+    }
+
+    public Image bitdepth(Integer bitdepth) {
+        this.bitdepth = bitdepth;
+        return this;
+    }
+
+    public void setBitdepth(Integer bitdepth) {
+        this.bitdepth = bitdepth;
     }
 
     public AudioBook getAudioBook() {
@@ -106,6 +154,9 @@ public class Image implements Serializable {
         return "Image{" +
             "id=" + getId() +
             ", filePath='" + getFilePath() + "'" +
+            ", width=" + getWidth() +
+            ", height=" + getHeight() +
+            ", bitdepth=" + getBitdepth() +
             "}";
     }
 }

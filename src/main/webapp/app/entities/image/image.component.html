@@ -16,6 +16,9 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ablamsApp.image.filePath">File Path</span></th>
+            <th><span jhiTranslate="ablamsApp.image.width">Width</span></th>
+            <th><span jhiTranslate="ablamsApp.image.height">Height</span></th>
+            <th><span jhiTranslate="ablamsApp.image.bitdepth">Bitdepth</span></th>
             <th><span jhiTranslate="ablamsApp.image.audioBook">Audio Book</span></th>
             <th><span jhiTranslate="ablamsApp.image.author">Author</span></th>
             <th></th>
@@ -25,6 +28,9 @@
             <tr *ngFor="let image of images ;trackBy: trackId">
                 <td><a [routerLink]="['/image', image.id, 'view' ]">{{image.id}}</a></td>
                 <td>{{image.filePath}}</td>
+                <td>{{image.width}}</td>
+                <td>{{image.height}}</td>
+                <td>{{image.bitdepth}}</td>
                 <td>
                     <div *ngIf="image.audioBookId">
                         <a [routerLink]="['../audio-book', image.audioBookId , 'view' ]" >{{image.audioBookId}}</a>

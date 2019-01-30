@@ -4,6 +4,18 @@
         {
             "fieldName": "filePath",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "width",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "height",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "bitdepth",
+            "fieldType": "Integer"
         }
     ],
     "relationships": [

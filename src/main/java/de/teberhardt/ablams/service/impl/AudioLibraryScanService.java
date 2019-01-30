@@ -1,24 +1,37 @@
 package de.teberhardt.ablams.service.impl;
 
-import de.teberhardt.ablams.domain.AudioBook;
-import de.teberhardt.ablams.domain.AudioFile;
-import de.teberhardt.ablams.domain.AudioLibrary;
-import de.teberhardt.ablams.domain.Author;
+import de.teberhardt.ablams.domain.*;
 import de.teberhardt.ablams.repository.AudioBookRepository;
 import de.teberhardt.ablams.repository.AudioFileRepository;
 import de.teberhardt.ablams.repository.AuthorRepository;
+import org.apache.tika.metadata.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.xml.sax.helpers.DefaultHandler;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.parser.mp3.Mp3Parser;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 @Service
 public class AudioLibraryScanService {
@@ -45,12 +58,11 @@ public class AudioLibraryScanService {
     public void scan(AudioLibrary audioLibrary) throws IOException {
 
         Pattern p = Pattern.compile(AUDIO_BOOK_NAMING_PATTERN_SINGLE);
-
-//        PathMatcher audioFileMatcher = FileSystems.getDefault().getPathMatcher("*.{mp3}");
-
         Path startPath = Paths.get(audioLibrary.getFilepath()).normalize();
         Files.walkFileTree(startPath, new FileVisitor<Path>() {
 
+
+            ArrayList<AudioSeries> audioSerieses = new ArrayList<>();
             Matcher audioBookNamingConventionMatcher;
             AudioBook scannedAbook;
 
@@ -73,16 +85,50 @@ public class AudioLibraryScanService {
             }
 
             @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-               if(scannedAbook != null && file.toString().endsWith(".mp3"))
-               {
-                    AudioFile audioFile = new AudioFile();
-                    audioFile.setFilePath(file.toString());
-                    audioFile.setAudioBook(scannedAbook);
-                    audioFile.setAudioLibrary(audioLibrary);
-                   scannedAbook.getAudioFiles().add(audioFile);
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
+            {
+               if(scannedAbook != null ) {
+                   if (file.toString().endsWith(".mp3"))
+                   {
+                       AudioFile audioFile = new AudioFile();
+                       audioFile.setFilePath(file.toString());
+                       audioFile.setAudioBook(scannedAbook);
+                       audioFile.setAudioLibrary(audioLibrary);
+                       scannedAbook.getAudioFiles().add(audioFile);
+
+                       System.out.println(new Date());
+
+                       try (InputStream inputStream = Files.newInputStream(file)) {
+                           BufferedInputStream bufd = new BufferedInputStream(inputStream);
+                           ContentHandler handler = new DefaultHandler();
+                           Metadata metadata = new Metadata();
+                           Parser parser = new Mp3Parser();
+                           ParseContext parseCtx = new ParseContext();
+                           parser.parse(bufd, handler, metadata, parseCtx);
+
+                           for (String identifier : metadata.names()) {
+                               System.out.println(identifier + ":" + metadata.get(identifier));
+                           }
+
+
+                           String title = metadata.get(TikaCoreProperties.TITLE);
+                           String album = metadata.get(XMPDM.ALBUM);
+                           //String album = metadata.get(XMPDM.ALBUM);
+
+
+                       } catch (SAXException e) {
+                           e.printStackTrace();
+                       } catch (TikaException e) {
+                           e.printStackTrace();
+                       }
+                       System.out.println(new Date());
+                   }
+                   else if (file.toString().endsWith(".jpg"))
+                   {
+
+                   }
                }
-               return FileVisitResult.CONTINUE;
+                return FileVisitResult.CONTINUE;
             }
 
             @Override

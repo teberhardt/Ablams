@@ -48,7 +48,7 @@ relationship OneToOne{
 }
 
 relationship OneToMany {
- AudioLibrary to AudioFile{audioLibrary}
+ AudioLibrary to AudioBook{audioLibrary}
  AudioBook to AudioFile{audioBook},
  AudioSeries to AudioBook{series},
  Author to AudioBook{author},

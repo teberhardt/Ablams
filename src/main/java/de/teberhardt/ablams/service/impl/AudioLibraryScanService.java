@@ -17,12 +17,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -32,6 +30,8 @@ import org.apache.tika.parser.mp3.Mp3Parser;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import static java.util.stream.Collectors.groupingBy;
 
 @Service
 public class AudioLibraryScanService {
@@ -59,113 +59,53 @@ public class AudioLibraryScanService {
 
         Pattern p = Pattern.compile(AUDIO_BOOK_NAMING_PATTERN_SINGLE);
         Path startPath = Paths.get(audioLibrary.getFilepath()).normalize();
-        Files.walkFileTree(startPath, new FileVisitor<Path>() {
+
+        Map<Path, List<Path>> collect = Files.walk(startPath)
+            .parallel()
+            .filter(e -> !Files.isDirectory(e))
+            .filter(AudioLibraryScanService::isAudioFile)
+            .collect(groupingBy(Path::getParent));
+
+        collect
+            .entrySet()
+            .stream()
+            .parallel()
+            .map(e -> createAudiobook(e.getKey(), e.getValue()));
 
 
-            ArrayList<AudioSeries> audioSerieses = new ArrayList<>();
-            Matcher audioBookNamingConventionMatcher;
-            AudioBook scannedAbook;
-
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-
-                audioBookNamingConventionMatcher = p.matcher(dir.getFileName().toString());
-
-               if(audioBookNamingConventionMatcher.matches()) {
-                   scannedAbook = new AudioBook();
-                   return  FileVisitResult.CONTINUE;
-               }
-               else
-               {
-                   audioBookNamingConventionMatcher = null;
-                   scannedAbook = null;
-                   return FileVisitResult.CONTINUE;
-               }
-
-            }
-
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
-            {
-               if(scannedAbook != null ) {
-                   if (file.toString().endsWith(".mp3"))
-                   {
-                       AudioFile audioFile = new AudioFile();
-                       audioFile.setFilePath(file.toString());
-                       audioFile.setAudioBook(scannedAbook);
-                       audioFile.setAudioLibrary(audioLibrary);
-                       scannedAbook.getAudioFiles().add(audioFile);
-
-                       System.out.println(new Date());
-
-                       try (InputStream inputStream = Files.newInputStream(file)) {
-                           BufferedInputStream bufd = new BufferedInputStream(inputStream);
-                           ContentHandler handler = new DefaultHandler();
-                           Metadata metadata = new Metadata();
-                           Parser parser = new Mp3Parser();
-                           ParseContext parseCtx = new ParseContext();
-                           parser.parse(bufd, handler, metadata, parseCtx);
-
-                           for (String identifier : metadata.names()) {
-                               System.out.println(identifier + ":" + metadata.get(identifier));
-                           }
 
 
-                           String title = metadata.get(TikaCoreProperties.TITLE);
-                           String album = metadata.get(XMPDM.ALBUM);
-                           //String album = metadata.get(XMPDM.ALBUM);
-
-
-                       } catch (SAXException e) {
-                           e.printStackTrace();
-                       } catch (TikaException e) {
-                           e.printStackTrace();
-                       }
-                       System.out.println(new Date());
-                   }
-                   else if (file.toString().endsWith(".jpg"))
-                   {
-
-                   }
-               }
-                return FileVisitResult.CONTINUE;
-            }
-
-            @Override
-            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                log.error("scan failed", exc);
-                return FileVisitResult.TERMINATE;
-            }
-
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-
-                if (scannedAbook != null) {
-                    String authorName = audioBookNamingConventionMatcher.group("Author");
-
-                    Optional<Author> author = authorRepository.findAuthorByName(authorName);
-
-                    if (!author.isPresent())
-                    {
-                        Author a = new Author().name(authorName);
-                        author = Optional.of(authorRepository.save(a));
-                    }
-
-                    String name = audioBookNamingConventionMatcher.group("bookName");
-
-                    scannedAbook.name(name);
-
-                    scannedAbook = audioBookRepository.save(scannedAbook);
-                    scannedAbook.getAudioFiles().forEach(audioFileRepository::save);
-
-                    author.get().addAudioBook(scannedAbook);
-
-                    scannedAbook = null;
-                    audioBookNamingConventionMatcher = null;
-                    return FileVisitResult.CONTINUE;
-                }
-                return FileVisitResult.CONTINUE;
-            }
-        });
     }
+
+    private AudioBook createAudiobook(Path key, List<Path> value) {
+        AudioBook a = new AudioBook();
+        a.setAudioFiles(createAudioFiles(value, a));
+        return a;
+    }
+
+    private Set<AudioFile> createAudioFiles(List<Path> value, AudioBook a) {
+       return  value.stream().map((Path e) -> createAudioFile(e, a)).collect(Collectors.toSet());
+    }
+
+    private AudioFile createAudioFile(Path e, AudioBook a) {
+        AudioFile afile = new AudioFile();
+        afile.setFilePath(e.toString());
+        afile.setAudioBook(a);
+        return afile;
+    }
+
+
+    private static boolean isAudioFile(Path e) {
+        List<String> allowedAudioFiles = Arrays.asList("mp3");
+
+        for (String allowedAudioFile : allowedAudioFiles) {
+
+            if(e.getFileName().toString().toLowerCase().endsWith(allowedAudioFile.toLowerCase()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

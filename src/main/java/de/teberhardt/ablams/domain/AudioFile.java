@@ -35,10 +35,6 @@ public class AudioFile implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("audioFiles")
-    private AudioLibrary audioLibrary;
-
-    @ManyToOne
-    @JsonIgnoreProperties("audioFiles")
     private AudioBook audioBook;
 
     @ManyToOne
@@ -78,19 +74,6 @@ public class AudioFile implements Serializable {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
-    }
-
-    public AudioLibrary getAudioLibrary() {
-        return audioLibrary;
-    }
-
-    public AudioFile audioLibrary(AudioLibrary audioLibrary) {
-        this.audioLibrary = audioLibrary;
-        return this;
-    }
-
-    public void setAudioLibrary(AudioLibrary audioLibrary) {
-        this.audioLibrary = audioLibrary;
     }
 
     public AudioBook getAudioBook() {

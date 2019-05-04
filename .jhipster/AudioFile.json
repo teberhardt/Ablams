@@ -14,12 +14,6 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "audioLibrary",
-            "otherEntityName": "audioLibrary",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "audioBook",
             "otherEntityName": "audioBook",
             "otherEntityField": "id"

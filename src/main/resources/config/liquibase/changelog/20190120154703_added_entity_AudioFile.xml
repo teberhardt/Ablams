@@ -29,10 +29,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="audio_library_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="audio_book_id" type="bigint">
                 <constraints nullable="true" />
             </column>

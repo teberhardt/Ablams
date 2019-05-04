@@ -15,8 +15,6 @@ public class AudioFileDTO implements Serializable {
 
     private String filePath;
 
-    private Long audioLibraryId;
-
     private Long audioBookId;
 
     private Long progressId;
@@ -43,14 +41,6 @@ public class AudioFileDTO implements Serializable {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
-    }
-
-    public Long getAudioLibraryId() {
-        return audioLibraryId;
-    }
-
-    public void setAudioLibraryId(Long audioLibraryId) {
-        this.audioLibraryId = audioLibraryId;
     }
 
     public Long getAudioBookId() {
@@ -96,7 +86,6 @@ public class AudioFileDTO implements Serializable {
             "id=" + getId() +
             ", fileType='" + getFileType() + "'" +
             ", filePath='" + getFilePath() + "'" +
-            ", audioLibrary=" + getAudioLibraryId() +
             ", audioBook=" + getAudioBookId() +
             ", progress=" + getProgressId() +
             "}";

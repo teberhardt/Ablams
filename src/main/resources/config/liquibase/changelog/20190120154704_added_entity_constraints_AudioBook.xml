@@ -8,6 +8,12 @@
     -->
     <changeSet id="20190120154704-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="audio_library_id"
+                                 baseTableName="audio_book"
+                                 constraintName="fk_audio_book_audio_library_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="audio_library"/>
+
         <addForeignKeyConstraint baseColumnNames="series_id"
                                  baseTableName="audio_book"
                                  constraintName="fk_audio_book_series_id"

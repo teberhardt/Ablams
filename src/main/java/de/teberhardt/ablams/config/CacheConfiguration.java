@@ -45,7 +45,7 @@ public class CacheConfiguration {
             cm.createCache(de.teberhardt.ablams.domain.AudioSeries.class.getName(), jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.AudioSeries.class.getName() + ".audioBooks", jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.AudioLibrary.class.getName(), jcacheConfiguration);
-            cm.createCache(de.teberhardt.ablams.domain.AudioLibrary.class.getName() + ".audioFiles", jcacheConfiguration);
+            cm.createCache(de.teberhardt.ablams.domain.AudioLibrary.class.getName() + ".audioBooks", jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.AudioFile.class.getName(), jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.AudioBook.class.getName(), jcacheConfiguration);
             cm.createCache(de.teberhardt.ablams.domain.AudioBook.class.getName() + ".audioFiles", jcacheConfiguration);

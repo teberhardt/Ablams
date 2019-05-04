@@ -31,7 +31,7 @@ public class AudioLibrary implements Serializable {
 
     @OneToMany(mappedBy = "audioLibrary")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<AudioFile> audioFiles = new HashSet<>();
+    private Set<AudioBook> audioBooks = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -54,29 +54,29 @@ public class AudioLibrary implements Serializable {
         this.filepath = filepath;
     }
 
-    public Set<AudioFile> getAudioFiles() {
-        return audioFiles;
+    public Set<AudioBook> getAudioBooks() {
+        return audioBooks;
     }
 
-    public AudioLibrary audioFiles(Set<AudioFile> audioFiles) {
-        this.audioFiles = audioFiles;
+    public AudioLibrary audioBooks(Set<AudioBook> audioBooks) {
+        this.audioBooks = audioBooks;
         return this;
     }
 
-    public AudioLibrary addAudioFile(AudioFile audioFile) {
-        this.audioFiles.add(audioFile);
-        audioFile.setAudioLibrary(this);
+    public AudioLibrary addAudioBook(AudioBook audioBook) {
+        this.audioBooks.add(audioBook);
+        audioBook.setAudioLibrary(this);
         return this;
     }
 
-    public AudioLibrary removeAudioFile(AudioFile audioFile) {
-        this.audioFiles.remove(audioFile);
-        audioFile.setAudioLibrary(null);
+    public AudioLibrary removeAudioBook(AudioBook audioBook) {
+        this.audioBooks.remove(audioBook);
+        audioBook.setAudioLibrary(null);
         return this;
     }
 
-    public void setAudioFiles(Set<AudioFile> audioFiles) {
-        this.audioFiles = audioFiles;
+    public void setAudioBooks(Set<AudioBook> audioBooks) {
+        this.audioBooks = audioBooks;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

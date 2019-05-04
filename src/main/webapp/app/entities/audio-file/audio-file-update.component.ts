@@ -6,8 +6,6 @@ import { JhiAlertService } from 'ng-jhipster';
 
 import { IAudioFile } from 'app/shared/model/audio-file.model';
 import { AudioFileService } from './audio-file.service';
-import { IAudioLibrary } from 'app/shared/model/audio-library.model';
-import { AudioLibraryService } from 'app/entities/audio-library';
 import { IAudioBook } from 'app/shared/model/audio-book.model';
 import { AudioBookService } from 'app/entities/audio-book';
 import { IProgressable } from 'app/shared/model/progressable.model';
@@ -21,8 +19,6 @@ export class AudioFileUpdateComponent implements OnInit {
     audioFile: IAudioFile;
     isSaving: boolean;
 
-    audiolibraries: IAudioLibrary[];
-
     audiobooks: IAudioBook[];
 
     progressables: IProgressable[];
@@ -30,7 +26,6 @@ export class AudioFileUpdateComponent implements OnInit {
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected audioFileService: AudioFileService,
-        protected audioLibraryService: AudioLibraryService,
         protected audioBookService: AudioBookService,
         protected progressableService: ProgressableService,
         protected activatedRoute: ActivatedRoute
@@ -41,12 +36,6 @@ export class AudioFileUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ audioFile }) => {
             this.audioFile = audioFile;
         });
-        this.audioLibraryService.query().subscribe(
-            (res: HttpResponse<IAudioLibrary[]>) => {
-                this.audiolibraries = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
         this.audioBookService.query().subscribe(
             (res: HttpResponse<IAudioBook[]>) => {
                 this.audiobooks = res.body;
@@ -89,10 +78,6 @@ export class AudioFileUpdateComponent implements OnInit {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackAudioLibraryById(index: number, item: IAudioLibrary) {
-        return item.id;
     }
 
     trackAudioBookById(index: number, item: IAudioBook) {

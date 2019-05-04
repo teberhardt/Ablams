@@ -13,12 +13,6 @@
                 <dd>
                     <span>{{audioFile.filePath}}</span>
                 </dd>
-                <dt><span jhiTranslate="ablamsApp.audioFile.audioLibrary">Audio Library</span></dt>
-                <dd>
-                    <div *ngIf="audioFile.audioLibraryId">
-                        <a [routerLink]="['/audio-library', audioFile.audioLibraryId, 'view']">{{audioFile.audioLibraryId}}</a>
-                    </div>
-                </dd>
                 <dt><span jhiTranslate="ablamsApp.audioFile.audioBook">Audio Book</span></dt>
                 <dd>
                     <div *ngIf="audioFile.audioBookId">

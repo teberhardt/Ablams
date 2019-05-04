@@ -1,35 +1,27 @@
 package de.teberhardt.ablams.service.impl;
 
-import de.teberhardt.ablams.domain.*;
+import de.teberhardt.ablams.domain.AudioBook;
+import de.teberhardt.ablams.domain.AudioFile;
+import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.repository.AudioBookRepository;
 import de.teberhardt.ablams.repository.AudioFileRepository;
 import de.teberhardt.ablams.repository.AuthorRepository;
-import org.apache.tika.metadata.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.*;
-import java.util.regex.Matcher;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.parser.Parser;
-import org.apache.tika.parser.mp3.Mp3Parser;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import static java.util.stream.Collectors.groupingBy;
 

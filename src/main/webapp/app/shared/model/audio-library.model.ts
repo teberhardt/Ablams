@@ -1,11 +1,11 @@
-import { IAudioFile } from 'app/shared/model//audio-file.model';
+import { IAudioBook } from 'app/shared/model//audio-book.model';
 
 export interface IAudioLibrary {
     id?: number;
     filepath?: string;
-    audioFiles?: IAudioFile[];
+    audioBooks?: IAudioBook[];
 }
 
 export class AudioLibrary implements IAudioLibrary {
-    constructor(public id?: number, public filepath?: string, public audioFiles?: IAudioFile[]) {}
+    constructor(public id?: number, public filepath?: string, public audioBooks?: IAudioBook[]) {}
 }

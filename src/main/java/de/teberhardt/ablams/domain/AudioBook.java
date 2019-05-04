@@ -45,6 +45,10 @@ public class AudioBook implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("audioBooks")
+    private AudioLibrary audioLibrary;
+
+    @ManyToOne
+    @JsonIgnoreProperties("audioBooks")
     private AudioSeries series;
 
     @ManyToOne
@@ -122,6 +126,19 @@ public class AudioBook implements Serializable {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public AudioLibrary getAudioLibrary() {
+        return audioLibrary;
+    }
+
+    public AudioBook audioLibrary(AudioLibrary audioLibrary) {
+        this.audioLibrary = audioLibrary;
+        return this;
+    }
+
+    public void setAudioLibrary(AudioLibrary audioLibrary) {
+        this.audioLibrary = audioLibrary;
     }
 
     public AudioSeries getSeries() {

@@ -9,8 +9,8 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "audioFile",
-            "otherEntityName": "audioFile",
+            "relationshipName": "audioBook",
+            "otherEntityName": "audioBook",
             "otherEntityRelationshipName": "audioLibrary"
         }
     ],

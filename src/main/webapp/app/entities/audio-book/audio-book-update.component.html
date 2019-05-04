@@ -25,6 +25,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.audioLibrary" for="field_audioLibrary">Audio Library</label>
+                    <select class="form-control" id="field_audioLibrary" name="audioLibrary" [(ngModel)]="audioBook.audioLibraryId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="audioLibraryOption.id" *ngFor="let audioLibraryOption of audiolibraries; trackBy: trackAudioLibraryById">{{audioLibraryOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.series" for="field_series">Series</label>
                     <select class="form-control" id="field_series" name="series" [(ngModel)]="audioBook.seriesId" >
                         <option [ngValue]="null"></option>

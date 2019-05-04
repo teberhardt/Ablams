@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -30,12 +29,9 @@ public class AudioLibraryServiceImpl implements AudioLibraryService {
 
     private final AudioLibraryMapper audioLibraryMapper;
 
-    private final AudioLibraryScanService audioLibraryScanService;
-
-    public AudioLibraryServiceImpl(AudioLibraryRepository audioLibraryRepository, AudioLibraryMapper audioLibraryMapper, AudioLibraryScanService audioLibraryScanService) {
+    public AudioLibraryServiceImpl(AudioLibraryRepository audioLibraryRepository, AudioLibraryMapper audioLibraryMapper) {
         this.audioLibraryRepository = audioLibraryRepository;
         this.audioLibraryMapper = audioLibraryMapper;
-        this.audioLibraryScanService = audioLibraryScanService;
     }
 
     /**
@@ -50,11 +46,6 @@ public class AudioLibraryServiceImpl implements AudioLibraryService {
 
         AudioLibrary audioLibrary = audioLibraryMapper.toEntity(audioLibraryDTO);
         audioLibrary = audioLibraryRepository.save(audioLibrary);
-        try {
-            audioLibraryScanService.scan(audioLibrary);
-        } catch (IOException e) {
-            log.error("", e);
-        }
         return audioLibraryMapper.toDto(audioLibrary);
     }
 

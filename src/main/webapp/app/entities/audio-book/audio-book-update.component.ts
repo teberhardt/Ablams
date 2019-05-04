@@ -8,6 +8,8 @@ import { IAudioBook } from 'app/shared/model/audio-book.model';
 import { AudioBookService } from './audio-book.service';
 import { IImage } from 'app/shared/model/image.model';
 import { ImageService } from 'app/entities/image';
+import { IAudioLibrary } from 'app/shared/model/audio-library.model';
+import { AudioLibraryService } from 'app/entities/audio-library';
 import { IAudioSeries } from 'app/shared/model/audio-series.model';
 import { AudioSeriesService } from 'app/entities/audio-series';
 import { IAuthor } from 'app/shared/model/author.model';
@@ -23,6 +25,8 @@ export class AudioBookUpdateComponent implements OnInit {
 
     images: IImage[];
 
+    audiolibraries: IAudioLibrary[];
+
     audioseries: IAudioSeries[];
 
     authors: IAuthor[];
@@ -31,6 +35,7 @@ export class AudioBookUpdateComponent implements OnInit {
         protected jhiAlertService: JhiAlertService,
         protected audioBookService: AudioBookService,
         protected imageService: ImageService,
+        protected audioLibraryService: AudioLibraryService,
         protected audioSeriesService: AudioSeriesService,
         protected authorService: AuthorService,
         protected activatedRoute: ActivatedRoute
@@ -44,6 +49,12 @@ export class AudioBookUpdateComponent implements OnInit {
         this.imageService.query().subscribe(
             (res: HttpResponse<IImage[]>) => {
                 this.images = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+        this.audioLibraryService.query().subscribe(
+            (res: HttpResponse<IAudioLibrary[]>) => {
+                this.audiolibraries = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -92,6 +103,10 @@ export class AudioBookUpdateComponent implements OnInit {
     }
 
     trackImageById(index: number, item: IImage) {
+        return item.id;
+    }
+
+    trackAudioLibraryById(index: number, item: IAudioLibrary) {
         return item.id;
     }
 

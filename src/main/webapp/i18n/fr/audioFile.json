@@ -17,7 +17,6 @@
             },
             "fileType": "File Type",
             "filePath": "File Path",
-            "audioLibrary": "Audio Library",
             "audioBook": "Audio Book",
             "progress": "Progress"
         }

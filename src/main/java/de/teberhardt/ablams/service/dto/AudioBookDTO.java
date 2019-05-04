@@ -15,6 +15,8 @@ public class AudioBookDTO implements Serializable {
 
     private Language language;
 
+    private Long audioLibraryId;
+
     private Long seriesId;
 
     private Long authorId;
@@ -41,6 +43,14 @@ public class AudioBookDTO implements Serializable {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public Long getAudioLibraryId() {
+        return audioLibraryId;
+    }
+
+    public void setAudioLibraryId(Long audioLibraryId) {
+        this.audioLibraryId = audioLibraryId;
     }
 
     public Long getSeriesId() {
@@ -86,6 +96,7 @@ public class AudioBookDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", language='" + getLanguage() + "'" +
+            ", audioLibrary=" + getAudioLibraryId() +
             ", series=" + getSeriesId() +
             ", author=" + getAuthorId() +
             "}";

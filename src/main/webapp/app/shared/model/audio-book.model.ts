@@ -13,6 +13,7 @@ export interface IAudioBook {
     language?: Language;
     audioFiles?: IAudioFile[];
     imageId?: number;
+    audioLibraryId?: number;
     seriesId?: number;
     authorId?: number;
 }
@@ -24,6 +25,7 @@ export class AudioBook implements IAudioBook {
         public language?: Language,
         public audioFiles?: IAudioFile[],
         public imageId?: number,
+        public audioLibraryId?: number,
         public seriesId?: number,
         public authorId?: number
     ) {}

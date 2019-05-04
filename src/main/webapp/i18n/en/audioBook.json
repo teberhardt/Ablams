@@ -19,6 +19,7 @@
             "language": "Language",
             "audioFile": "Audio File",
             "image": "Image",
+            "audioLibrary": "Audio Library",
             "series": "Series",
             "author": "Author"
         }

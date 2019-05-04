@@ -17,7 +17,6 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ablamsApp.audioFile.fileType">File Type</span></th>
             <th><span jhiTranslate="ablamsApp.audioFile.filePath">File Path</span></th>
-            <th><span jhiTranslate="ablamsApp.audioFile.audioLibrary">Audio Library</span></th>
             <th><span jhiTranslate="ablamsApp.audioFile.audioBook">Audio Book</span></th>
             <th><span jhiTranslate="ablamsApp.audioFile.progress">Progress</span></th>
             <th></th>
@@ -28,11 +27,6 @@
                 <td><a [routerLink]="['/audio-file', audioFile.id, 'view' ]">{{audioFile.id}}</a></td>
                 <td jhiTranslate="{{'ablamsApp.FileType.' + audioFile.fileType}}">{{audioFile.fileType}}</td>
                 <td>{{audioFile.filePath}}</td>
-                <td>
-                    <div *ngIf="audioFile.audioLibraryId">
-                        <a [routerLink]="['../audio-library', audioFile.audioLibraryId , 'view' ]" >{{audioFile.audioLibraryId}}</a>
-                    </div>
-                </td>
                 <td>
                     <div *ngIf="audioFile.audioBookId">
                         <a [routerLink]="['../audio-book', audioFile.audioBookId , 'view' ]" >{{audioFile.audioBookId}}</a>

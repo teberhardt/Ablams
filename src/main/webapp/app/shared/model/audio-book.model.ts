@@ -11,6 +11,7 @@ export interface IAudioBook {
     id?: number;
     name?: string;
     language?: Language;
+    filePath?: string;
     audioFiles?: IAudioFile[];
     imageId?: number;
     audioLibraryId?: number;
@@ -23,6 +24,7 @@ export class AudioBook implements IAudioBook {
         public id?: number,
         public name?: string,
         public language?: Language,
+        public filePath?: string,
         public audioFiles?: IAudioFile[],
         public imageId?: number,
         public audioLibraryId?: number,

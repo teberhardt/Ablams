@@ -36,6 +36,9 @@ public class AudioBook implements Serializable {
     @Column(name = "language")
     private Language language;
 
+    @Column(name = "file_path")
+    private String filePath;
+
     @OneToMany(mappedBy = "audioBook")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AudioFile> audioFiles = new HashSet<>();
@@ -88,6 +91,19 @@ public class AudioBook implements Serializable {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public AudioBook filePath(String filePath) {
+        this.filePath = filePath;
+        return this;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public Set<AudioFile> getAudioFiles() {
@@ -194,6 +210,7 @@ public class AudioBook implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", language='" + getLanguage() + "'" +
+            ", filePath='" + getFilePath() + "'" +
             "}";
     }
 }

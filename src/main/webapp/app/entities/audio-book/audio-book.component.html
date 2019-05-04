@@ -17,6 +17,7 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="ablamsApp.audioBook.name">Name</span></th>
             <th><span jhiTranslate="ablamsApp.audioBook.language">Language</span></th>
+            <th><span jhiTranslate="ablamsApp.audioBook.filePath">File Path</span></th>
             <th><span jhiTranslate="ablamsApp.audioBook.audioLibrary">Audio Library</span></th>
             <th><span jhiTranslate="ablamsApp.audioBook.series">Series</span></th>
             <th><span jhiTranslate="ablamsApp.audioBook.author">Author</span></th>
@@ -28,6 +29,7 @@
                 <td><a [routerLink]="['/audio-book', audioBook.id, 'view' ]">{{audioBook.id}}</a></td>
                 <td>{{audioBook.name}}</td>
                 <td jhiTranslate="{{'ablamsApp.Language.' + audioBook.language}}">{{audioBook.language}}</td>
+                <td>{{audioBook.filePath}}</td>
                 <td>
                     <div *ngIf="audioBook.audioLibraryId">
                         <a [routerLink]="['../audio-library', audioBook.audioLibraryId , 'view' ]" >{{audioBook.audioLibraryId}}</a>

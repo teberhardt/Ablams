@@ -49,7 +49,6 @@ public class AudioLibraryScanService {
     @Transactional
     public void scan(AudioLibrary audioLibrary) throws IOException {
 
-        Pattern p = Pattern.compile(AUDIO_BOOK_NAMING_PATTERN_SINGLE);
         Path startPath = Paths.get(audioLibrary.getFilepath()).normalize();
 
         Map<Path, List<Path>> collect = Files.walk(startPath)
@@ -58,15 +57,14 @@ public class AudioLibraryScanService {
             .filter(AudioLibraryScanService::isAudioFile)
             .collect(groupingBy(Path::getParent));
 
-        collect
+        Set<AudioBook> audioBooks = collect
             .entrySet()
             .stream()
             .parallel()
-            .map(e -> createAudiobook(e.getKey(), e.getValue()));
+            .map(e -> createAudiobook(e.getKey(), e.getValue()))
+            .collect(Collectors.toSet());
 
-
-
-
+        audioLibrary.setAudioBooks(audioBooks);
     }
 
     private AudioBook createAudiobook(Path key, List<Path> value) {

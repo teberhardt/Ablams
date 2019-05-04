@@ -50,6 +50,9 @@ public class AudioBookResourceIntTest {
     private static final Language DEFAULT_LANGUAGE = Language.GERMAN;
     private static final Language UPDATED_LANGUAGE = Language.FRENCH;
 
+    private static final String DEFAULT_FILE_PATH = "AAAAAAAAAA";
+    private static final String UPDATED_FILE_PATH = "BBBBBBBBBB";
+
     @Autowired
     private AudioBookRepository audioBookRepository;
 
@@ -99,7 +102,8 @@ public class AudioBookResourceIntTest {
     public static AudioBook createEntity(EntityManager em) {
         AudioBook audioBook = new AudioBook()
             .name(DEFAULT_NAME)
-            .language(DEFAULT_LANGUAGE);
+            .language(DEFAULT_LANGUAGE)
+            .filePath(DEFAULT_FILE_PATH);
         return audioBook;
     }
 
@@ -126,6 +130,7 @@ public class AudioBookResourceIntTest {
         AudioBook testAudioBook = audioBookList.get(audioBookList.size() - 1);
         assertThat(testAudioBook.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testAudioBook.getLanguage()).isEqualTo(DEFAULT_LANGUAGE);
+        assertThat(testAudioBook.getFilePath()).isEqualTo(DEFAULT_FILE_PATH);
     }
 
     @Test
@@ -160,7 +165,8 @@ public class AudioBookResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(audioBook.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].language").value(hasItem(DEFAULT_LANGUAGE.toString())));
+            .andExpect(jsonPath("$.[*].language").value(hasItem(DEFAULT_LANGUAGE.toString())))
+            .andExpect(jsonPath("$.[*].filePath").value(hasItem(DEFAULT_FILE_PATH.toString())));
     }
     
     @Test
@@ -175,7 +181,8 @@ public class AudioBookResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(audioBook.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.language").value(DEFAULT_LANGUAGE.toString()));
+            .andExpect(jsonPath("$.language").value(DEFAULT_LANGUAGE.toString()))
+            .andExpect(jsonPath("$.filePath").value(DEFAULT_FILE_PATH.toString()));
     }
 
     @Test
@@ -200,7 +207,8 @@ public class AudioBookResourceIntTest {
         em.detach(updatedAudioBook);
         updatedAudioBook
             .name(UPDATED_NAME)
-            .language(UPDATED_LANGUAGE);
+            .language(UPDATED_LANGUAGE)
+            .filePath(UPDATED_FILE_PATH);
         AudioBookDTO audioBookDTO = audioBookMapper.toDto(updatedAudioBook);
 
         restAudioBookMockMvc.perform(put("/api/audio-books")
@@ -214,6 +222,7 @@ public class AudioBookResourceIntTest {
         AudioBook testAudioBook = audioBookList.get(audioBookList.size() - 1);
         assertThat(testAudioBook.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testAudioBook.getLanguage()).isEqualTo(UPDATED_LANGUAGE);
+        assertThat(testAudioBook.getFilePath()).isEqualTo(UPDATED_FILE_PATH);
     }
 
     @Test

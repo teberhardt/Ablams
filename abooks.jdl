@@ -25,7 +25,8 @@ entity AudioFile{
 entity AudioBook
 {
  name String,
- language Language
+ language Language,
+ filePath String
 }
 
 entity Progressable

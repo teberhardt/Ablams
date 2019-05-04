@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(AudioBookService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new AudioBook(0, 'AAAAAAA', Language.GERMAN);
+            elemDefault = new AudioBook(0, 'AAAAAAA', Language.GERMAN, 'AAAAAAA');
         });
 
         describe('Service methods', async () => {
@@ -56,7 +56,8 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         name: 'BBBBBB',
-                        language: 'BBBBBB'
+                        language: 'BBBBBB',
+                        filePath: 'BBBBBB'
                     },
                     elemDefault
                 );
@@ -74,7 +75,8 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         name: 'BBBBBB',
-                        language: 'BBBBBB'
+                        language: 'BBBBBB',
+                        filePath: 'BBBBBB'
                     },
                     elemDefault
                 );

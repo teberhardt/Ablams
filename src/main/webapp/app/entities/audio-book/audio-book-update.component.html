@@ -23,6 +23,11 @@
                         <option value="SPANISH">{{'ablamsApp.Language.SPANISH' | translate}}</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.filePath" for="field_filePath">File Path</label>
+                    <input type="text" class="form-control" name="filePath" id="field_filePath"
+                        [(ngModel)]="audioBook.filePath" />
+                </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.audioLibrary" for="field_audioLibrary">Audio Library</label>

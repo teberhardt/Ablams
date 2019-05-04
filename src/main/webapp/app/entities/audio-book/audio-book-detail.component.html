@@ -13,6 +13,10 @@
                 <dd>
                     <span jhiTranslate="{{'ablamsApp.Language.' + audioBook.language}}">{{audioBook.language}}</span>
                 </dd>
+                <dt><span jhiTranslate="ablamsApp.audioBook.filePath">File Path</span></dt>
+                <dd>
+                    <span>{{audioBook.filePath}}</span>
+                </dd>
                 <dt><span jhiTranslate="ablamsApp.audioBook.audioLibrary">Audio Library</span></dt>
                 <dd>
                     <div *ngIf="audioBook.audioLibraryId">

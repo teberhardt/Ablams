@@ -9,6 +9,10 @@
     <name>Ablams</name>
 
     <repositories>
+        <repository>
+            <id>jaudiotagger-repository</id>
+            <url>https://dl.bintray.com/ijabz/maven</url>
+        </repository>
         <!-- jhipster-needle-maven-repository -->
     </repositories>
 
@@ -352,6 +356,13 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>net.jthink</groupId>
+            <artifactId>jaudiotagger</artifactId>
+            <version>2.2.5</version>
+        </dependency>
+
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 

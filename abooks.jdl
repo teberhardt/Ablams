@@ -29,6 +29,12 @@ entity AudioBook
  filePath String
 }
 
+entity AudioMetadata
+{
+identifier String,
+Value
+}
+
 entity Progressable
 {
  progress Float,

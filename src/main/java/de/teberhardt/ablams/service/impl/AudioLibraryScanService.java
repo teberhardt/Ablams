@@ -6,6 +6,10 @@ import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.repository.AudioBookRepository;
 import de.teberhardt.ablams.repository.AudioFileRepository;
 import de.teberhardt.ablams.repository.AuthorRepository;
+import org.apache.commons.io.FilenameUtils;
+import org.jaudiotagger;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.SupportedFileFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -20,10 +24,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
+import static org.jaudiotagger.audio.AudioFileIO.read;
 
 @Service
 public class AudioLibraryScanService {
@@ -33,6 +37,8 @@ public class AudioLibraryScanService {
     private final AudioBookRepository audioBookRepository;
 
     private final AuthorRepository authorRepository;
+
+    private final AudioFileMetadataService audioFileMetadataService;
 
     private final static Logger log = LoggerFactory.getLogger(AudioLibraryScanService.class);
 
@@ -54,22 +60,26 @@ public class AudioLibraryScanService {
         Map<Path, List<Path>> collect = Files.walk(startPath)
             .parallel()
             .filter(e -> !Files.isDirectory(e))
-            .filter(AudioLibraryScanService::isAudioFile)
+            .filter(this::isAudioFile)
             .collect(groupingBy(Path::getParent));
 
         Set<AudioBook> audioBooks = collect
             .entrySet()
             .stream()
             .parallel()
-            .map(e -> createAudiobook(e.getKey(), e.getValue()))
+            .map(e -> createAudiobook(e.getKey(), e.getValue(), audioLibrary))
             .collect(Collectors.toSet());
 
+        audioBookRepository.saveAll(audioBooks);
         audioLibrary.setAudioBooks(audioBooks);
     }
 
-    private AudioBook createAudiobook(Path key, List<Path> value) {
+    private AudioBook createAudiobook(Path folderPath, List<Path> value, AudioLibrary audioLibrary) {
         AudioBook a = new AudioBook();
+        a.setName(folderPath.getFileName().toString());
         a.setAudioFiles(createAudioFiles(value, a));
+        a.setFilePath(folderPath.toString());
+        a.setAudioLibrary(audioLibrary);
         return a;
     }
 
@@ -81,21 +91,22 @@ public class AudioLibraryScanService {
         AudioFile afile = new AudioFile();
         afile.setFilePath(e.toString());
         afile.setAudioBook(a);
+
+
         return afile;
     }
 
+    private boolean isAudioFile(Path p)
+    {
+        String filename = FilenameUtils.getExtension(p.getFileName().toString();
+        return isSupportedFilesuffix(filename);
+    }
 
-    private static boolean isAudioFile(Path e) {
-        List<String> allowedAudioFiles = Arrays.asList("mp3");
-
-        for (String allowedAudioFile : allowedAudioFiles) {
-
-            if(e.getFileName().toString().toLowerCase().endsWith(allowedAudioFile.toLowerCase()))
-            {
-                return true;
-            }
-        }
-        return false;
+    private boolean isSupportedFilesuffix(String actualSuffix) {
+        return Arrays
+            .stream(SupportedFileFormat.values())
+            .map(SupportedFileFormat::getFilesuffix)
+            .anyMatch(actualSuffix::equalsIgnoreCase);
     }
 
 }

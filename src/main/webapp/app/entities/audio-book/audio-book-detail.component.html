@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="audioBook">
+            <h2><span jhiTranslate="ablamsApp.audioBook.detail.title">Audio Book</span> {{audioBook.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="ablamsApp.audioBook.name">Name</span></dt>
+                <dd>
+                    <span>{{audioBook.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="ablamsApp.audioBook.language">Language</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'ablamsApp.Language.' + audioBook.language}}">{{audioBook.language}}</span>
+                </dd>
+                <dt><span jhiTranslate="ablamsApp.audioBook.filePath">File Path</span></dt>
+                <dd>
+                    <span>{{audioBook.filePath}}</span>
+                </dd>
+                <dt><span jhiTranslate="ablamsApp.audioBook.audioLibrary">Audio Library</span></dt>
+                <dd>
+                    <div *ngIf="audioBook.audioLibraryId">
+                        <a [routerLink]="['/audio-library', audioBook.audioLibraryId, 'view']">{{audioBook.audioLibraryId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="ablamsApp.audioBook.series">Series</span></dt>
+                <dd>
+                    <div *ngIf="audioBook.seriesId">
+                        <a [routerLink]="['/audio-series', audioBook.seriesId, 'view']">{{audioBook.seriesId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="ablamsApp.audioBook.author">Author</span></dt>
+                <dd>
+                    <div *ngIf="audioBook.authorId">
+                        <a [routerLink]="['/author', audioBook.authorId, 'view']">{{audioBook.authorId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/audio-book', audioBook.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

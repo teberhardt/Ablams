@@ -1,0 +1,28 @@
+{
+    "name": "AudioLibrary",
+    "fields": [
+        {
+            "fieldName": "filepath",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "audioBook",
+            "otherEntityName": "audioBook",
+            "otherEntityRelationshipName": "audioLibrary"
+        }
+    ],
+    "changelogDate": "20190120154702",
+    "entityTableName": "audio_library",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "ablams"
+    ]
+}

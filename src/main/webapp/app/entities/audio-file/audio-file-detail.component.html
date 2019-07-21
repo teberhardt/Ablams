@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="audioFile">
+            <h2><span jhiTranslate="ablamsApp.audioFile.detail.title">Audio File</span> {{audioFile.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="ablamsApp.audioFile.fileType">File Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'ablamsApp.FileType.' + audioFile.fileType}}">{{audioFile.fileType}}</span>
+                </dd>
+                <dt><span jhiTranslate="ablamsApp.audioFile.filePath">File Path</span></dt>
+                <dd>
+                    <span>{{audioFile.filePath}}</span>
+                </dd>
+                <dt><span jhiTranslate="ablamsApp.audioFile.audioBook">Audio Book</span></dt>
+                <dd>
+                    <div *ngIf="audioFile.audioBookId">
+                        <a [routerLink]="['/audio-book', audioFile.audioBookId, 'view']">{{audioFile.audioBookId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="ablamsApp.audioFile.progress">Progress</span></dt>
+                <dd>
+                    <div *ngIf="audioFile.progressId">
+                        <a [routerLink]="['/progressable', audioFile.progressId, 'view']">{{audioFile.progressId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/audio-file', audioFile.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+{
+    "name": "Progressable",
+    "fields": [
+        {
+            "fieldName": "progress",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "duration",
+            "fieldType": "Float"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "audioFile",
+            "otherEntityName": "audioFile",
+            "otherEntityRelationshipName": "progress"
+        }
+    ],
+    "changelogDate": "20190120154705",
+    "entityTableName": "progressable",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "ablams"
+    ]
+}

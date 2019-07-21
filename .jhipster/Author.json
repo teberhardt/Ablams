@@ -1,0 +1,41 @@
+{
+    "name": "Author",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "audioBook",
+            "otherEntityName": "audioBook",
+            "otherEntityRelationshipName": "author"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "audioSeries",
+            "otherEntityName": "audioSeries",
+            "otherEntityRelationshipName": "author"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "image",
+            "otherEntityName": "image",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "author"
+        }
+    ],
+    "changelogDate": "20190120154659",
+    "entityTableName": "author",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "ablams"
+    ]
+}

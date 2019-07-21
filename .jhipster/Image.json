@@ -1,0 +1,50 @@
+{
+    "name": "Image",
+    "fields": [
+        {
+            "fieldName": "filePath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "width",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "height",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "bitdepth",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "audioBook",
+            "otherEntityName": "audioBook",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "image"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "author",
+            "otherEntityName": "author",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "image"
+        }
+    ],
+    "changelogDate": "20190120154700",
+    "entityTableName": "image",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "ablams"
+    ]
+}

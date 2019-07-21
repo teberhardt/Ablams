@@ -1,0 +1,76 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="ablamsApp.audioBook.home.title">Audio Books</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-audio-book" [routerLink]="['/audio-book/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="ablamsApp.audioBook.home.createLabel">
+            Create new Audio Book
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="audioBooks">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="ablamsApp.audioBook.name">Name</span></th>
+            <th><span jhiTranslate="ablamsApp.audioBook.language">Language</span></th>
+            <th><span jhiTranslate="ablamsApp.audioBook.filePath">File Path</span></th>
+            <th><span jhiTranslate="ablamsApp.audioBook.audioLibrary">Audio Library</span></th>
+            <th><span jhiTranslate="ablamsApp.audioBook.series">Series</span></th>
+            <th><span jhiTranslate="ablamsApp.audioBook.author">Author</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let audioBook of audioBooks ;trackBy: trackId">
+                <td><a [routerLink]="['/audio-book', audioBook.id, 'view' ]">{{audioBook.id}}</a></td>
+                <td>{{audioBook.name}}</td>
+                <td jhiTranslate="{{'ablamsApp.Language.' + audioBook.language}}">{{audioBook.language}}</td>
+                <td>{{audioBook.filePath}}</td>
+                <td>
+                    <div *ngIf="audioBook.audioLibraryId">
+                        <a [routerLink]="['../audio-library', audioBook.audioLibraryId , 'view' ]" >{{audioBook.audioLibraryId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="audioBook.seriesId">
+                        <a [routerLink]="['../audio-series', audioBook.seriesId , 'view' ]" >{{audioBook.seriesId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="audioBook.authorId">
+                        <a [routerLink]="['../author', audioBook.authorId , 'view' ]" >{{audioBook.authorId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/audio-book', audioBook.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/audio-book', audioBook.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'audio-book/'+ audioBook.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

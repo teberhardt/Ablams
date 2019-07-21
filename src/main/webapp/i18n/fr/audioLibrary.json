@@ -1,0 +1,22 @@
+{
+    "ablamsApp": {
+        "audioLibrary": {
+            "home": {
+                "title": "AudioLibraries",
+                "createLabel": "Créer un nouveau Audio Library",
+                "createOrEditLabel": "Créer ou éditer un Audio Library"
+            },
+            "created": "Un nouveau Audio Library a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Audio Library avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Audio Library avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Audio Library {{ id }} ?"
+            },
+            "detail": {
+                "title": "Audio Library"
+            },
+            "filepath": "Filepath",
+            "audioBook": "Audio Book"
+        }
+    }
+}

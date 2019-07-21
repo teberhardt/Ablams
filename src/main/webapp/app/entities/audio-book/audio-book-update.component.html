@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-audio-book-heading" jhiTranslate="ablamsApp.audioBook.home.createOrEditLabel">Create or edit a Audio Book</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!audioBook.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="audioBook.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="audioBook.name" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.language" for="field_language">Language</label>
+                    <select class="form-control" name="language" [(ngModel)]="audioBook.language" id="field_language" >
+                        <option value="GERMAN">{{'ablamsApp.Language.GERMAN' | translate}}</option>
+                        <option value="FRENCH">{{'ablamsApp.Language.FRENCH' | translate}}</option>
+                        <option value="ENGLISH">{{'ablamsApp.Language.ENGLISH' | translate}}</option>
+                        <option value="SPANISH">{{'ablamsApp.Language.SPANISH' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.filePath" for="field_filePath">File Path</label>
+                    <input type="text" class="form-control" name="filePath" id="field_filePath"
+                        [(ngModel)]="audioBook.filePath" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.audioLibrary" for="field_audioLibrary">Audio Library</label>
+                    <select class="form-control" id="field_audioLibrary" name="audioLibrary" [(ngModel)]="audioBook.audioLibraryId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="audioLibraryOption.id" *ngFor="let audioLibraryOption of audiolibraries; trackBy: trackAudioLibraryById">{{audioLibraryOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.series" for="field_series">Series</label>
+                    <select class="form-control" id="field_series" name="series" [(ngModel)]="audioBook.seriesId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="audioSeriesOption.id" *ngFor="let audioSeriesOption of audioseries; trackBy: trackAudioSeriesById">{{audioSeriesOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioBook.author" for="field_author">Author</label>
+                    <select class="form-control" id="field_author" name="author" [(ngModel)]="audioBook.authorId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="authorOption.id" *ngFor="let authorOption of authors; trackBy: trackAuthorById">{{authorOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

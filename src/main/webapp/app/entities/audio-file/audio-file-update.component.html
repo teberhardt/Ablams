@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-audio-file-heading" jhiTranslate="ablamsApp.audioFile.home.createOrEditLabel">Create or edit a Audio File</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!audioFile.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="audioFile.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioFile.fileType" for="field_fileType">File Type</label>
+                    <select class="form-control" name="fileType" [(ngModel)]="audioFile.fileType" id="field_fileType" >
+                        <option value="MP3">{{'ablamsApp.FileType.MP3' | translate}}</option>
+                        <option value="FLAC">{{'ablamsApp.FileType.FLAC' | translate}}</option>
+                        <option value="M4B">{{'ablamsApp.FileType.M4B' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioFile.filePath" for="field_filePath">File Path</label>
+                    <input type="text" class="form-control" name="filePath" id="field_filePath"
+                        [(ngModel)]="audioFile.filePath" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioFile.audioBook" for="field_audioBook">Audio Book</label>
+                    <select class="form-control" id="field_audioBook" name="audioBook" [(ngModel)]="audioFile.audioBookId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="audioBookOption.id" *ngFor="let audioBookOption of audiobooks; trackBy: trackAudioBookById">{{audioBookOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="ablamsApp.audioFile.progress" for="field_progress">Progress</label>
+                    <select class="form-control" id="field_progress" name="progress" [(ngModel)]="audioFile.progressId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="progressableOption.id" *ngFor="let progressableOption of progressables; trackBy: trackProgressableById">{{progressableOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

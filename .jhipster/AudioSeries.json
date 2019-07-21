@@ -1,0 +1,34 @@
+{
+    "name": "AudioSeries",
+    "fields": [
+        {
+            "fieldName": "seriesName",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "audioBook",
+            "otherEntityName": "audioBook",
+            "otherEntityRelationshipName": "series"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "author",
+            "otherEntityName": "author",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190120154701",
+    "entityTableName": "audio_series",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "ablams"
+    ]
+}

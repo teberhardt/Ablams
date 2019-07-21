@@ -1,0 +1,62 @@
+{
+    "name": "AudioBook",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "language",
+            "fieldType": "Language",
+            "fieldValues": "GERMAN,FRENCH,ENGLISH,SPANISH"
+        },
+        {
+            "fieldName": "filePath",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "audioFile",
+            "otherEntityName": "audioFile",
+            "otherEntityRelationshipName": "audioBook"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "image",
+            "otherEntityName": "image",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "audioBook"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "audioLibrary",
+            "otherEntityName": "audioLibrary",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "series",
+            "otherEntityName": "audioSeries",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "author",
+            "otherEntityName": "author",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190120154704",
+    "entityTableName": "audio_book",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "ablams"
+    ]
+}

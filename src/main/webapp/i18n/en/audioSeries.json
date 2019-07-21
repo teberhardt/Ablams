@@ -1,0 +1,23 @@
+{
+    "ablamsApp": {
+        "audioSeries": {
+            "home": {
+                "title": "Audio Series",
+                "createLabel": "Create a new Audio Series",
+                "createOrEditLabel": "Create or edit a Audio Series"
+            },
+            "created": "A new Audio Series is created with identifier {{ param }}",
+            "updated": "A Audio Series is updated with identifier {{ param }}",
+            "deleted": "A Audio Series is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Audio Series {{ id }}?"
+            },
+            "detail": {
+                "title": "Audio Series"
+            },
+            "seriesName": "Series Name",
+            "audioBook": "Audio Book",
+            "author": "Author"
+        }
+    }
+}

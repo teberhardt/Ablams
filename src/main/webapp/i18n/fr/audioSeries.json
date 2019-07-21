@@ -1,0 +1,23 @@
+{
+    "ablamsApp": {
+        "audioSeries": {
+            "home": {
+                "title": "AudioSeries",
+                "createLabel": "Créer un nouveau Audio Series",
+                "createOrEditLabel": "Créer ou éditer un Audio Series"
+            },
+            "created": "Un nouveau Audio Series a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Audio Series avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Audio Series avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Audio Series {{ id }} ?"
+            },
+            "detail": {
+                "title": "Audio Series"
+            },
+            "seriesName": "Series Name",
+            "audioBook": "Audio Book",
+            "author": "Author"
+        }
+    }
+}

@@ -1,0 +1,68 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="ablamsApp.audioFile.home.title">Audio Files</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-audio-file" [routerLink]="['/audio-file/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="ablamsApp.audioFile.home.createLabel">
+            Create new Audio File
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="audioFiles">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="ablamsApp.audioFile.fileType">File Type</span></th>
+            <th><span jhiTranslate="ablamsApp.audioFile.filePath">File Path</span></th>
+            <th><span jhiTranslate="ablamsApp.audioFile.audioBook">Audio Book</span></th>
+            <th><span jhiTranslate="ablamsApp.audioFile.progress">Progress</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let audioFile of audioFiles ;trackBy: trackId">
+                <td><a [routerLink]="['/audio-file', audioFile.id, 'view' ]">{{audioFile.id}}</a></td>
+                <td jhiTranslate="{{'ablamsApp.FileType.' + audioFile.fileType}}">{{audioFile.fileType}}</td>
+                <td>{{audioFile.filePath}}</td>
+                <td>
+                    <div *ngIf="audioFile.audioBookId">
+                        <a [routerLink]="['../audio-book', audioFile.audioBookId , 'view' ]" >{{audioFile.audioBookId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="audioFile.progressId">
+                        <a [routerLink]="['../progressable', audioFile.progressId , 'view' ]" >{{audioFile.progressId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/audio-file', audioFile.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/audio-file', audioFile.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'audio-file/'+ audioFile.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

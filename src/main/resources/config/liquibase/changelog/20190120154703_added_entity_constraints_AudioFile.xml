@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity AudioFile.
+    -->
+    <changeSet id="20190120154703-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="audio_book_id"
+                                 baseTableName="audio_file"
+                                 constraintName="fk_audio_file_audio_book_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="audio_book"/>
+
+        <addForeignKeyConstraint baseColumnNames="progress_id"
+                                 baseTableName="audio_file"
+                                 constraintName="fk_audio_file_progress_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="progressable"/>
+
+    </changeSet>
+</databaseChangeLog>

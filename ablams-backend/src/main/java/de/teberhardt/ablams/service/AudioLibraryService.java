@@ -1,5 +1,6 @@
 package de.teberhardt.ablams.service;
 
+import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.service.dto.AudioLibraryDTO;
 
 import java.util.List;
@@ -40,4 +41,6 @@ public interface AudioLibraryService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    void scan(AudioLibrary audioLibrary);
 }

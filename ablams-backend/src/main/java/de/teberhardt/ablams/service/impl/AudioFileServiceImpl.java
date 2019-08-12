@@ -1,5 +1,6 @@
 package de.teberhardt.ablams.service.impl;
 
+import de.teberhardt.ablams.domain.AudioBook;
 import de.teberhardt.ablams.domain.AudioFile;
 import de.teberhardt.ablams.repository.AudioFileRepository;
 import de.teberhardt.ablams.service.AudioFileService;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -86,5 +89,19 @@ public class AudioFileServiceImpl implements AudioFileService {
     public void delete(Long id) {
         log.debug("Request to delete AudioFile : {}", id);
         audioFileRepository.deleteById(id);
+    }
+
+
+    @Transactional
+    public AudioFile scan(AudioBook audioBook, Path e)
+    {
+        if (Files.exists(e))
+        {
+            throw new IllegalArgumentException(String.format("Given Path %s does not Exists", e.toString()));
+        }
+
+        AudioFile a = new AudioFile();
+        a.setFilePath(audioBook.getPath().relativize(e).toString());
+        return audioFileRepository.save(a);
     }
 }

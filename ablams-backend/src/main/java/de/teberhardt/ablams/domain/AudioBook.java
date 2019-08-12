@@ -8,9 +8,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * A AudioBook.
@@ -18,7 +18,7 @@ import java.util.Set;
 @Entity
 @Table(name = "audio_book")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class AudioBook implements Serializable {
+public class AudioBook implements LocalPersisted,Serializable  {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,9 +37,9 @@ public class AudioBook implements Serializable {
     @Column(name = "file_path")
     private String filePath;
 
-    @OneToMany(mappedBy = "audioBook")
+    @OneToMany(mappedBy = "audioBook", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<AudioFile> audioFiles = new HashSet<>();
+    private List<AudioFile> audioFiles = new ArrayList<>();
     @OneToOne(mappedBy = "audioBook")
     @JsonIgnore
     private Image image;
@@ -103,11 +103,11 @@ public class AudioBook implements Serializable {
         this.filePath = filePath;
     }
 
-    public Set<AudioFile> getAudioFiles() {
+    public List<AudioFile> getAudioFiles() {
         return audioFiles;
     }
 
-    public AudioBook audioFiles(Set<AudioFile> audioFiles) {
+    public AudioBook audioFiles(List<AudioFile> audioFiles) {
         this.audioFiles = audioFiles;
         return this;
     }
@@ -124,7 +124,7 @@ public class AudioBook implements Serializable {
         return this;
     }
 
-    public void setAudioFiles(Set<AudioFile> audioFiles) {
+    public void setAudioFiles(List<AudioFile> audioFiles) {
         this.audioFiles = audioFiles;
     }
 
@@ -180,24 +180,11 @@ public class AudioBook implements Serializable {
         this.author = author;
     }
 
+    @Transient
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        AudioBook audioBook = (AudioBook) o;
-        if (audioBook.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), audioBook.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
+    public Path getPath()
+    {
+        return Paths.get(getAudioLibrary().getFilepath(), getFilePath());
     }
 
     @Override

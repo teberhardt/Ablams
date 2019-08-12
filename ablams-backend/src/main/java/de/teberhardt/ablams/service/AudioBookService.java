@@ -1,7 +1,10 @@
 package de.teberhardt.ablams.service;
 
+import de.teberhardt.ablams.domain.AudioBook;
+import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.service.dto.AudioBookDTO;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,4 +49,6 @@ public interface AudioBookService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    AudioBook scan(Path folderPath, List<Path> audioFilePaths, AudioLibrary audioLibrary);
 }

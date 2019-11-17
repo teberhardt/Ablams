@@ -11,8 +11,8 @@ import vuetify from './plugins/vuetify';
 import store from './store';
 import 'vuetify/dist/vuetify.min.css';
 import axios from 'axios';
-import 'roboto-fontface/css/roboto/roboto-fontface.css'
-import '@mdi/font/css/materialdesignicons.css'
+import 'roboto-fontface/css/roboto/roboto-fontface.css';
+import '@mdi/font/css/materialdesignicons.css';
 
 Vue.prototype.$http = axios;
 

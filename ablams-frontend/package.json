@@ -25,15 +25,15 @@
     "@vue/cli-plugin-pwa": "^3.10.0",
     "@vue/cli-plugin-typescript": "^3.10.0",
     "@vue/cli-service": "^3.10.0",
+    "axios": "latest",
+    "material-design-icons-iconfont": "^3.0.3",
     "sass": "^1.17.4",
     "sass-loader": "^7.1.0",
     "typescript": "^3.4.3",
     "vue-cli-plugin-vuetify": "^0.6.3",
-    "vue-template-compiler": "^2.6.10",
-    "axios": "latest",
-    "material-design-icons-iconfont": "^3.0.3",
-    "vuetify-loader": "^1.2.2",
     "vue-router": "^3.0.3",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.2.2",
     "vuex": "^3.0.1"
   }
 }

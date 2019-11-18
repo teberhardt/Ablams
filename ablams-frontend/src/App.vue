@@ -29,14 +29,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Appbar from "@/components/Appbar.vue";
-import NavigationDrawer from "@/components/NavigationDrawer.vue";
+import Appbar from '@/components/Appbar.vue';
+import NavigationDrawer from '@/components/NavigationDrawer.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
       Appbar,
-      NavigationDrawer
+      NavigationDrawer,
   },
   data: () => ({
     //

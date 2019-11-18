@@ -1,9 +1,11 @@
 <template>
     <v-app-bar
         app
+        clipped-left
+        color="blue"
     >
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-        <v-toolbar-title>{{title  }}</v-toolbar-title>
+        <v-app-bar-nav-icon/>
+        <v-toolbar-title>{{title}}</v-toolbar-title>
         <v-spacer/>
         <Searchfield></Searchfield>
         <v-spacer/>
@@ -20,10 +22,10 @@
     export default Vue.extend({
         name: 'Appbar',
         components: {
-            Searchfield
+            Searchfield,
         },
         data: () => ({
-            title:"Ablams"
+            title: 'Ablams',
         }),
         methods: {
         },

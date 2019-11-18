@@ -69,7 +69,7 @@
                 { icon: 'mdi-home', text: 'Home' },
                 { divider: true },
                 { icon: 'mdi-settings', text: 'Settings' },
-                ]
+                ],
         }),
         methods: {
         },

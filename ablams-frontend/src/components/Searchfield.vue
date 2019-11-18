@@ -6,6 +6,7 @@
                     dense
                     hide-details
                     rounded
+                    dark
                     placeholder="Search..."
     />
 </template>

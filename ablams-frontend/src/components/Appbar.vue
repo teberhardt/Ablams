@@ -4,7 +4,6 @@
         clipped-left
         color="blue"
     >
-        <v-app-bar-nav-icon/>
         <v-toolbar-title>{{title}}</v-toolbar-title>
         <v-spacer/>
         <Searchfield></Searchfield>

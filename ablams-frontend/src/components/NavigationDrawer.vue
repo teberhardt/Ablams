@@ -3,6 +3,7 @@
         v-model="drawer"
         app
         clipped
+        expand-on-hover
         color="grey lighten-4"
     >
         <v-list
@@ -55,7 +56,7 @@
     </v-navigation-drawer>
 </template>
 
-<script>
+<script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
 
     export default Vue.extend({

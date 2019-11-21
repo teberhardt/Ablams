@@ -41,6 +41,7 @@
                     v-else
                     :key="i"
                     link
+                    :to="item.path"
                 >
                     <v-list-item-action>
                         <v-icon>{{ item.icon }}</v-icon>
@@ -67,9 +68,12 @@
         data: () => ({
             drawer: null,
             items: [
-                { icon: 'mdi-home', text: 'Home' },
+                { icon: 'mdi-home', text: 'Home', path: '/home'},
                 { divider: true },
-                { icon: 'mdi-settings', text: 'Settings' },
+                { icon: 'mdi-audiobook', text: 'Audiobooks', path: '/audiobooks'},
+                { icon: 'mdi-account-group', text: 'Authors', path: '/authors'},
+                { divider: true },
+                { icon: 'mdi-settings', text: 'Admin Settings', path: '/settings'},
                 ],
         }),
         methods: {

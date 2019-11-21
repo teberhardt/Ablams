@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import AudioLibraryList from '@/components/AudioLibraryList.vue';
 
 
 Vue.use(Router);
@@ -12,13 +10,22 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home,
+            redirect: '/home',
         },
         {
-            path: '/audio-library-list',
-            name: 'audio-library-list',
-            component: AudioLibraryList,
+            path: '/home',
+            name: 'home',
+            component: () => import('./views/HomeView.vue'),
+        },
+        {
+            path: '/audiobooks',
+            name: 'audiobooks',
+            component: () => import('./views/AudiobooksView.vue'),
+        },
+        {
+            path: '/authors',
+            name: 'authors',
+            component: () => import('./views/AuthorsView.vue'),
         },
         {
             path: '/about',
@@ -26,7 +33,7 @@ export default new Router({
             // route level code-splitting
             // this generates a separate chunk (about.[hash].js) for this route
             // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+            component: () => import(/* webpackChunkName: "about" */ './views/AboutView.vue'),
         },
 
     ],

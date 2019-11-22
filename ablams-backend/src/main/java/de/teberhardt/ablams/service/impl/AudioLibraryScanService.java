@@ -61,12 +61,12 @@ public class AudioLibraryScanService {
             .filter(this::isAudioFile)
             .collect(groupingBy(Path::getParent));
 
-        Set<AudioBook> audioBooks = collect
+        List<AudioBook> audioBooks = collect
             .entrySet()
             .stream()
             .parallel()
             .map(e -> createAudiobook(e.getKey(), e.getValue(), audioLibrary))
-            .collect(Collectors.toSet());
+            .collect(Collectors.toList());
 
         audioBookRepository.saveAll(audioBooks);
         audioLibrary.setAudioBooks(audioBooks);
@@ -81,8 +81,8 @@ public class AudioLibraryScanService {
         return a;
     }
 
-    private Set<AudioFile> createAudioFiles(List<Path> value, AudioBook a) {
-       return  value.stream().map((Path e) -> createAudioFile(e, a)).collect(Collectors.toSet());
+    private List<AudioFile> createAudioFiles(List<Path> value, AudioBook a) {
+       return  value.stream().map((Path e) -> createAudioFile(e, a)).collect(Collectors.toList());
     }
 
     private AudioFile createAudioFile(Path e, AudioBook a) {

@@ -4,14 +4,12 @@ import de.teberhardt.ablams.domain.AudioCharacteristics;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
-import org.jaudiotagger.audio.aiff.AiffAudioHeader;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.TagField;
-
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -38,7 +36,6 @@ public class AudioTagFacade {
 
             for (FieldKey f : FieldKey.values()) {
                 TagField firstField = jaudioFile.getTag().getFirstField(f);
-                firstField.
             }
 
         } catch (CannotReadException | IOException | TagException | ReadOnlyFileException | InvalidAudioFrameException ex) {

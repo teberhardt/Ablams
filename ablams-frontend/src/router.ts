@@ -30,7 +30,7 @@ export default new Router({
         {
             path: '/admin-settings',
             name: 'adminsettings',
-            component: () => import('./views/AdminSettingsView.vue')
+            component: () => import('./views/AdminSettingsView.vue'),
         },
         {
             path: '/about',

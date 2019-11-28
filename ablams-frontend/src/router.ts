@@ -28,6 +28,11 @@ export default new Router({
             component: () => import('./views/AuthorsView.vue'),
         },
         {
+            path: '/admin-settings',
+            name: 'adminsettings',
+            component: () => import('./views/AdminSettingsView.vue')
+        },
+        {
             path: '/about',
             name: 'about',
             // route level code-splitting

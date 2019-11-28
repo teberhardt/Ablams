@@ -12,6 +12,19 @@
     <artifactId>ablams-backend</artifactId>
 
     <dependencies>
+        <!-- own modules -->
+        <dependency>
+            <groupId>de.teberhardt.ablams</groupId>
+            <artifactId>ablams-java-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.teberhardt.ablams</groupId>
+            <artifactId>ablams-frontend</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
+        </dependency>
+
         <!--metrics-->
         <dependency>
             <groupId>io.micrometer</groupId>

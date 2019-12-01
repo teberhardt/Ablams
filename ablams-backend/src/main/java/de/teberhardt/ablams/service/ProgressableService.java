@@ -1,6 +1,6 @@
 package de.teberhardt.ablams.service;
 
-import de.teberhardt.ablams.service.dto.ProgressableDTO;
+import de.teberhardt.ablams.web.dto.ProgressableDTO;
 
 import java.util.List;
 import java.util.Optional;

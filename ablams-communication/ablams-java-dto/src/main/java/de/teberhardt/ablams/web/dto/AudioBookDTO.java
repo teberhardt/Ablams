@@ -1,6 +1,4 @@
-package de.teberhardt.ablams.service.dto;
-
-import de.teberhardt.ablams.domain.enumeration.Language;
+package de.teberhardt.ablams.web.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,7 +12,7 @@ public class AudioBookDTO implements Serializable {
 
     private String name;
 
-    private Language language;
+    private String language;
 
     private String filePath;
 
@@ -40,11 +38,11 @@ public class AudioBookDTO implements Serializable {
         this.name = name;
     }
 
-    public Language getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(Language language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 

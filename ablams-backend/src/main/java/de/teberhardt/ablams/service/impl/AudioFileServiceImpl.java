@@ -4,7 +4,7 @@ import de.teberhardt.ablams.domain.AudioBook;
 import de.teberhardt.ablams.domain.AudioFile;
 import de.teberhardt.ablams.repository.AudioFileRepository;
 import de.teberhardt.ablams.service.AudioFileService;
-import de.teberhardt.ablams.service.dto.AudioFileDTO;
+import de.teberhardt.ablams.web.dto.AudioFileDTO;
 import de.teberhardt.ablams.service.mapper.AudioFileMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

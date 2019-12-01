@@ -1,6 +1,6 @@
 package de.teberhardt.ablams.service;
 
-import de.teberhardt.ablams.service.dto.AudioSeriesDTO;
+import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 
 import java.util.List;
 import java.util.Optional;

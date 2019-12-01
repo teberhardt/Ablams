@@ -1,7 +1,7 @@
 package de.teberhardt.ablams.service.mapper;
 
 import de.teberhardt.ablams.domain.Author;
-import de.teberhardt.ablams.service.dto.AuthorDTO;
+import de.teberhardt.ablams.web.dto.AuthorDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,6 +1,6 @@
 package de.teberhardt.ablams.service;
 
-import de.teberhardt.ablams.service.dto.ImageDTO;
+import de.teberhardt.ablams.web.dto.ImageDTO;
 
 import java.util.List;
 import java.util.Optional;

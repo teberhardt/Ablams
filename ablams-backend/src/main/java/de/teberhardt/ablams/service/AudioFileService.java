@@ -2,7 +2,7 @@ package de.teberhardt.ablams.service;
 
 import de.teberhardt.ablams.domain.AudioBook;
 import de.teberhardt.ablams.domain.AudioFile;
-import de.teberhardt.ablams.service.dto.AudioFileDTO;
+import de.teberhardt.ablams.web.dto.AudioFileDTO;
 
 import java.nio.file.Path;
 import java.util.List;

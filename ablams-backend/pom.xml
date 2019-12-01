@@ -15,7 +15,7 @@
         <!-- own modules -->
         <dependency>
             <groupId>de.teberhardt.ablams</groupId>
-            <artifactId>ablams-java-core</artifactId>
+            <artifactId>ablams-java-dto</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

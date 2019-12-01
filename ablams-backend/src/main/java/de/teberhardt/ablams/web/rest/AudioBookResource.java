@@ -1,7 +1,7 @@
 package de.teberhardt.ablams.web.rest;
 
 import de.teberhardt.ablams.service.AudioBookService;
-import de.teberhardt.ablams.service.dto.AudioBookDTO;
+import de.teberhardt.ablams.web.dto.AudioBookDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;

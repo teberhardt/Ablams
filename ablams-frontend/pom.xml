@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>de.teberhardt.ablams</groupId>
-            <artifactId>ablams-js-core</artifactId>
+            <artifactId>ablams-js-dto</artifactId>
             <version>${project.version}</version>
             <type>pom</type>
         </dependency>

@@ -5,7 +5,7 @@ import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.repository.AudioLibraryRepository;
 import de.teberhardt.ablams.service.AudioBookService;
 import de.teberhardt.ablams.service.AudioLibraryService;
-import de.teberhardt.ablams.service.dto.AudioLibraryDTO;
+import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
 import de.teberhardt.ablams.service.mapper.AudioLibraryMapper;
 import org.apache.commons.io.FilenameUtils;
 import org.jaudiotagger.audio.SupportedFileFormat;

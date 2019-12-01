@@ -7,6 +7,6 @@ import java.nio.file.Path;
 public interface LocalPersisted {
 
     @Transient
-    public Path getPath();
+    Path getPath();
 
 }

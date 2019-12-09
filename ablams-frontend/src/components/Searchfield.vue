@@ -7,6 +7,7 @@
                     hide-details
                     rounded
                     dark
+                    md-layout="box"
                     placeholder="Search..."
     />
 </template>

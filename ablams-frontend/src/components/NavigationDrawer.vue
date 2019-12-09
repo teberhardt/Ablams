@@ -4,56 +4,59 @@
         app
         clipped
         expand-on-hover
-        color="grey lighten-4"
+        dark
+        class="#344955"
     >
-        <v-list
-            dense
-            class="grey lighten-4"
-        >
-            <template v-for="(item, i) in items">
-                <v-row
-                    v-if="item.heading"
-                    :key="i"
-                    align="center"
-                >
-                    <v-col cols="6">
-                        <v-subheader v-if="item.heading">
-                            {{ item.heading }}
-                        </v-subheader>
-                    </v-col>
-                    <v-col
-                        cols="6"
-                        class="text-right"
-                    >
-                        <v-btn
-                            small
-                            text
-                        >edit</v-btn>
-                    </v-col>
-                </v-row>
-                <v-divider
-                    v-else-if="item.divider"
-                    :key="i"
-                    dark
-                    class="my-4"
-                />
-                <v-list-item
-                    v-else
-                    :key="i"
-                    link
-                    :to="item.path"
-                >
-                    <v-list-item-action>
-                        <v-icon>{{ item.icon }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title class="grey--text">
-                            {{ item.text }}
-                        </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </template>
+        <v-list-item link
+         :value="HomeItem.active"
+            active-class="orange--text"      
+            :to="HomeItem.path == '#' ? '' : HomeItem.path" 
+            :exact="HomeItem.exact">
+            <v-list-item-icon>
+                <v-icon>{{ HomeItem.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+                <v-list-item-title>{{ HomeItem.title }}</v-list-item-title>
+            </v-list-item-content>
+        </v-list-item>
+
+        <v-list>
+            <v-list-item
+            v-for="item in MainItems"
+            :key="item.title"
+            link
+            :value="item.active"
+            active-class="orange--text"      
+            :to="item.path == '#' ? '' : item.path" 
+            :exact="item.exact"
+            >
+                <v-list-item-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
         </v-list>
+        <template v-slot:append>
+            <v-list-item
+            v-for="item in BottomItems"
+            :key="item.title"
+            link
+             :value="item.active"
+            active-class="orange--text"      
+            :to="item.path == '#' ? '' : item.path" 
+            :exact="item.exact"
+            >
+            <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+            </v-list-item>
+        </template>
+
     </v-navigation-drawer>
 </template>
 
@@ -67,13 +70,13 @@
         },
         data: () => ({
             drawer: null,
-            items: [
-                { icon: 'mdi-home', text: 'Home', path: '/home'},
-                { divider: true },
-                { icon: 'mdi-audiobook', text: 'Audiobooks', path: '/audiobooks'},
-                { icon: 'mdi-account-group', text: 'Authors', path: '/authors'},
-                { divider: true },
-                { icon: 'mdi-settings', text: 'Admin Settings', path: '/settings'},
+            HomeItem: { icon: 'mdi-home', title: 'Home', path: '/home'},
+            MainItems: [
+                { icon: 'mdi-audiobook', title: 'Audiobooks', path: '/audiobooks'},
+                { icon: 'mdi-account-group', title: 'Authors', path: '/authors'}
+                ],
+            BottomItems: [
+                { icon: 'mdi-settings', title: 'Settings', path: '/settings'},
                 ],
         }),
         methods: {

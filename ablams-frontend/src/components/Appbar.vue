@@ -2,15 +2,20 @@
     <v-app-bar
         app
         clipped-left
-        color="blue"
+        color="primary"
+        dark
+        flat
     >
         <v-toolbar-title>{{title}}</v-toolbar-title>
         <v-spacer/>
         <Searchfield></Searchfield>
         <v-spacer/>
-        <v-btn icon>
-            <v-icon>mdi-account-settings</v-icon>
-        </v-btn>
+        <v-avatar>
+            <img
+                src="https://cdn.vuetifyjs.com/images/john.jpg"
+                alt="John"
+            >
+        </v-avatar>
     </v-app-bar>
 </template>
 

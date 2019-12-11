@@ -9,21 +9,17 @@
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
     import axios from 'axios';
-
-    export interface AudioLibrary {
-        id: number;
-        filepath: string;
-    }
+    import AudioLibraryDTO from 'ablams-js-dto/src/domain/models';
 
     @Component
     export default class AudioLibraryList extends Vue {
 
-        public audioLibraries: AudioLibrary[] = [];
+/*        audioLibraries: AudioLibraryDTO[] = [];
 
         private async created() {
             const response = await axios.get('/api/audio-libraries');
             this.audioLibraries = await response.data;
-        }
+        }*/
     }
 </script>
 

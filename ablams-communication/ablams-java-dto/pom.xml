@@ -47,10 +47,10 @@
                 <configuration>
                     <jsonLibrary>jackson2</jsonLibrary>
                     <classPatterns>
-                        <pattern>de.teberhardt.ablams.domain.*</pattern>
+                        <pattern>de.teberhardt.ablams.web.dto.*</pattern>
                     </classPatterns>
                     <outputKind>module</outputKind>
-                    <outputFile>../ablams-js-core/src/domain/models.d.ts</outputFile>
+                    <outputFile>../ablams-js-dto/src/domain/models.d.ts</outputFile>
                 </configuration>
             </plugin>
         </plugins>

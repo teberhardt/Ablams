@@ -22,6 +22,7 @@ logging:
         org.hibernate.type.descriptor.sql: DEBUG
         org.springframework.transaction: DEBUG
         org.springframework.orm.jpa: DEBUG
+        org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 
 
 spring:

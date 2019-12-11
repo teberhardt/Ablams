@@ -58,6 +58,7 @@ local.properties
 # Intellij
 ######################
 .idea/
+!.idea/runConfigurations/
 *.iml
 *.iws
 *.ipr
@@ -163,3 +164,4 @@ yarn-error.log*
 
 # other
 /dist
+

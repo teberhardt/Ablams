@@ -105,23 +105,13 @@
         }
 
 
-        /*        watch: {
-                    dialog(val) {
-                    val || this.close()
-                },}
-            ,
-            }
-            ,*/
-
         protected created(): void {
             this.initialize();
         }
 
 
         protected initialize(): void {
-            let promise = AudioLibraryResource.fetchAll();
-            promise.then(value => {
-                console.log("queried audiobooks: " + value.data);
+            AudioLibraryResource.fetchAll().then((value) => {
                 this.aLibs = value.data;
             });
         }

@@ -73,7 +73,7 @@
             HomeItem: { icon: 'mdi-home', title: 'Home', path: '/home'},
             MainItems: [
                 { icon: 'mdi-audiobook', title: 'Audiobooks', path: '/audiobooks'},
-                { icon: 'mdi-account-group', title: 'Authors', path: '/authors'}
+                { icon: 'mdi-account-group', title: 'Authors', path: '/authors'},
                 ],
             BottomItems: [
                 { icon: 'mdi-settings', title: 'Admin Settings', path: '/admin-settings'},

@@ -14,12 +14,6 @@
     @Component
     export default class AudioLibraryList extends Vue {
 
-/*        audioLibraries: AudioLibraryDTO[] = [];
-
-        private async created() {
-            const response = await axios.get('/api/audio-libraries');
-            this.audioLibraries = await response.data;
-        }*/
     }
 </script>
 

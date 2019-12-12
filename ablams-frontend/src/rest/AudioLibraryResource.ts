@@ -12,7 +12,7 @@ export default new class AudioLibraryResource {
     public insert(aLib: AudioLibraryDTO): void {
         // @ts-ignore
         aLib.id = null;
-        axios.post(this.URL_ENDPOINT, aLib).then(r => console.log('request result: ' + r) );
+        axios.post(this.URL_ENDPOINT, aLib).then((r) => console.log('request result: ' + r) );
     }
 
 };

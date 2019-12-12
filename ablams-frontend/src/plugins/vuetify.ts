@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import de from 'vuetify/src/locale/de';
-import colors from 'vuetify/lib/util/colors'
 
 Vue.use(Vuetify);
 

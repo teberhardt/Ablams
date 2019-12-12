@@ -8,8 +8,11 @@
 /ablams-backend/src/main/resources/public/
 /ablams-core/ablams-js-core/src/domain/models.d.ts
 /ablams-backend/target/
+/ablams-frontend/target/
+/ablams-frontend/node
+/ablams-communication/ablams-js-dto/src
 /ablams-communication/target/
-
+/ablams-communication/ablams-java-dto/target
 ######################
 # Node
 ######################

@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {AudioLibraryDTO} from 'ablams-js-dto/src/domain/models';
 
-export default new class AudioLibraryRestResource {
+export default new class AudioLibraryResource {
 
     private readonly URL_ENDPOINT: string  = '/api/audio-libraries';
 

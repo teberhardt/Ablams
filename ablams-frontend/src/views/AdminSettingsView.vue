@@ -70,7 +70,7 @@
 <script lang="ts">
     import {AudioLibraryDTO} from 'ablams-js-dto/src/domain/models';
     import {Component, Vue} from 'vue-property-decorator';
-    import AudiobookRestResource from '@/rest/AudioLibrariesRestResource';
+    import AudioLibraryResource from '@/rest/AudioLibraryResource';
 
     @Component
     export default class AdminSettingsView extends Vue {
@@ -119,7 +119,7 @@
 
 
         protected initialize(): void {
-            let promise = AudiobookRestResource.fetchAll();
+            let promise = AudioLibraryResource.fetchAll();
             promise.then(value => {
                 console.log("queried audiobooks: " + value.data);
                 this.aLibs = value.data;
@@ -152,7 +152,7 @@
                 Object.assign(this.aLibs[this.editedIndex], this.editedItem);
             } else {
                 this.aLibs.push(this.editedItem);
-                AudiobookRestResource.insert(this.editedItem);
+                AudioLibraryResource.insert(this.editedItem);
             }
             this.close();
         }

@@ -1,4 +1,4 @@
-package de.teberhardt.ablams.service.dto;
+package de.teberhardt.ablams.web.dto;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -7,6 +7,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
@@ -15,7 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "audio_file")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class AudioFile implements Serializable {
+public class AudioFile implements LocalPersisted, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,6 +40,9 @@ public class AudioFile implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("audioFiles")
     private Progressable progress;
+
+    @Transient
+    private AudioCharacteristics audioCharacteristics = new AudioCharacteristics();
 
     public Long getId() {
         return id;
@@ -126,5 +131,19 @@ public class AudioFile implements Serializable {
             ", fileType='" + getFileType() + "'" +
             ", filePath='" + getFilePath() + "'" +
             "}";
+    }
+
+    @Transient
+    @Override
+    public Path getPath() {
+        return Paths.get(getAudioBook().getAudioLibrary().getFilepath(), getAudioBook().getFilePath(), getFilePath());
+    }
+
+    public AudioCharacteristics getAudioCharacteristics() {
+        return audioCharacteristics;
+    }
+
+    public void setAudioCharacteristics(AudioCharacteristics audioCharacteristics) {
+        this.audioCharacteristics = audioCharacteristics;
     }
 }

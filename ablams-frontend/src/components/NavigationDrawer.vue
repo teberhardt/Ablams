@@ -9,8 +9,8 @@
     >
         <v-list-item link
          :value="HomeItem.active"
-            active-class="orange--text"      
-            :to="HomeItem.path == '#' ? '' : HomeItem.path" 
+            active-class="orange--text"
+            :to="HomeItem.path == '#' ? '' : HomeItem.path"
             :exact="HomeItem.exact">
             <v-list-item-icon>
                 <v-icon>{{ HomeItem.icon }}</v-icon>
@@ -26,8 +26,8 @@
             :key="item.title"
             link
             :value="item.active"
-            active-class="orange--text"      
-            :to="item.path == '#' ? '' : item.path" 
+            active-class="orange--text"
+            :to="item.path == '#' ? '' : item.path"
             :exact="item.exact"
             >
                 <v-list-item-icon>
@@ -44,8 +44,8 @@
             :key="item.title"
             link
              :value="item.active"
-            active-class="orange--text"      
-            :to="item.path == '#' ? '' : item.path" 
+            active-class="orange--text"
+            :to="item.path == '#' ? '' : item.path"
             :exact="item.exact"
             >
             <v-list-item-icon>
@@ -73,10 +73,10 @@
             HomeItem: { icon: 'mdi-home', title: 'Home', path: '/home'},
             MainItems: [
                 { icon: 'mdi-audiobook', title: 'Audiobooks', path: '/audiobooks'},
-                { icon: 'mdi-account-group', title: 'Authors', path: '/authors'}
+                { icon: 'mdi-account-group', title: 'Authors', path: '/authors'},
                 ],
             BottomItems: [
-                { icon: 'mdi-settings', title: 'Settings', path: '/settings'},
+                { icon: 'mdi-settings', title: 'Admin Settings', path: '/admin-settings'},
                 ],
         }),
         methods: {

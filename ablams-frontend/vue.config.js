@@ -3,6 +3,10 @@ module.exports = {
     // see https://cli.vuejs.org/config/
     outputDir: 'target/dist',
     assetsDir: 'static',
+    productionSourceMap: false,
+    configureWebpack: {
+        "devtool": "eval-source-map"
+    },
 
     devServer: {
         port: 8081,

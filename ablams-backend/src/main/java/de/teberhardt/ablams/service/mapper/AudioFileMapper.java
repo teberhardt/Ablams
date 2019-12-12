@@ -1,7 +1,7 @@
 package de.teberhardt.ablams.service.mapper;
 
 import de.teberhardt.ablams.domain.AudioFile;
-import de.teberhardt.ablams.service.dto.AudioFileDTO;
+import de.teberhardt.ablams.web.dto.AudioFileDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

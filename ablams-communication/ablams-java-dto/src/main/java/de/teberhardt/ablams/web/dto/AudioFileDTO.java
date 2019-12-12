@@ -1,6 +1,4 @@
-package de.teberhardt.ablams.service.dto;
-
-import de.teberhardt.ablams.domain.enumeration.FileType;
+package de.teberhardt.ablams.web.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,7 +10,7 @@ public class AudioFileDTO implements Serializable {
 
     private Long id;
 
-    private FileType fileType;
+    private String fileType;
 
     private String filePath;
 
@@ -28,11 +26,11 @@ public class AudioFileDTO implements Serializable {
         this.id = id;
     }
 
-    public FileType getFileType() {
+    public String getFileType() {
         return fileType;
     }
 
-    public void setFileType(FileType fileType) {
+    public void setFileType(String fileType) {
         this.fileType = fileType;
     }
 

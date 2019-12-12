@@ -3,7 +3,7 @@ package de.teberhardt.ablams.service.impl;
 import de.teberhardt.ablams.domain.Progressable;
 import de.teberhardt.ablams.repository.ProgressableRepository;
 import de.teberhardt.ablams.service.ProgressableService;
-import de.teberhardt.ablams.service.dto.ProgressableDTO;
+import de.teberhardt.ablams.web.dto.ProgressableDTO;
 import de.teberhardt.ablams.service.mapper.ProgressableMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

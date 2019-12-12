@@ -2,7 +2,7 @@ package de.teberhardt.ablams.web.rest;
 
 
 import de.teberhardt.ablams.service.AuthorService;
-import de.teberhardt.ablams.service.dto.AuthorDTO;
+import de.teberhardt.ablams.web.dto.AuthorDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;

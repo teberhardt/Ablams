@@ -3,7 +3,7 @@ package de.teberhardt.ablams.service.impl;
 import de.teberhardt.ablams.domain.Image;
 import de.teberhardt.ablams.repository.ImageRepository;
 import de.teberhardt.ablams.service.ImageService;
-import de.teberhardt.ablams.service.dto.ImageDTO;
+import de.teberhardt.ablams.web.dto.ImageDTO;
 import de.teberhardt.ablams.service.mapper.ImageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

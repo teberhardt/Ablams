@@ -1,7 +1,7 @@
 package de.teberhardt.ablams.service.mapper;
 
 import de.teberhardt.ablams.domain.Progressable;
-import de.teberhardt.ablams.service.dto.ProgressableDTO;
+import de.teberhardt.ablams.web.dto.ProgressableDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

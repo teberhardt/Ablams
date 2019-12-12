@@ -1,16 +1,16 @@
-package de.teberhardt.ablams.service.dto;
+package de.teberhardt.ablams.web.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the Author entity.
+ * A DTO for the AudioLibrary entity.
  */
-public class AuthorDTO implements Serializable {
+public class AudioLibraryDTO implements Serializable {
 
     private Long id;
 
-    private String name;
+    private String filepath;
 
     public Long getId() {
         return id;
@@ -20,12 +20,12 @@ public class AuthorDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFilepath() {
+        return filepath;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
     }
 
     @Override
@@ -37,11 +37,11 @@ public class AuthorDTO implements Serializable {
             return false;
         }
 
-        AuthorDTO authorDTO = (AuthorDTO) o;
-        if (authorDTO.getId() == null || getId() == null) {
+        AudioLibraryDTO audioLibraryDTO = (AudioLibraryDTO) o;
+        if (audioLibraryDTO.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), authorDTO.getId());
+        return Objects.equals(getId(), audioLibraryDTO.getId());
     }
 
     @Override
@@ -51,9 +51,9 @@ public class AuthorDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "AuthorDTO{" +
+        return "AudioLibraryDTO{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
+            ", filepath='" + getFilepath() + "'" +
             "}";
     }
 }

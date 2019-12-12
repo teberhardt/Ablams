@@ -3,7 +3,7 @@ package de.teberhardt.ablams.service.impl;
 import de.teberhardt.ablams.domain.Author;
 import de.teberhardt.ablams.repository.AuthorRepository;
 import de.teberhardt.ablams.service.AuthorService;
-import de.teberhardt.ablams.service.dto.AuthorDTO;
+import de.teberhardt.ablams.web.dto.AuthorDTO;
 import de.teberhardt.ablams.service.mapper.AuthorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +69,7 @@ public class AuthorServiceImpl implements AuthorService {
      *  get all the authors where Image is null.
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<AuthorDTO> findAllWhereImageIsNull() {
         log.debug("Request to get all authors where Image is null");
         return StreamSupport

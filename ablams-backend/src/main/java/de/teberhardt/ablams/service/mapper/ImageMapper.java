@@ -1,7 +1,7 @@
 package de.teberhardt.ablams.service.mapper;
 
 import de.teberhardt.ablams.domain.Image;
-import de.teberhardt.ablams.service.dto.ImageDTO;
+import de.teberhardt.ablams.web.dto.ImageDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

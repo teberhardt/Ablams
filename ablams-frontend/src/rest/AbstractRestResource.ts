@@ -15,4 +15,8 @@ export abstract class AbstractRestResource<T> {
     public fetchAll(): Promise<AxiosResponse<T[]>> {
         return axios.get(this.ENDPOINT_URL);
     }
+
+    public update(resource: T): Promise<AxiosResponse<T>> {
+        return axios.put(this.ENDPOINT_URL, resource);
+    }
 }

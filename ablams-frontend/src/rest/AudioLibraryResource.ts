@@ -1,18 +1,23 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {AudioLibraryDTO} from 'ablams-js-dto/src/domain/models';
+import {AbstractRestResource} from "@/rest/AbstractRestResource";
 
-export default new class AudioLibraryResource {
+export default new class AudioLibraryResource extends AbstractRestResource<AudioLibraryDTO> {
 
-    private readonly URL_ENDPOINT: string  = '/api/audio-libraries';
-
-    public fetchAll(): Promise<AxiosResponse<AudioLibraryDTO[]>> {
-        return axios.get(this.URL_ENDPOINT);
+    constructor()
+    {
+        super('/api/audio-libraries')
     }
 
-    public insert(aLib: AudioLibraryDTO): void {
-        // @ts-ignore
-        aLib.id = null;
-        axios.post(this.URL_ENDPOINT, aLib).then((r) => console.log('request result: ' + r) );
+    public insert(newAudioLibrary: AudioLibraryDTO): Promise<AxiosResponse<AudioLibraryDTO>> {
+        newAudioLibrary = AudioLibraryResource.prepareForPost(newAudioLibrary);
+       return super.insert(newAudioLibrary);
+    }
+
+    private static prepareForPost(aLib: AudioLibraryDTO) : AudioLibraryDTO {
+        // set id to undefined because a post request with an id will not be accepted by the backend
+        aLib.id = undefined;
+        return aLib;
     }
 
 };

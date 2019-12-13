@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from 'axios';
+import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 export abstract class AbstractRestResource<T> {
 
@@ -16,7 +16,14 @@ export abstract class AbstractRestResource<T> {
         return axios.get(this.ENDPOINT_URL);
     }
 
-    public update(resource: T): Promise<AxiosResponse<T>> {
-        return axios.put(this.ENDPOINT_URL, resource);
+    public update(changedResource: T): Promise<AxiosResponse<T>> {
+        return axios.put(this.ENDPOINT_URL, changedResource);
+    }
+
+    public delete(resourceIdToDelete?: number) {
+        //should cover null and undefined
+        if(resourceIdToDelete != null){
+            return axios.delete(this.ENDPOINT_URL + `/${resourceIdToDelete}`);
+        }
     }
 }

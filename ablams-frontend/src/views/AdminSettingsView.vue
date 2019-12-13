@@ -84,7 +84,7 @@
                 value: 'id',
             },
             {text: 'Filepath', value: 'filepath'},
-            { text: 'Actions', value: 'action', sortable: false },
+            {text: 'Actions', value: 'action', sortable: false },
         ];
 
         private aLibs: AudioLibraryDTO[] = [];
@@ -126,6 +126,7 @@
             const index = this.aLibs.indexOf(item);
             if (confirm('Are you sure you want to delete this item?')) {
                 this.aLibs.splice(index, 1);
+                AudioLibraryResource.delete(item.id);
             }
         }
 

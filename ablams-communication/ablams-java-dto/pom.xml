@@ -57,6 +57,9 @@
                     </classPatterns>
                     <outputKind>module</outputKind>
                     <outputFile>../ablams-js-dto/src/domain/models.d.ts</outputFile>
+                    <optionalAnnotations>
+                        <annotation>javax.annotation.Nullable</annotation>
+                    </optionalAnnotations>
                 </configuration>
             </plugin>
         </plugins>

@@ -21,8 +21,8 @@ export abstract class AbstractRestResource<T> {
     }
 
     public delete(resourceIdToDelete?: number) {
-        //should cover null and undefined
-        if(resourceIdToDelete != null){
+        // should cover null and undefined
+        if (resourceIdToDelete != null) {
             return axios.delete(this.ENDPOINT_URL + `/${resourceIdToDelete}`);
         }
     }

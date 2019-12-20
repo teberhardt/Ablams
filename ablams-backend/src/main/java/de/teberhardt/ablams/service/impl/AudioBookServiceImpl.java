@@ -119,7 +119,7 @@ public class AudioBookServiceImpl implements AudioBookService {
             .orElseGet(AudioBook::new);
 
         audioBook.setName(filename);
-        audioBook.setFilePath(folderPath.toString().replaceFirst(audioLibrary.getFilepath(), ""));
+        audioBook.setFilePath(folderPath.toString().replace(audioLibrary.getFilepath(), ""));
         audioBook = audioBookRepository.save(audioBook);
 
         audioBook.setAudioFiles(createAudioFiles(audioFilePaths, audioBook));

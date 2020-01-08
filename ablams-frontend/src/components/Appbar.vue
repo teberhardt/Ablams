@@ -10,11 +10,8 @@
         <v-spacer/>
         <Searchfield></Searchfield>
         <v-spacer/>
-        <v-avatar>
-            <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-            >
+        <v-avatar color="red">
+            <span class="white--text headline">TE</span>
         </v-avatar>
     </v-app-bar>
 </template>

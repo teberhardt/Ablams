@@ -6,6 +6,7 @@ import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.repository.AudioBookRepository;
 import de.teberhardt.ablams.service.AudioBookService;
 import de.teberhardt.ablams.service.AudioFileService;
+import de.teberhardt.ablams.util.PathStringUtils;
 import de.teberhardt.ablams.web.dto.AudioBookDTO;
 import de.teberhardt.ablams.service.mapper.AudioBookMapper;
 import org.slf4j.Logger;
@@ -111,27 +112,29 @@ public class AudioBookServiceImpl implements AudioBookService {
     }
 
     @Transactional
-    public AudioBook scan(Path folderPath, List<Path> audioFilePaths, AudioLibrary audioLibrary)
-    {
-        String filename = folderPath.getFileName().toString();
+    public AudioBook scan(Path folderPath, List<Path> audioFilePaths, AudioLibrary audioLibrary) {
 
+        PathStringUtils pathUtils = new PathStringUtils(folderPath);
+
+        String filename = pathUtils.getFileName();
         AudioBook audioBook = audioBookRepository.findAudioBookByName(filename)
-            .orElseGet(AudioBook::new);
+            .orElseGet(() -> new AudioBook().name(filename));
 
-        audioBook.setName(filename);
-        audioBook.setFilePath(folderPath.toString().replace(audioLibrary.getFilepath(), ""));
+        String relativeString = pathUtils.getRelativeString(audioLibrary.getPath());
+        audioBook.setFilePath(relativeString);
+
+        audioBook.setAudioLibrary(audioLibrary);
+
         audioBook = audioBookRepository.save(audioBook);
 
-        audioBook.setAudioFiles(createAudioFiles(audioFilePaths, audioBook));
+        scanDependentAudioFiles(audioFilePaths, audioBook);
+
 
         return audioBook;
     }
 
-    private List<AudioFile> createAudioFiles(List<Path> value, AudioBook audioBook) {
-        return value
-            .stream()
-            .filter(e -> e.toString().startsWith(audioBook.getFilePath())) // make sure file is in Audiobook directory
-            .map(e -> audioFileService.scan(audioBook, e))
-            .collect(Collectors.toList());
+
+    private void scanDependentAudioFiles(List<Path> audioFilePaths, AudioBook relatedAudioBook) {
+        audioFilePaths.forEach(e -> audioFileService.scan(e, relatedAudioBook));
     }
 }

@@ -4,6 +4,7 @@ import de.teberhardt.ablams.domain.AudioBook;
 import de.teberhardt.ablams.domain.AudioFile;
 import de.teberhardt.ablams.repository.AudioFileRepository;
 import de.teberhardt.ablams.service.AudioFileService;
+import de.teberhardt.ablams.util.PathStringUtils;
 import de.teberhardt.ablams.web.dto.AudioFileDTO;
 import de.teberhardt.ablams.service.mapper.AudioFileMapper;
 import org.slf4j.Logger;
@@ -93,15 +94,20 @@ public class AudioFileServiceImpl implements AudioFileService {
 
 
     @Transactional
-    public AudioFile scan(AudioBook audioBook, Path e)
+    public AudioFile scan(Path audioFilePath, AudioBook relatedAudioBook)
     {
-        if (Files.exists(e))
+        // performance issue with nio in java 8, so switch to old io
+        if (!audioFilePath.toFile().exists())
         {
-            throw new IllegalArgumentException(String.format("Given Path %s does not Exists", e.toString()));
+            throw new IllegalArgumentException(String.format("Given Path %s does not Exists", audioFilePath.toString()));
         }
 
         AudioFile a = new AudioFile();
-        a.setFilePath(audioBook.getPath().relativize(e).toString());
+        a.setAudioBook(relatedAudioBook);
+
+        PathStringUtils pathStringUtils = new PathStringUtils(audioFilePath);
+        a.setFilePath(pathStringUtils.getRelativeString(relatedAudioBook.getPath()));
+
         return audioFileRepository.save(a);
     }
 }

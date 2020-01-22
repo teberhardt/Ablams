@@ -44,5 +44,5 @@ public interface AudioFileService {
      */
     void delete(Long id);
 
-    AudioFile scan(AudioBook audioBook, Path e);
+    AudioFile scan(Path audioFilePath, AudioBook relatedAudioBook);
 }

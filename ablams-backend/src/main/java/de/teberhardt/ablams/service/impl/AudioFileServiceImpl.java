@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -92,7 +92,6 @@ public class AudioFileServiceImpl implements AudioFileService {
         audioFileRepository.deleteById(id);
     }
 
-
     @Transactional
     public AudioFile scan(Path audioFilePath, AudioBook relatedAudioBook)
     {
@@ -102,12 +101,35 @@ public class AudioFileServiceImpl implements AudioFileService {
             throw new IllegalArgumentException(String.format("Given Path %s does not Exists", audioFilePath.toString()));
         }
 
-        AudioFile a = new AudioFile();
-        a.setAudioBook(relatedAudioBook);
-
         PathStringUtils pathStringUtils = new PathStringUtils(audioFilePath);
-        a.setFilePath(pathStringUtils.getRelativeString(relatedAudioBook.getPath()));
+        String relPathString = pathStringUtils.getRelativeString(relatedAudioBook.getPath());
 
-        return audioFileRepository.save(a);
+        AudioFile audioFile = relatedAudioBook.getAudioFiles()
+            .stream()
+                .filter(e -> e.getFilePath().equals(relPathString))
+                .findAny()
+            .orElseGet(() -> new AudioFile().filePath(relPathString).audioBook(relatedAudioBook));
+
+        return audioFileRepository.save(audioFile);
+    }
+
+    @Override
+    public void scan(Collection<Path> audioFilePaths, AudioBook relatedAudioBook) {
+
+        //if there exist no audiofiles to check we can just insert
+        if (relatedAudioBook.getAudioFiles().isEmpty())
+        {
+            for (Path filePath: audioFilePaths)
+            {
+                PathStringUtils pathStringUtils = new PathStringUtils(filePath);
+                String relPathString = pathStringUtils.getRelativeString(relatedAudioBook.getPath());
+
+                audioFileRepository.save(new AudioFile().filePath(relPathString).audioBook(relatedAudioBook));
+            }
+        }
+        else
+        {
+            audioFilePaths.forEach( path -> scan(path, relatedAudioBook));
+        }
     }
 }

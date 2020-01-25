@@ -117,7 +117,7 @@ public class AudioBookServiceImpl implements AudioBookService {
         PathStringUtils pathUtils = new PathStringUtils(folderPath);
 
         String filename = pathUtils.getFileName();
-        AudioBook audioBook = audioBookRepository.findAudioBookByName(filename)
+        AudioBook audioBook = audioBookRepository.findAudioBookByNameAndAudioLibraryId(filename, audioLibrary.getId())
             .orElseGet(() -> new AudioBook().name(filename));
 
         String relativeString = pathUtils.getRelativeString(audioLibrary.getPath());
@@ -127,14 +127,8 @@ public class AudioBookServiceImpl implements AudioBookService {
 
         audioBook = audioBookRepository.save(audioBook);
 
-        scanDependentAudioFiles(audioFilePaths, audioBook);
-
+        audioFileService.scan(audioFilePaths, audioBook);
 
         return audioBook;
-    }
-
-
-    private void scanDependentAudioFiles(List<Path> audioFilePaths, AudioBook relatedAudioBook) {
-        audioFilePaths.forEach(e -> audioFileService.scan(e, relatedAudioBook));
     }
 }

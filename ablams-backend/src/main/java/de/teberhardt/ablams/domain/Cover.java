@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "image")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Image implements Serializable {
+public class Cover implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,7 +52,7 @@ public class Image implements Serializable {
         return filePath;
     }
 
-    public Image filePath(String filePath) {
+    public Cover filePath(String filePath) {
         this.filePath = filePath;
         return this;
     }
@@ -65,7 +65,7 @@ public class Image implements Serializable {
         return width;
     }
 
-    public Image width(Integer width) {
+    public Cover width(Integer width) {
         this.width = width;
         return this;
     }
@@ -78,7 +78,7 @@ public class Image implements Serializable {
         return height;
     }
 
-    public Image height(Integer height) {
+    public Cover height(Integer height) {
         this.height = height;
         return this;
     }
@@ -91,7 +91,7 @@ public class Image implements Serializable {
         return bitdepth;
     }
 
-    public Image bitdepth(Integer bitdepth) {
+    public Cover bitdepth(Integer bitdepth) {
         this.bitdepth = bitdepth;
         return this;
     }
@@ -104,7 +104,7 @@ public class Image implements Serializable {
         return audioBook;
     }
 
-    public Image audioBook(AudioBook audioBook) {
+    public Cover audioBook(AudioBook audioBook) {
         this.audioBook = audioBook;
         return this;
     }
@@ -117,7 +117,7 @@ public class Image implements Serializable {
         return author;
     }
 
-    public Image author(Author author) {
+    public Cover author(Author author) {
         this.author = author;
         return this;
     }
@@ -134,11 +134,11 @@ public class Image implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Image image = (Image) o;
-        if (image.getId() == null || getId() == null) {
+        Cover cover = (Cover) o;
+        if (cover.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), image.getId());
+        return Objects.equals(getId(), cover.getId());
 
 
     }

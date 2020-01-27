@@ -1,8 +1,8 @@
 package de.teberhardt.ablams.web.rest;
 
 
-import de.teberhardt.ablams.service.ImageService;
-import de.teberhardt.ablams.web.dto.ImageDTO;
+import de.teberhardt.ablams.service.CoverService;
+import de.teberhardt.ablams.web.dto.CoverDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;
@@ -29,27 +29,27 @@ public class ImageResource {
 
     private static final String ENTITY_NAME = "image";
 
-    private final ImageService imageService;
+    private final CoverService coverService;
 
-    public ImageResource(ImageService imageService) {
-        this.imageService = imageService;
+    public ImageResource(CoverService coverService) {
+        this.coverService = coverService;
     }
 
     /**
      * POST  /images : Create a new image.
      *
-     * @param imageDTO the imageDTO to create
+     * @param coverDTO the imageDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new imageDTO, or with status 400 (Bad Request) if the image has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/images")
     @Timed
-    public ResponseEntity<ImageDTO> createImage(@RequestBody ImageDTO imageDTO) throws URISyntaxException {
-        log.debug("REST request to save Image : {}", imageDTO);
-        if (imageDTO.getId() != null) {
+    public ResponseEntity<CoverDTO> createImage(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
+        log.debug("REST request to save Image : {}", coverDTO);
+        if (coverDTO.getId() != null) {
             throw new BadRequestAlertException("A new image cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ImageDTO result = imageService.save(imageDTO);
+        CoverDTO result = coverService.save(coverDTO);
         return ResponseEntity.created(new URI("/api/images/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -58,7 +58,7 @@ public class ImageResource {
     /**
      * PUT  /images : Updates an existing image.
      *
-     * @param imageDTO the imageDTO to update
+     * @param coverDTO the imageDTO to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated imageDTO,
      * or with status 400 (Bad Request) if the imageDTO is not valid,
      * or with status 500 (Internal Server Error) if the imageDTO couldn't be updated
@@ -66,14 +66,14 @@ public class ImageResource {
      */
     @PutMapping("/images")
     @Timed
-    public ResponseEntity<ImageDTO> updateImage(@RequestBody ImageDTO imageDTO) throws URISyntaxException {
-        log.debug("REST request to update Image : {}", imageDTO);
-        if (imageDTO.getId() == null) {
+    public ResponseEntity<CoverDTO> updateImage(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
+        log.debug("REST request to update Image : {}", coverDTO);
+        if (coverDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        ImageDTO result = imageService.save(imageDTO);
+        CoverDTO result = coverService.save(coverDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, imageDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, coverDTO.getId().toString()))
             .body(result);
     }
 
@@ -84,9 +84,9 @@ public class ImageResource {
      */
     @GetMapping("/images")
     @Timed
-    public List<ImageDTO> getAllImages() {
+    public List<CoverDTO> getAllImages() {
         log.debug("REST request to get all Images");
-        return imageService.findAll();
+        return coverService.findAll();
     }
 
     /**
@@ -97,9 +97,9 @@ public class ImageResource {
      */
     @GetMapping("/images/{id}")
     @Timed
-    public ResponseEntity<ImageDTO> getImage(@PathVariable Long id) {
+    public ResponseEntity<CoverDTO> getImage(@PathVariable Long id) {
         log.debug("REST request to get Image : {}", id);
-        Optional<ImageDTO> imageDTO = imageService.findOne(id);
+        Optional<CoverDTO> imageDTO = coverService.findOne(id);
         return ResponseUtil.wrapOrNotFound(imageDTO);
     }
 
@@ -113,7 +113,7 @@ public class ImageResource {
     @Timed
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         log.debug("REST request to delete Image : {}", id);
-        imageService.delete(id);
+        coverService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the Image entity.
+ * A DTO for the Cover entity.
  */
-public class ImageDTO implements Serializable {
+public class CoverDTO implements Serializable {
 
     private Long id;
 
@@ -87,11 +87,11 @@ public class ImageDTO implements Serializable {
             return false;
         }
 
-        ImageDTO imageDTO = (ImageDTO) o;
-        if (imageDTO.getId() == null || getId() == null) {
+        CoverDTO coverDTO = (CoverDTO) o;
+        if (coverDTO.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), imageDTO.getId());
+        return Objects.equals(getId(), coverDTO.getId());
     }
 
     @Override
@@ -101,7 +101,7 @@ public class ImageDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ImageDTO{" +
+        return "CoverDTO{" +
             "id=" + getId() +
             ", filePath='" + getFilePath() + "'" +
             ", width=" + getWidth() +

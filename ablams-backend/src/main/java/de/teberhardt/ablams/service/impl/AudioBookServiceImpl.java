@@ -1,7 +1,6 @@
 package de.teberhardt.ablams.service.impl;
 
 import de.teberhardt.ablams.domain.AudioBook;
-import de.teberhardt.ablams.domain.AudioFile;
 import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.repository.AudioBookRepository;
 import de.teberhardt.ablams.service.AudioBookService;
@@ -81,7 +80,7 @@ public class AudioBookServiceImpl implements AudioBookService {
         log.debug("Request to get all audioBooks where Image is null");
         return StreamSupport
             .stream(audioBookRepository.findAll().spliterator(), false)
-            .filter(audioBook -> audioBook.getImage() == null)
+            .filter(audioBook -> audioBook.getCover() == null)
             .map(audioBookMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

@@ -1,6 +1,6 @@
 package de.teberhardt.ablams.service;
 
-import de.teberhardt.ablams.web.dto.ImageDTO;
+import de.teberhardt.ablams.web.dto.CoverDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,22 +8,22 @@ import java.util.Optional;
 /**
  * Service Interface for managing Image.
  */
-public interface ImageService {
+public interface CoverService {
 
     /**
      * Save a image.
      *
-     * @param imageDTO the entity to save
+     * @param coverDTO the entity to save
      * @return the persisted entity
      */
-    ImageDTO save(ImageDTO imageDTO);
+    CoverDTO save(CoverDTO coverDTO);
 
     /**
      * Get all the images.
      *
      * @return the list of entities
      */
-    List<ImageDTO> findAll();
+    List<CoverDTO> findAll();
 
 
     /**
@@ -32,7 +32,7 @@ public interface ImageService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<ImageDTO> findOne(Long id);
+    Optional<CoverDTO> findOne(Long id);
 
     /**
      * Delete the "id" image.

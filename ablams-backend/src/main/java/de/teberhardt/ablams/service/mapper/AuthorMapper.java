@@ -14,7 +14,7 @@ public interface AuthorMapper extends EntityMapper<AuthorDTO, Author> {
 
     @Mapping(target = "audioBooks", ignore = true)
     @Mapping(target = "audioSeries", ignore = true)
-    @Mapping(target = "image", ignore = true)
+    @Mapping(target = "cover", ignore = true)
     Author toEntity(AuthorDTO authorDTO);
 
     default Author fromId(Long id) {

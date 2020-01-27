@@ -36,7 +36,7 @@ public class Author implements Serializable {
     private Set<AudioSeries> audioSeries = new HashSet<>();
     @OneToOne(mappedBy = "author")
     @JsonIgnore
-    private Image image;
+    private Cover cover;
 
     public Long getId() {
         return id;
@@ -109,17 +109,17 @@ public class Author implements Serializable {
         this.audioSeries = audioSeries;
     }
 
-    public Image getImage() {
-        return image;
+    public Cover getCover() {
+        return cover;
     }
 
-    public Author image(Image image) {
-        this.image = image;
+    public Author image(Cover cover) {
+        this.cover = cover;
         return this;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setCover(Cover cover) {
+        this.cover = cover;
     }
 
     @Override

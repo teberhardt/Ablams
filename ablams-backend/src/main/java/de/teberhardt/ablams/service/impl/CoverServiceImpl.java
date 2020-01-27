@@ -1,10 +1,10 @@
 package de.teberhardt.ablams.service.impl;
 
-import de.teberhardt.ablams.domain.Image;
+import de.teberhardt.ablams.domain.Cover;
 import de.teberhardt.ablams.repository.ImageRepository;
-import de.teberhardt.ablams.service.ImageService;
-import de.teberhardt.ablams.web.dto.ImageDTO;
-import de.teberhardt.ablams.service.mapper.ImageMapper;
+import de.teberhardt.ablams.service.CoverService;
+import de.teberhardt.ablams.service.mapper.CoverMapper;
+import de.teberhardt.ablams.web.dto.CoverDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,32 +20,32 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class ImageServiceImpl implements ImageService {
+public class CoverServiceImpl implements CoverService {
 
-    private final Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(CoverServiceImpl.class);
 
     private final ImageRepository imageRepository;
 
-    private final ImageMapper imageMapper;
+    private final CoverMapper coverMapper;
 
-    public ImageServiceImpl(ImageRepository imageRepository, ImageMapper imageMapper) {
+    public CoverServiceImpl(ImageRepository imageRepository, CoverMapper coverMapper) {
         this.imageRepository = imageRepository;
-        this.imageMapper = imageMapper;
+        this.coverMapper = coverMapper;
     }
 
     /**
      * Save a image.
      *
-     * @param imageDTO the entity to save
+     * @param coverDTO the entity to save
      * @return the persisted entity
      */
     @Override
-    public ImageDTO save(ImageDTO imageDTO) {
-        log.debug("Request to save Image : {}", imageDTO);
+    public CoverDTO save(CoverDTO coverDTO) {
+        log.debug("Request to save Cover : {}", coverDTO);
 
-        Image image = imageMapper.toEntity(imageDTO);
-        image = imageRepository.save(image);
-        return imageMapper.toDto(image);
+        Cover cover = coverMapper.toEntity(coverDTO);
+        cover = imageRepository.save(cover);
+        return coverMapper.toDto(cover);
     }
 
     /**
@@ -55,10 +55,10 @@ public class ImageServiceImpl implements ImageService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<ImageDTO> findAll() {
-        log.debug("Request to get all Images");
+    public List<CoverDTO> findAll() {
+        log.debug("Request to get all Covers");
         return imageRepository.findAll().stream()
-            .map(imageMapper::toDto)
+            .map(coverMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
@@ -71,10 +71,10 @@ public class ImageServiceImpl implements ImageService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<ImageDTO> findOne(Long id) {
-        log.debug("Request to get Image : {}", id);
+    public Optional<CoverDTO> findOne(Long id) {
+        log.debug("Request to get Cover : {}", id);
         return imageRepository.findById(id)
-            .map(imageMapper::toDto);
+            .map(coverMapper::toDto);
     }
 
     /**
@@ -84,7 +84,7 @@ public class ImageServiceImpl implements ImageService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Image : {}", id);
+        log.debug("Request to delete Cover : {}", id);
         imageRepository.deleteById(id);
     }
 }

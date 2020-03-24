@@ -1,6 +1,5 @@
 package de.teberhardt.ablams.service;
 
-import de.teberhardt.ablams.domain.AudioBook;
 import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.web.dto.AudioBookDTO;
 
@@ -50,5 +49,5 @@ public interface AudioBookService {
      */
     void delete(Long id);
 
-    AudioBook scan(Path folderPath, List<Path> audioFilePaths, AudioLibrary audioLibrary);
+    void scan(Path folderPath, List<Path> audioFilePaths, AudioLibrary audioLibrary);
 }

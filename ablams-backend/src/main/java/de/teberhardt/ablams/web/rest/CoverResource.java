@@ -23,15 +23,15 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class ImageResource {
+public class CoverResource {
 
-    private final Logger log = LoggerFactory.getLogger(ImageResource.class);
+    private final Logger log = LoggerFactory.getLogger(CoverResource.class);
 
-    private static final String ENTITY_NAME = "image";
+    private static final String ENTITY_NAME = "cover";
 
     private final CoverService coverService;
 
-    public ImageResource(CoverService coverService) {
+    public CoverResource(CoverService coverService) {
         this.coverService = coverService;
     }
 

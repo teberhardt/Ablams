@@ -11,7 +11,7 @@ import java.util.Objects;
  * A Image.
  */
 @Entity
-@Table(name = "image")
+@Table(name = "cover")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Cover implements Serializable {
 

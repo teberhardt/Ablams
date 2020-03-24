@@ -1,7 +1,7 @@
 package de.teberhardt.ablams.service.impl;
 
 import de.teberhardt.ablams.domain.Cover;
-import de.teberhardt.ablams.repository.ImageRepository;
+import de.teberhardt.ablams.repository.CoverRepository;
 import de.teberhardt.ablams.service.CoverService;
 import de.teberhardt.ablams.service.mapper.CoverMapper;
 import de.teberhardt.ablams.web.dto.CoverDTO;
@@ -24,12 +24,12 @@ public class CoverServiceImpl implements CoverService {
 
     private final Logger log = LoggerFactory.getLogger(CoverServiceImpl.class);
 
-    private final ImageRepository imageRepository;
+    private final CoverRepository coverRepository;
 
     private final CoverMapper coverMapper;
 
-    public CoverServiceImpl(ImageRepository imageRepository, CoverMapper coverMapper) {
-        this.imageRepository = imageRepository;
+    public CoverServiceImpl(CoverRepository coverRepository, CoverMapper coverMapper) {
+        this.coverRepository = coverRepository;
         this.coverMapper = coverMapper;
     }
 
@@ -44,7 +44,7 @@ public class CoverServiceImpl implements CoverService {
         log.debug("Request to save Cover : {}", coverDTO);
 
         Cover cover = coverMapper.toEntity(coverDTO);
-        cover = imageRepository.save(cover);
+        cover = coverRepository.save(cover);
         return coverMapper.toDto(cover);
     }
 
@@ -57,7 +57,7 @@ public class CoverServiceImpl implements CoverService {
     @Transactional(readOnly = true)
     public List<CoverDTO> findAll() {
         log.debug("Request to get all Covers");
-        return imageRepository.findAll().stream()
+        return coverRepository.findAll().stream()
             .map(coverMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
@@ -73,7 +73,7 @@ public class CoverServiceImpl implements CoverService {
     @Transactional(readOnly = true)
     public Optional<CoverDTO> findOne(Long id) {
         log.debug("Request to get Cover : {}", id);
-        return imageRepository.findById(id)
+        return coverRepository.findById(id)
             .map(coverMapper::toDto);
     }
 
@@ -85,6 +85,6 @@ public class CoverServiceImpl implements CoverService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Cover : {}", id);
-        imageRepository.deleteById(id);
+        coverRepository.deleteById(id);
     }
 }

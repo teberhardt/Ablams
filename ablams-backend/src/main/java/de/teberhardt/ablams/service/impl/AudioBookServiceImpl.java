@@ -2,7 +2,9 @@ package de.teberhardt.ablams.service.impl;
 
 import de.teberhardt.ablams.domain.AudioBook;
 import de.teberhardt.ablams.domain.AudioLibrary;
+import de.teberhardt.ablams.domain.Cover;
 import de.teberhardt.ablams.repository.AudioBookRepository;
+import de.teberhardt.ablams.repository.CoverRepository;
 import de.teberhardt.ablams.service.AudioBookService;
 import de.teberhardt.ablams.service.AudioFileService;
 import de.teberhardt.ablams.util.PathStringUtils;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,11 +36,15 @@ public class AudioBookServiceImpl implements AudioBookService {
 
     private final AudioBookMapper audioBookMapper;
     private AudioFileService audioFileService;
+    private CoverPhysicalScanService coverPhysicalScanService;
+    private CoverRepository coverRepository;
 
-    public AudioBookServiceImpl(AudioBookRepository audioBookRepository, AudioBookMapper audioBookMapper, AudioFileService audioFileService) {
+    public AudioBookServiceImpl(AudioBookRepository audioBookRepository, AudioBookMapper audioBookMapper, AudioFileService audioFileService, CoverPhysicalScanService coverPhysicalScanService, CoverRepository coverRepository) {
         this.audioBookRepository = audioBookRepository;
         this.audioBookMapper = audioBookMapper;
         this.audioFileService = audioFileService;
+        this.coverPhysicalScanService = coverPhysicalScanService;
+        this.coverRepository = coverRepository;
     }
 
     /**
@@ -111,7 +118,7 @@ public class AudioBookServiceImpl implements AudioBookService {
     }
 
     @Transactional
-    public AudioBook scan(Path folderPath, List<Path> audioFilePaths, AudioLibrary audioLibrary) {
+    public void scan(Path folderPath, List<Path> audioFilePaths, AudioLibrary audioLibrary) {
 
         PathStringUtils pathUtils = new PathStringUtils(folderPath);
 
@@ -124,10 +131,21 @@ public class AudioBookServiceImpl implements AudioBookService {
 
         audioBook.setAudioLibrary(audioLibrary);
 
+        try {
+            Cover cover = coverPhysicalScanService.scanForPhysicalCoverInPath(folderPath);
+            if(cover != null)
+            {
+                cover.setAudioBook(audioBook);
+                coverRepository.save(cover);
+            }
+            audioBook.setCover(cover);
+
+        } catch (IOException e) {
+            log.error("Could not Scan Cover in Audiobook {}, due to" ,audioBook.getId(), e);
+        }
+
         audioBook = audioBookRepository.save(audioBook);
 
         audioFileService.scan(audioFilePaths, audioBook);
-
-        return audioBook;
     }
 }

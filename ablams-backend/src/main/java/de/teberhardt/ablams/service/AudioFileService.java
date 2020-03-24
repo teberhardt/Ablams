@@ -5,6 +5,7 @@ import de.teberhardt.ablams.domain.AudioFile;
 import de.teberhardt.ablams.web.dto.AudioFileDTO;
 
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +45,7 @@ public interface AudioFileService {
      */
     void delete(Long id);
 
-    AudioFile scan(AudioBook audioBook, Path e);
+    void scan(Collection<Path> audioFilePaths, AudioBook relatedAudioBook);
+
+    AudioFile scan(Path audioFilePath, AudioBook relatedAudioBook);
 }

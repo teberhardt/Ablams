@@ -42,7 +42,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
     private List<AudioFile> audioFiles = new ArrayList<>();
     @OneToOne(mappedBy = "audioBook")
     @JsonIgnore
-    private Image image;
+    private Cover cover;
 
     @ManyToOne
     @JsonIgnoreProperties("audioBooks")
@@ -128,17 +128,17 @@ public class AudioBook implements LocalPersisted,Serializable  {
         this.audioFiles = audioFiles;
     }
 
-    public Image getImage() {
-        return image;
+    public Cover getCover() {
+        return cover;
     }
 
-    public AudioBook image(Image image) {
-        this.image = image;
+    public AudioBook image(Cover cover) {
+        this.cover = cover;
         return this;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setCover(Cover cover) {
+        this.cover = cover;
     }
 
     public AudioLibrary getAudioLibrary() {

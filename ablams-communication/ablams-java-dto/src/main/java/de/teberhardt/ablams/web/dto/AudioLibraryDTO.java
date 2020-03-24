@@ -2,21 +2,24 @@ package de.teberhardt.ablams.web.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.annotation.Nullable;
 
 /**
  * A DTO for the AudioLibrary entity.
  */
 public class AudioLibraryDTO implements Serializable {
 
+    @Nullable
     private Long id;
 
     private String filepath;
 
+    @Nullable
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@Nullable Long id) {
         this.id = id;
     }
 

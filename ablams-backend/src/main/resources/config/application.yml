@@ -14,15 +14,21 @@
 # ===================================================================
 
 logging:
+    file: logs/application.log
+#    pattern:
+#        console: "%d %-5level %logger : %msg%n"
+#        file: "%d %-5level [%thread] %logger : %msg%n"
     level:
         ROOT: INFO
         de.teberhardt.ablams: DEBUG
         org.hibernate: INFO
-        org.hibernate.SQL: DEBUG
-        org.hibernate.type.descriptor.sql: DEBUG
-        org.springframework.transaction: DEBUG
-        org.springframework.orm.jpa: DEBUG
+        org.hibernate.SQL: INFO
+        org.hibernate.type: INFO
+        org.hibernate.type.descriptor.sql: INFO
+        org.springframework.transaction: INFO
+        org.springframework.orm.jpa: INFO
         org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+        de.teberhardt.ablams.web: DEBUG
 
 
 spring:
@@ -32,7 +38,7 @@ spring:
         password: password
 
     jpa:
-#        show-sql: true
+        show-sql: true
         properties:
             hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
             hibernate:
@@ -43,8 +49,12 @@ spring:
                     batch_versioned_data: true
                 order_inserts: true
                 order_updates: true
+                generate_statistics: true
 
         hibernate:
             ddl-auto: create-drop
+    output:
+        ansi:
+            enabled: always
 server:
     port: 8080

@@ -1,18 +1,12 @@
 package de.teberhardt.ablams.service.impl;
 
-import de.teberhardt.ablams.domain.AudioBook;
-import de.teberhardt.ablams.domain.AudioFile;
 import de.teberhardt.ablams.domain.AudioLibrary;
-import de.teberhardt.ablams.repository.AudioBookRepository;
-import de.teberhardt.ablams.repository.AudioFileRepository;
-import de.teberhardt.ablams.repository.AuthorRepository;
+import de.teberhardt.ablams.service.AudioBookService;
 import org.apache.commons.io.FilenameUtils;
 import org.jaudiotagger.audio.SupportedFileFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,76 +15,48 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
 @Service
 public class AudioLibraryScanService {
 
-    private final AudioFileRepository audioFileRepository;
+    private final Logger log = LoggerFactory.getLogger(AudioLibraryScanService.class);
 
-    private final AudioBookRepository audioBookRepository;
+    private final AudioBookService audioBookService;
 
-    private final AuthorRepository authorRepository;
-
-    private final AudioFileMetadataService audioFileMetadataService;
-
-    private final static Logger log = LoggerFactory.getLogger(AudioLibraryScanService.class);
-
-    private final static String AUDIO_BOOK_NAMING_PATTERN_SINGLE = "(?<Author>[\\wäöüÄÖÜß ]+) - (?<bookName>[\\wäöüÄÖÜß ]+)";
-
-    public AudioLibraryScanService(AudioFileRepository audioFileRepository, AudioBookRepository audioBookRepository, AuthorRepository authorRepository, AudioFileMetadataService audioFileMetadataService) {
-        this.audioFileRepository = audioFileRepository;
-
-        this.audioBookRepository = audioBookRepository;
-        this.authorRepository = authorRepository;
-        this.audioFileMetadataService = audioFileMetadataService;
+    public AudioLibraryScanService(AudioBookService audioBookService) {
+        this.audioBookService = audioBookService;
     }
 
-    @Async
-    @Transactional
-    public void scan(AudioLibrary audioLibrary) throws IOException {
-
+    public void scan(AudioLibrary audioLibrary) {
         Path startPath = Paths.get(audioLibrary.getFilepath()).normalize();
 
-        Map<Path, List<Path>> collect = Files.walk(startPath)
-            .parallel()
-            .filter(e -> !Files.isDirectory(e))
-            .filter(this::isAudioFile)
-            .collect(groupingBy(Path::getParent));
+        if (!Files.isDirectory(startPath))
+        {
+            throw new IllegalArgumentException(String.format("Given Path %s represents not a Directory", startPath.toString()));
+        }
 
-        List<AudioBook> audioBooks = collect
-            .entrySet()
-            .stream()
-            .parallel()
-            .map(e -> createAudiobook(e.getKey(), e.getValue(), audioLibrary))
-            .collect(Collectors.toList());
+        Map<Path, List<Path>> includedFilePaths = null;
+        try {
+            includedFilePaths = Files.walk(startPath)
+                .parallel()
+                .filter(e -> !Files.isDirectory(e))
+                .filter(this::isAudioFile)
+                .collect(groupingBy(Path::getParent));
+        } catch (IOException e) {
+            log.error("Error appeared when scanning AudioLibrary on Path {}", startPath.toString(), e);
+            return;
+        }
 
-        audioBookRepository.saveAll(audioBooks);
-        audioLibrary.setAudioBooks(audioBooks);
+        scanIncludedAudiobooks(includedFilePaths, audioLibrary);
     }
 
-    private AudioBook createAudiobook(Path folderPath, List<Path> value, AudioLibrary audioLibrary) {
-        AudioBook a = new AudioBook();
-        a.setName(folderPath.getFileName().toString());
-        a.setAudioFiles(createAudioFiles(value, a));
-        a.setFilePath(folderPath.toString());
-        a.setAudioLibrary(audioLibrary);
-        return a;
-    }
-
-    private List<AudioFile> createAudioFiles(List<Path> value, AudioBook a) {
-       return  value.stream().map((Path e) -> createAudioFile(e, a)).collect(Collectors.toList());
-    }
-
-    private AudioFile createAudioFile(Path e, AudioBook a) {
-        AudioFile afile = new AudioFile();
-        afile.setFilePath(e.toString());
-        afile.setAudioBook(a);
-
-
-        return afile;
+    private void scanIncludedAudiobooks(Map<Path, List<Path>> includedFilePaths, AudioLibrary audioLibrary)
+    {
+        //            .parallel()
+        includedFilePaths
+            .forEach((key, value) -> audioBookService.scan(key, value, audioLibrary));
     }
 
     private boolean isAudioFile(Path p)
@@ -105,5 +71,6 @@ public class AudioLibraryScanService {
             .map(SupportedFileFormat::getFilesuffix)
             .anyMatch(actualSuffix::equalsIgnoreCase);
     }
+
 
 }

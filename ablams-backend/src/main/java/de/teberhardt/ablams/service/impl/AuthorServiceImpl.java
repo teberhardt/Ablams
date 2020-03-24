@@ -74,7 +74,7 @@ public class AuthorServiceImpl implements AuthorService {
         log.debug("Request to get all authors where Image is null");
         return StreamSupport
             .stream(authorRepository.findAll().spliterator(), false)
-            .filter(author -> author.getImage() == null)
+            .filter(author -> author.getCover() == null)
             .map(authorMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

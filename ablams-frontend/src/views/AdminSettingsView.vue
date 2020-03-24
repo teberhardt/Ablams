@@ -28,14 +28,14 @@
                                 <v-card-text>
                                     <v-container>
                                         <v-row>
-                                            <v-col cols="12" sm="6" md="4">
+                                            <v-col cols="12" sm="2" md="1" v-if="editedItem.id !== undefined">
                                                 <v-text-field
                                                     readonly
                                                     disabled
                                                     v-model="editedItem.id"
                                                               label="Id"></v-text-field>
                                             </v-col>
-                                            <v-col cols="12" sm="6" md="4">
+                                            <v-col cols="12" sm="11" md="11">
                                                 <v-text-field v-model="editedItem.filepath"
                                                               label="Filepath"></v-text-field>
                                             </v-col>
@@ -84,19 +84,19 @@
                 value: 'id',
             },
             {text: 'Filepath', value: 'filepath'},
-            { text: 'Actions', value: 'action', sortable: false },
+            {text: 'Actions', value: 'action', sortable: false },
         ];
 
         private aLibs: AudioLibraryDTO[] = [];
         private editedIndex: number = -1;
 
         private editedItem: AudioLibraryDTO = {
-            id: 0,
+            id: undefined,
             filepath: '',
         };
 
         private defaultItem: AudioLibraryDTO = {
-            id: 0,
+            id: undefined,
             filepath: '',
         };
 
@@ -126,6 +126,7 @@
             const index = this.aLibs.indexOf(item);
             if (confirm('Are you sure you want to delete this item?')) {
                 this.aLibs.splice(index, 1);
+                AudioLibraryResource.delete(item.id);
             }
         }
 
@@ -140,6 +141,7 @@
         protected save(): void {
             if (this.editedIndex > -1) {
                 Object.assign(this.aLibs[this.editedIndex], this.editedItem);
+                AudioLibraryResource.update(this.editedItem);
             } else {
                 this.aLibs.push(this.editedItem);
                 AudioLibraryResource.insert(this.editedItem);

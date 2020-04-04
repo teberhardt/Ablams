@@ -1,5 +1,6 @@
 package de.teberhardt.ablams.web.dto;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ import java.util.Objects;
  */
 public class AudioBookDTO implements Serializable {
 
+    @Nullable
     private Long id;
 
     private String name;

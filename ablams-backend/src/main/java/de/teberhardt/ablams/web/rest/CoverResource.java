@@ -36,13 +36,13 @@ public class CoverResource {
     }
 
     /**
-     * POST  /images : Create a new image.
+     * POST  /cover : Create a new image.
      *
      * @param coverDTO the imageDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new imageDTO, or with status 400 (Bad Request) if the image has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/images")
+    @PostMapping("/cover")
     @Timed
     public ResponseEntity<CoverDTO> createImage(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
         log.debug("REST request to save Image : {}", coverDTO);
@@ -50,13 +50,13 @@ public class CoverResource {
             throw new BadRequestAlertException("A new image cannot already have an ID", ENTITY_NAME, "idexists");
         }
         CoverDTO result = coverService.save(coverDTO);
-        return ResponseEntity.created(new URI("/api/images/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/cover/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /images : Updates an existing image.
+     * PUT  /cover : Updates an existing image.
      *
      * @param coverDTO the imageDTO to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated imageDTO,
@@ -64,7 +64,7 @@ public class CoverResource {
      * or with status 500 (Internal Server Error) if the imageDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/images")
+    @PutMapping("/cover")
     @Timed
     public ResponseEntity<CoverDTO> updateImage(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
         log.debug("REST request to update Image : {}", coverDTO);
@@ -78,24 +78,24 @@ public class CoverResource {
     }
 
     /**
-     * GET  /images : get all the images.
+     * GET  /cover : get all the cover.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of images in body
+     * @return the ResponseEntity with status 200 (OK) and the list of cover in body
      */
-    @GetMapping("/images")
+    @GetMapping("/cover")
     @Timed
-    public List<CoverDTO> getAllImages() {
-        log.debug("REST request to get all Images");
+    public List<CoverDTO> getAllCovers() {
+        log.debug("REST request to get all cover");
         return coverService.findAll();
     }
 
     /**
-     * GET  /images/:id : get the "id" image.
+     * GET  /cover/:id : get the "id" image.
      *
      * @param id the id of the imageDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the imageDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/images/{id}")
+    @GetMapping("/cover/{id}")
     @Timed
     public ResponseEntity<CoverDTO> getImage(@PathVariable Long id) {
         log.debug("REST request to get Image : {}", id);
@@ -104,12 +104,12 @@ public class CoverResource {
     }
 
     /**
-     * DELETE  /images/:id : delete the "id" image.
+     * DELETE  /cover/:id : delete the "id" image.
      *
      * @param id the id of the imageDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/images/{id}")
+    @DeleteMapping("/cover/{id}")
     @Timed
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         log.debug("REST request to delete Image : {}", id);

@@ -24,11 +24,12 @@ public class AudioBookDTO implements Serializable {
 
     private Long authorId;
 
+    @Nullable
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@Nullable Long id) {
         this.id = id;
     }
 

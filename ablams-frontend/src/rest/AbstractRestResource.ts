@@ -9,6 +9,7 @@ export abstract class AbstractRestResource<T> {
     }
 
     public insert(newResource: T): Promise<AxiosResponse<T>> {
+        newResource = this.prepareForPost(newResource);
         return axios.post(this.ENDPOINT_URL, newResource);
     }
 
@@ -26,4 +27,6 @@ export abstract class AbstractRestResource<T> {
             return axios.delete(this.ENDPOINT_URL + `/${resourceIdToDelete}`);
         }
     }
+
+    public abstract prepareForPost(newAudioLibrary:T):T;
 }

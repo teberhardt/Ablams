@@ -44,7 +44,7 @@ public class CoverResource {
      */
     @PostMapping("/cover")
     @Timed
-    public ResponseEntity<CoverDTO> createImage(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
+    public ResponseEntity<CoverDTO> createCover(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
         log.debug("REST request to save Image : {}", coverDTO);
         if (coverDTO.getId() != null) {
             throw new BadRequestAlertException("A new image cannot already have an ID", ENTITY_NAME, "idexists");
@@ -66,7 +66,7 @@ public class CoverResource {
      */
     @PutMapping("/cover")
     @Timed
-    public ResponseEntity<CoverDTO> updateImage(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
+    public ResponseEntity<CoverDTO> updateCover(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
         log.debug("REST request to update Image : {}", coverDTO);
         if (coverDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -97,7 +97,7 @@ public class CoverResource {
      */
     @GetMapping("/cover/{id}")
     @Timed
-    public ResponseEntity<CoverDTO> getImage(@PathVariable Long id) {
+    public ResponseEntity<CoverDTO> getCover(@PathVariable Long id) {
         log.debug("REST request to get Image : {}", id);
         Optional<CoverDTO> imageDTO = coverService.findOne(id);
         return ResponseUtil.wrapOrNotFound(imageDTO);
@@ -111,7 +111,7 @@ public class CoverResource {
      */
     @DeleteMapping("/cover/{id}")
     @Timed
-    public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCover(@PathVariable Long id) {
         log.debug("REST request to delete Image : {}", id);
         coverService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

@@ -2,6 +2,7 @@ package de.teberhardt.ablams.service;
 
 import de.teberhardt.ablams.web.dto.CoverDTO;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +41,8 @@ public interface CoverService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    Optional<CoverDTO> findCoverForAudiobookId(Long aId);
+
+    Optional<InputStream> getCoverAsBytestreamForAudiobookId(Long aId);
 }

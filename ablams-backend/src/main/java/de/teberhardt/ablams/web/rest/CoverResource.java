@@ -8,11 +8,15 @@ import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 
 import io.micrometer.core.annotation.Timed;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -102,6 +106,27 @@ public class CoverResource {
         Optional<CoverDTO> coverDTO = coverService.findOne(id);
         return ResponseUtil.wrapOrNotFound(coverDTO);
     }
+
+    /**
+     * GET /audio-books/{aId}/cover : get bytes of the cover of "aId" audiobook.
+     *
+     * @param aId the id of the coverDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the coverDTO, or with status 404 (Not Found)
+     */
+    @GetMapping(value = "/audio-books/{aId}/cover/raw",
+        produces = MediaType.IMAGE_JPEG_VALUE)
+    @Timed
+    public @ResponseBody
+    Object getCoverAsByteByAudiobook(@PathVariable Long aId) throws IOException {
+        log.debug("REST request to get cover as byte array of audiobook {}", aId);
+        Optional<InputStream> coverStream = coverService.getCoverAsBytestreamForAudiobookId(aId);
+        if (coverStream.isPresent()) {
+            return IOUtils.toByteArray(coverStream.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     /**
      * DELETE  /cover/:id : delete the "id" cover.

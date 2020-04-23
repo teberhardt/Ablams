@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -86,5 +90,29 @@ public class CoverServiceImpl implements CoverService {
     public void delete(Long id) {
         log.debug("Request to delete Cover : {}", id);
         coverRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<CoverDTO> findCoverForAudiobookId(Long aId) {
+        return coverRepository.findCoverByAudioBookId(aId).map(coverMapper::toDto);
+    }
+
+    @Override
+    public Optional<InputStream> getCoverAsBytestreamForAudiobookId(Long aId){
+        Optional<CoverDTO> potentialCover = findCoverForAudiobookId(aId);
+        if (potentialCover.isPresent())
+        {
+            CoverDTO coverDTO = potentialCover.get();
+            try {
+                return Optional.of(Files.newInputStream(Paths.get(coverDTO.getFilePath())));
+            } catch (IOException e) {
+                log.warn("IOException when accessing cover of Audiobook {} :", aId, e);
+                return Optional.empty();
+            }
+        }
+        else
+        {
+            return Optional.empty();
+        }
     }
 }

@@ -1,4 +1,4 @@
-import {AbstractRestResource} from "@/rest/AbstractRestResource";
+import {AbstractRestResource} from '@/rest/AbstractRestResource';
 import {CoverDTO} from 'ablams-js-dto/src/domain/models';
 
 export default new class CoverResourceResource extends AbstractRestResource<CoverDTO> {

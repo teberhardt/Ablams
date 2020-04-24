@@ -28,5 +28,5 @@ export abstract class AbstractRestResource<T> {
         }
     }
 
-    public abstract prepareForPost(newAudioLibrary:T):T;
+    public abstract prepareForPost(newAudioLibrary: T): T;
 }

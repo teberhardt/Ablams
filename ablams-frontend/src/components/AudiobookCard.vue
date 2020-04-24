@@ -51,10 +51,8 @@
         }
 
         public getImageSrcUrl(): string{
-            return `/api/audio-books/${this.abook.id}/cover/raw`
+            return `/api/audio-books/${this.$props.abook.id}/cover/raw`
         }
-
-
     }
 </script>
 <style>

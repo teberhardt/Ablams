@@ -35,12 +35,12 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {AudioBookDTO} from 'ablams-js-dto/src/domain/models';
 
-
-    @Component
+    @Component ({
+        props: {
+            abook: Object as () => AudioBookDTO
+        }
+    })
     export default class AudiobookCard extends Vue {
-
-        @Prop({default: 'Example'})
-       abook!: AudioBookDTO;
 
         protected created(): void {
             this.initialize();

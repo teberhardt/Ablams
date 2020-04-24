@@ -8,8 +8,6 @@
 </template>
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import axios from 'axios';
-    import AudioLibraryDTO from 'ablams-js-dto/src/domain/models';
 
     @Component
     export default class AudioLibraryList extends Vue {

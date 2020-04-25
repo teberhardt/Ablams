@@ -17,11 +17,6 @@
                 >
                   <AudioBookCard :abook="abook"></AudioBookCard>
                 </v-col>
-                <v-responsive
-                    v-if="n === 2"
-                    :key="`width-${n}`"
-                    width="100%"
-                ></v-responsive>
             </v-row>
         </v-container>
     </div>

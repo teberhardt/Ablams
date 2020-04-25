@@ -3,7 +3,8 @@
         class="ma-4"
         hover
         shaped
-        height="100%"
+        width="200"
+        height="350"
     >
         <v-img contain
                align-center

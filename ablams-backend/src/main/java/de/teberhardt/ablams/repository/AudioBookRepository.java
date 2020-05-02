@@ -14,5 +14,5 @@ import java.util.Optional;
 @Repository
 public interface AudioBookRepository extends JpaRepository<AudioBook, Long> {
 
-    public Optional<AudioBook> findAudioBookByNameAndAudioLibraryId(String name, Long audiobookId);
+    public Optional<AudioBook> findAudioBookByNameAndAudioLibraryId(String name, Long audioLibraryId);
 }

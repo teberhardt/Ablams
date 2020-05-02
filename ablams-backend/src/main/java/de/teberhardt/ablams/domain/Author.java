@@ -30,7 +30,7 @@ public class Author implements Serializable {
 
     @OneToMany(mappedBy = "author")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<AudioBook> audioBooks = new HashSet<>();
+    private Set<Audiobook> audiobooks = new HashSet<>();
     @OneToMany(mappedBy = "author")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AudioSeries> audioSeries = new HashSet<>();
@@ -59,29 +59,29 @@ public class Author implements Serializable {
         this.name = name;
     }
 
-    public Set<AudioBook> getAudioBooks() {
-        return audioBooks;
+    public Set<Audiobook> getAudiobooks() {
+        return audiobooks;
     }
 
-    public Author audioBooks(Set<AudioBook> audioBooks) {
-        this.audioBooks = audioBooks;
+    public Author audiobooks(Set<Audiobook> audiobooks) {
+        this.audiobooks = audiobooks;
         return this;
     }
 
-    public Author addAudioBook(AudioBook audioBook) {
-        this.audioBooks.add(audioBook);
-        audioBook.setAuthor(this);
+    public Author addAudiobook(Audiobook audiobook) {
+        this.audiobooks.add(audiobook);
+        audiobook.setAuthor(this);
         return this;
     }
 
-    public Author removeAudioBook(AudioBook audioBook) {
-        this.audioBooks.remove(audioBook);
-        audioBook.setAuthor(null);
+    public Author removeAudiobook(Audiobook audiobook) {
+        this.audiobooks.remove(audiobook);
+        audiobook.setAuthor(null);
         return this;
     }
 
-    public void setAudioBooks(Set<AudioBook> audioBooks) {
-        this.audioBooks = audioBooks;
+    public void setAudiobooks(Set<Audiobook> audiobooks) {
+        this.audiobooks = audiobooks;
     }
 
     public Set<AudioSeries> getAudioSeries() {

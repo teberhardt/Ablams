@@ -35,7 +35,7 @@ public class Cover implements Serializable {
     private Integer bitdepth;
 
     @OneToOne    @JoinColumn(unique = true)
-    private AudioBook audioBook;
+    private Audiobook audiobook;
 
     @OneToOne    @JoinColumn(unique = true)
     private Author author;
@@ -100,17 +100,17 @@ public class Cover implements Serializable {
         this.bitdepth = bitdepth;
     }
 
-    public AudioBook getAudioBook() {
-        return audioBook;
+    public Audiobook getAudiobook() {
+        return audiobook;
     }
 
-    public Cover audioBook(AudioBook audioBook) {
-        this.audioBook = audioBook;
+    public Cover audiobook(Audiobook audiobook) {
+        this.audiobook = audiobook;
         return this;
     }
 
-    public void setAudioBook(AudioBook audioBook) {
-        this.audioBook = audioBook;
+    public void setAudiobook(Audiobook audiobook) {
+        this.audiobook = audiobook;
     }
 
     public Author getAuthor() {

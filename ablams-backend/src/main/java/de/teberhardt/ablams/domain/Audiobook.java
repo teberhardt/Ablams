@@ -13,12 +13,12 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * A AudioBook.
+ * A Audiobook.
  */
 @Entity
 @Table(name = "audio_book")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class AudioBook implements LocalPersisted,Serializable  {
+public class Audiobook implements LocalPersisted,Serializable  {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,23 +37,23 @@ public class AudioBook implements LocalPersisted,Serializable  {
     @Column(name = "file_path")
     private String filePath;
 
-    @OneToMany(mappedBy = "audioBook", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "audiobook", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private List<AudioFile> audioFiles = new ArrayList<>();
-    @OneToOne(mappedBy = "audioBook")
+    @OneToOne(mappedBy = "audiobook")
     @JsonIgnore
     private Cover cover;
 
     @ManyToOne
-    @JsonIgnoreProperties("audioBooks")
+    @JsonIgnoreProperties("audiobooks")
     private AudioLibrary audioLibrary;
 
     @ManyToOne
-    @JsonIgnoreProperties("audioBooks")
+    @JsonIgnoreProperties("audiobooks")
     private AudioSeries series;
 
     @ManyToOne
-    @JsonIgnoreProperties("audioBooks")
+    @JsonIgnoreProperties("audiobooks")
     private Author author;
 
     public Long getId() {
@@ -68,7 +68,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
         return name;
     }
 
-    public AudioBook name(String name) {
+    public Audiobook name(String name) {
         this.name = name;
         return this;
     }
@@ -81,7 +81,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
         return language;
     }
 
-    public AudioBook language(Language language) {
+    public Audiobook language(Language language) {
         this.language = language;
         return this;
     }
@@ -94,7 +94,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
         return filePath;
     }
 
-    public AudioBook filePath(String filePath) {
+    public Audiobook filePath(String filePath) {
         this.filePath = filePath;
         return this;
     }
@@ -107,20 +107,20 @@ public class AudioBook implements LocalPersisted,Serializable  {
         return audioFiles;
     }
 
-    public AudioBook audioFiles(List<AudioFile> audioFiles) {
+    public Audiobook audioFiles(List<AudioFile> audioFiles) {
         this.audioFiles = audioFiles;
         return this;
     }
 
-    public AudioBook addAudioFile(AudioFile audioFile) {
+    public Audiobook addAudioFile(AudioFile audioFile) {
         this.audioFiles.add(audioFile);
-        audioFile.setAudioBook(this);
+        audioFile.setAudiobook(this);
         return this;
     }
 
-    public AudioBook removeAudioFile(AudioFile audioFile) {
+    public Audiobook removeAudioFile(AudioFile audioFile) {
         this.audioFiles.remove(audioFile);
-        audioFile.setAudioBook(null);
+        audioFile.setAudiobook(null);
         return this;
     }
 
@@ -132,7 +132,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
         return cover;
     }
 
-    public AudioBook image(Cover cover) {
+    public Audiobook image(Cover cover) {
         this.cover = cover;
         return this;
     }
@@ -145,7 +145,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
         return audioLibrary;
     }
 
-    public AudioBook audioLibrary(AudioLibrary audioLibrary) {
+    public Audiobook audioLibrary(AudioLibrary audioLibrary) {
         this.audioLibrary = audioLibrary;
         return this;
     }
@@ -158,7 +158,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
         return series;
     }
 
-    public AudioBook series(AudioSeries audioSeries) {
+    public Audiobook series(AudioSeries audioSeries) {
         this.series = audioSeries;
         return this;
     }
@@ -171,7 +171,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
         return author;
     }
 
-    public AudioBook author(Author author) {
+    public Audiobook author(Author author) {
         this.author = author;
         return this;
     }
@@ -189,7 +189,7 @@ public class AudioBook implements LocalPersisted,Serializable  {
 
     @Override
     public String toString() {
-        return "AudioBook{" +
+        return "Audiobook{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", language='" + getLanguage() + "'" +

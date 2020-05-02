@@ -34,11 +34,11 @@
 </template>
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import {AudioBookDTO} from 'ablams-js-dto/src/domain/models';
+    import {AudiobookDTO} from 'ablams-js-dto/src/domain/models';
 
     @Component ({
         props: {
-            abook: Object as () => AudioBookDTO
+            abook: Object as () => AudiobookDTO
         }
     })
     export default class AudiobookCard extends Vue {

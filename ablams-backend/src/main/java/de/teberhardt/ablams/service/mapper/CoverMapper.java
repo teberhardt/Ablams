@@ -8,14 +8,14 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity Image and its DTO ImageDTO.
  */
-@Mapper(componentModel = "spring", uses = {AudioBookMapper.class, AuthorMapper.class})
+@Mapper(componentModel = "spring", uses = {AudiobookMapper.class, AuthorMapper.class})
 public interface CoverMapper extends EntityMapper<CoverDTO, Cover> {
 
-    @Mapping(source = "audioBook.id", target = "audioBookId")
+    @Mapping(source = "audiobook.id", target = "audiobookId")
     @Mapping(source = "author.id", target = "authorId")
     CoverDTO toDto(Cover cover);
 
-    @Mapping(source = "audioBookId", target = "audioBook")
+    @Mapping(source = "audiobookId", target = "audiobook")
     @Mapping(source = "authorId", target = "author")
     Cover toEntity(CoverDTO coverDTO);
 

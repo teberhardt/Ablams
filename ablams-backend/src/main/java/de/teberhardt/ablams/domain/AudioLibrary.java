@@ -29,7 +29,7 @@ public class AudioLibrary implements LocalPersisted,Serializable {
 
     @OneToMany(mappedBy = "audioLibrary", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private List<AudioBook> audioBooks = new ArrayList<>();
+    private List<Audiobook> audiobooks = new ArrayList<>();
     public Long getId() {
         return id;
     }
@@ -51,29 +51,29 @@ public class AudioLibrary implements LocalPersisted,Serializable {
         this.filepath = filepath;
     }
 
-    public List<AudioBook> getAudioBooks() {
-        return audioBooks;
+    public List<Audiobook> getAudiobooks() {
+        return audiobooks;
     }
 
-    public AudioLibrary audioBooks(List<AudioBook> audioBooks) {
-        this.audioBooks = audioBooks;
+    public AudioLibrary audiobooks(List<Audiobook> audiobooks) {
+        this.audiobooks = audiobooks;
         return this;
     }
 
-    public AudioLibrary addAudioBook(AudioBook audioBook) {
-        this.audioBooks.add(audioBook);
-        audioBook.setAudioLibrary(this);
+    public AudioLibrary addAudiobook(Audiobook audiobook) {
+        this.audiobooks.add(audiobook);
+        audiobook.setAudioLibrary(this);
         return this;
     }
 
-    public AudioLibrary removeAudioBook(AudioBook audioBook) {
-        this.audioBooks.remove(audioBook);
-        audioBook.setAudioLibrary(null);
+    public AudioLibrary removeAudiobook(Audiobook audiobook) {
+        this.audiobooks.remove(audiobook);
+        audiobook.setAudioLibrary(null);
         return this;
     }
 
-    public void setAudioBooks(List<AudioBook> audioBooks) {
-        this.audioBooks = audioBooks;
+    public void setAudiobooks(List<Audiobook> audiobooks) {
+        this.audiobooks = audiobooks;
     }
 
     @Override

@@ -2,21 +2,14 @@ package de.teberhardt.ablams.service.impl;
 
 import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.repository.AudioLibraryRepository;
-import de.teberhardt.ablams.service.AudioBookService;
 import de.teberhardt.ablams.service.AudioLibraryService;
 import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
 import de.teberhardt.ablams.service.mapper.AudioLibraryMapper;
-import org.apache.commons.io.FilenameUtils;
-import org.jaudiotagger.audio.SupportedFileFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 

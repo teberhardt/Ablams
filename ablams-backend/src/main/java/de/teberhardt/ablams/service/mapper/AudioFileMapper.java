@@ -8,14 +8,14 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity AudioFile and its DTO AudioFileDTO.
  */
-@Mapper(componentModel = "spring", uses = {AudioBookMapper.class, ProgressableMapper.class})
+@Mapper(componentModel = "spring", uses = {AudiobookMapper.class, ProgressableMapper.class})
 public interface AudioFileMapper extends EntityMapper<AudioFileDTO, AudioFile> {
 
-    @Mapping(source = "audioBook.id", target = "audioBookId")
+    @Mapping(source = "audiobook.id", target = "audiobookId")
     @Mapping(source = "progress.id", target = "progressId")
     AudioFileDTO toDto(AudioFile audioFile);
 
-    @Mapping(source = "audioBookId", target = "audioBook")
+    @Mapping(source = "audiobookId", target = "audiobook")
     @Mapping(source = "progressId", target = "progress")
     AudioFile toEntity(AudioFileDTO audioFileDTO);
 

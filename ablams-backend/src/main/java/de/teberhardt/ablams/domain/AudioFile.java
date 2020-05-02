@@ -35,7 +35,7 @@ public class AudioFile implements LocalPersisted, Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("audioFiles")
-    private AudioBook audioBook;
+    private Audiobook audiobook;
 
     @ManyToOne
     @JsonIgnoreProperties("audioFiles")
@@ -78,17 +78,17 @@ public class AudioFile implements LocalPersisted, Serializable {
         this.filePath = filePath;
     }
 
-    public AudioBook getAudioBook() {
-        return audioBook;
+    public Audiobook getAudiobook() {
+        return audiobook;
     }
 
-    public AudioFile audioBook(AudioBook audioBook) {
-        this.audioBook = audioBook;
+    public AudioFile audiobook(Audiobook audiobook) {
+        this.audiobook = audiobook;
         return this;
     }
 
-    public void setAudioBook(AudioBook audioBook) {
-        this.audioBook = audioBook;
+    public void setAudiobook(Audiobook audiobook) {
+        this.audiobook = audiobook;
     }
 
     public Progressable getProgress() {
@@ -136,7 +136,7 @@ public class AudioFile implements LocalPersisted, Serializable {
     @Transient
     @Override
     public Path getPath() {
-        return Paths.get(getAudioBook().getAudioLibrary().getFilepath(), getAudioBook().getFilePath(), getFilePath());
+        return Paths.get(getAudiobook().getAudioLibrary().getFilepath(), getAudiobook().getFilePath(), getFilePath());
     }
 
     public AudioCharacteristics getAudioCharacteristics() {

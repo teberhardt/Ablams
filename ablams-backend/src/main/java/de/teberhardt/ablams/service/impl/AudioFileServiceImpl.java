@@ -1,6 +1,6 @@
 package de.teberhardt.ablams.service.impl;
 
-import de.teberhardt.ablams.domain.AudioBook;
+import de.teberhardt.ablams.domain.Audiobook;
 import de.teberhardt.ablams.domain.AudioFile;
 import de.teberhardt.ablams.repository.AudioFileRepository;
 import de.teberhardt.ablams.service.AudioFileService;
@@ -93,7 +93,7 @@ public class AudioFileServiceImpl implements AudioFileService {
     }
 
     @Transactional
-    public AudioFile scan(Path audioFilePath, AudioBook relatedAudioBook)
+    public AudioFile scan(Path audioFilePath, Audiobook relatedAudiobook)
     {
         // performance issue with nio in java 8, so switch to old io
         if (!audioFilePath.toFile().exists())
@@ -102,40 +102,40 @@ public class AudioFileServiceImpl implements AudioFileService {
         }
 
         PathStringUtils pathStringUtils = new PathStringUtils(audioFilePath);
-        String relPathString = pathStringUtils.getRelativeString(relatedAudioBook.getPath());
+        String relPathString = pathStringUtils.getRelativeString(relatedAudiobook.getPath());
 
-        AudioFile audioFile = relatedAudioBook.getAudioFiles()
+        AudioFile audioFile = relatedAudiobook.getAudioFiles()
             .stream()
                 .filter(e -> e.getFilePath().equals(relPathString))
                 .findAny()
-            .orElseGet(() -> new AudioFile().filePath(relPathString).audioBook(relatedAudioBook));
+            .orElseGet(() -> new AudioFile().filePath(relPathString).audiobook(relatedAudiobook));
 
         return audioFileRepository.save(audioFile);
     }
 
     @Override
     public List<AudioFileDTO> findbyAudiobook(Long aId) {
-        List<AudioFile> audioFilesE = audioFileRepository.findByAudioBookId(aId);
+        List<AudioFile> audioFilesE = audioFileRepository.findByAudiobookId(aId);
         return audioFileMapper.toDto(audioFilesE);
     }
 
     @Override
-    public void scan(Collection<Path> audioFilePaths, AudioBook relatedAudioBook) {
+    public void scan(Collection<Path> audioFilePaths, Audiobook relatedAudiobook) {
 
         //if there exist no audiofiles to check we can just insert
-        if (relatedAudioBook.getAudioFiles().isEmpty())
+        if (relatedAudiobook.getAudioFiles().isEmpty())
         {
             for (Path filePath: audioFilePaths)
             {
                 PathStringUtils pathStringUtils = new PathStringUtils(filePath);
-                String relPathString = pathStringUtils.getRelativeString(relatedAudioBook.getPath());
+                String relPathString = pathStringUtils.getRelativeString(relatedAudiobook.getPath());
 
-                audioFileRepository.save(new AudioFile().filePath(relPathString).audioBook(relatedAudioBook));
+                audioFileRepository.save(new AudioFile().filePath(relPathString).audiobook(relatedAudiobook));
             }
         }
         else
         {
-            audioFilePaths.forEach( path -> scan(path, relatedAudioBook));
+            audioFilePaths.forEach( path -> scan(path, relatedAudiobook));
         }
     }
 }

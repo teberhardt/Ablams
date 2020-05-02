@@ -1,7 +1,7 @@
 package de.teberhardt.ablams.service.impl;
 
 import de.teberhardt.ablams.domain.AudioLibrary;
-import de.teberhardt.ablams.service.AudioBookService;
+import de.teberhardt.ablams.service.AudiobookService;
 import org.apache.commons.io.FilenameUtils;
 import org.jaudiotagger.audio.SupportedFileFormat;
 import org.slf4j.Logger;
@@ -23,10 +23,10 @@ public class AudioLibraryScanService {
 
     private final Logger log = LoggerFactory.getLogger(AudioLibraryScanService.class);
 
-    private final AudioBookService audioBookService;
+    private final AudiobookService audiobookService;
 
-    public AudioLibraryScanService(AudioBookService audioBookService) {
-        this.audioBookService = audioBookService;
+    public AudioLibraryScanService(AudiobookService audiobookService) {
+        this.audiobookService = audiobookService;
     }
 
     public void scan(AudioLibrary audioLibrary) {
@@ -56,7 +56,7 @@ public class AudioLibraryScanService {
     {
         //            .parallel()
         includedFilePaths
-            .forEach((key, value) -> audioBookService.scan(key, value, audioLibrary));
+            .forEach((key, value) -> audiobookService.scan(key, value, audioLibrary));
     }
 
     private boolean isAudioFile(Path p)

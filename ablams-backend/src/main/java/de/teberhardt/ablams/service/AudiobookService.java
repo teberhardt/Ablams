@@ -1,49 +1,49 @@
 package de.teberhardt.ablams.service;
 
 import de.teberhardt.ablams.domain.AudioLibrary;
-import de.teberhardt.ablams.web.dto.AudioBookDTO;
+import de.teberhardt.ablams.web.dto.AudiobookDTO;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Service Interface for managing AudioBook.
+ * Service Interface for managing Audiobook.
  */
-public interface AudioBookService {
+public interface AudiobookService {
 
     /**
-     * Save a audioBook.
+     * Save a audiobook.
      *
-     * @param audioBookDTO the entity to save
+     * @param audiobookDTO the entity to save
      * @return the persisted entity
      */
-    AudioBookDTO save(AudioBookDTO audioBookDTO);
+    AudiobookDTO save(AudiobookDTO audiobookDTO);
 
     /**
-     * Get all the audioBooks.
+     * Get all the audiobooks.
      *
      * @return the list of entities
      */
-    List<AudioBookDTO> findAll();
+    List<AudiobookDTO> findAll();
     /**
-     * Get all the AudioBookDTO where Image is null.
+     * Get all the AudiobookDTO where Image is null.
      *
      * @return the list of entities
      */
-    List<AudioBookDTO> findAllWhereImageIsNull();
+    List<AudiobookDTO> findAllWhereImageIsNull();
 
 
     /**
-     * Get the "id" audioBook.
+     * Get the "id" audiobook.
      *
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<AudioBookDTO> findOne(Long id);
+    Optional<AudiobookDTO> findOne(Long id);
 
     /**
-     * Delete the "id" audioBook.
+     * Delete the "id" audiobook.
      *
      * @param id the id of the entity
      */

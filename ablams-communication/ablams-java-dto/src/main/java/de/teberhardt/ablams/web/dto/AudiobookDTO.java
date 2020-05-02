@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the AudioBook entity.
+ * A DTO for the Audiobook entity.
  */
-public class AudioBookDTO implements Serializable {
+public class AudiobookDTO implements Serializable {
 
     @Nullable
     private Long id;
@@ -90,11 +90,11 @@ public class AudioBookDTO implements Serializable {
             return false;
         }
 
-        AudioBookDTO audioBookDTO = (AudioBookDTO) o;
-        if (audioBookDTO.getId() == null || getId() == null) {
+        AudiobookDTO audiobookDTO = (AudiobookDTO) o;
+        if (audiobookDTO.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), audioBookDTO.getId());
+        return Objects.equals(getId(), audiobookDTO.getId());
     }
 
     @Override
@@ -104,7 +104,7 @@ public class AudioBookDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "AudioBookDTO{" +
+        return "AudiobookDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", language='" + getLanguage() + "'" +

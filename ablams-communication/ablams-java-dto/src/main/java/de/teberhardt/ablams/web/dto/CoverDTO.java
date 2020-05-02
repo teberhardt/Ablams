@@ -18,7 +18,7 @@ public class CoverDTO implements Serializable {
 
     private Integer bitdepth;
 
-    private Long audioBookId;
+    private Long audiobookId;
 
     private Long authorId;
 
@@ -62,12 +62,12 @@ public class CoverDTO implements Serializable {
         this.bitdepth = bitdepth;
     }
 
-    public Long getAudioBookId() {
-        return audioBookId;
+    public Long getAudiobookId() {
+        return audiobookId;
     }
 
-    public void setAudioBookId(Long audioBookId) {
-        this.audioBookId = audioBookId;
+    public void setAudiobookId(Long audiobookId) {
+        this.audiobookId = audiobookId;
     }
 
     public Long getAuthorId() {
@@ -107,7 +107,7 @@ public class CoverDTO implements Serializable {
             ", width=" + getWidth() +
             ", height=" + getHeight() +
             ", bitdepth=" + getBitdepth() +
-            ", audioBook=" + getAudioBookId() +
+            ", audiobook=" + getAudiobookId() +
             ", author=" + getAuthorId() +
             "}";
     }

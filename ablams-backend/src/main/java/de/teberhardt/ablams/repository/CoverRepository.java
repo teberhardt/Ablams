@@ -14,6 +14,6 @@ import java.util.Optional;
 @Repository
 public interface CoverRepository extends JpaRepository<Cover, Long> {
 
-    public Optional<Cover> findCoverByAudioBookId(Long audiobookId);
+    public Optional<Cover> findCoverByAudiobookId(Long audiobookId);
 
 }

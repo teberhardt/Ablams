@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-    import {AudioBookDTO} from 'ablams-js-dto/src/domain/models';
+    import {AudiobookDTO} from 'ablams-js-dto/src/domain/models';
     import {Component, Vue} from 'vue-property-decorator';
     import AudioBookResource from "@/rest/AudioBookResource";
     import AudiobookCard from "@/components/AudiobookCard.vue";
@@ -34,7 +34,7 @@
     })
     export default class AudioBooksView extends Vue {
 
-        private aBooks: AudioBookDTO[] = [];
+        private aBooks: AudiobookDTO[] = [];
 
         protected created(): void {
             this.initialize();

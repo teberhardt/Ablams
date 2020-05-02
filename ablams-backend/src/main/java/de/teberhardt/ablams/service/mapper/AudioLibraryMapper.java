@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
 public interface AudioLibraryMapper extends EntityMapper<AudioLibraryDTO, AudioLibrary> {
 
 
-    @Mapping(target = "audioBooks", ignore = true)
+    @Mapping(target = "audiobooks", ignore = true)
     AudioLibrary toEntity(AudioLibraryDTO audioLibraryDTO);
 
     default AudioLibrary fromId(Long id) {

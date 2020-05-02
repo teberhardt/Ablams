@@ -1,6 +1,6 @@
 package de.teberhardt.ablams.service;
 
-import de.teberhardt.ablams.domain.AudioBook;
+import de.teberhardt.ablams.domain.Audiobook;
 import de.teberhardt.ablams.domain.AudioFile;
 import de.teberhardt.ablams.web.dto.AudioFileDTO;
 
@@ -45,9 +45,9 @@ public interface AudioFileService {
      */
     void delete(Long id);
 
-    void scan(Collection<Path> audioFilePaths, AudioBook relatedAudioBook);
+    void scan(Collection<Path> audioFilePaths, Audiobook relatedAudiobook);
 
-    AudioFile scan(Path audioFilePath, AudioBook relatedAudioBook);
+    AudioFile scan(Path audioFilePath, Audiobook relatedAudiobook);
 
     List<AudioFileDTO> findbyAudiobook(Long aId);
 }

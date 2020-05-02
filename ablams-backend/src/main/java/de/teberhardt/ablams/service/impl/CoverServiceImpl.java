@@ -94,7 +94,7 @@ public class CoverServiceImpl implements CoverService {
 
     @Override
     public Optional<CoverDTO> findCoverForAudiobookId(Long aId) {
-        return coverRepository.findCoverByAudioBookId(aId).map(coverMapper::toDto);
+        return coverRepository.findCoverByAudiobookId(aId).map(coverMapper::toDto);
     }
 
     @Override

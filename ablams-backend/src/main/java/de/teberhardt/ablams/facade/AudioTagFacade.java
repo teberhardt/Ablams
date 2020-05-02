@@ -25,7 +25,7 @@ public class AudioTagFacade {
         this.audioFileIO = audioFileIO;
     }
 
-    public void scanAudioFileForTags(de.teberhardt.ablams.domain.AudioFile domainAudioFile) throws IOException {
+    public void scanAudioFileForTags(de.teberhardt.ablams.domain.Audiofile domainAudioFile) throws IOException {
 
         File file = domainAudioFile.getPath().toFile();
 

@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the AudioFile entity.
+ * A DTO for the Audiofile entity.
  */
-public class AudioFileDTO implements Serializable {
+public class AudiofileDTO implements Serializable {
 
     private Long id;
 
@@ -67,11 +67,11 @@ public class AudioFileDTO implements Serializable {
             return false;
         }
 
-        AudioFileDTO audioFileDTO = (AudioFileDTO) o;
-        if (audioFileDTO.getId() == null || getId() == null) {
+        AudiofileDTO audiofileDTO = (AudiofileDTO) o;
+        if (audiofileDTO.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), audioFileDTO.getId());
+        return Objects.equals(getId(), audiofileDTO.getId());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class AudioFileDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "AudioFileDTO{" +
+        return "AudiofileDTO{" +
             "id=" + getId() +
             ", fileType='" + getFileType() + "'" +
             ", filePath='" + getFilePath() + "'" +

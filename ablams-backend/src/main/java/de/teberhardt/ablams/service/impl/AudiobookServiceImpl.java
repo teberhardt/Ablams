@@ -6,7 +6,7 @@ import de.teberhardt.ablams.domain.Cover;
 import de.teberhardt.ablams.repository.AudiobookRepository;
 import de.teberhardt.ablams.repository.CoverRepository;
 import de.teberhardt.ablams.service.AudiobookService;
-import de.teberhardt.ablams.service.AudioFileService;
+import de.teberhardt.ablams.service.AudiofileService;
 import de.teberhardt.ablams.util.PathStringUtils;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.service.mapper.AudiobookMapper;
@@ -35,14 +35,14 @@ public class AudiobookServiceImpl implements AudiobookService {
     private final AudiobookRepository audiobookRepository;
 
     private final AudiobookMapper audiobookMapper;
-    private AudioFileService audioFileService;
+    private AudiofileService audiofileService;
     private CoverPhysicalScanService coverPhysicalScanService;
     private CoverRepository coverRepository;
 
-    public AudiobookServiceImpl(AudiobookRepository audiobookRepository, AudiobookMapper audiobookMapper, AudioFileService audioFileService, CoverPhysicalScanService coverPhysicalScanService, CoverRepository coverRepository) {
+    public AudiobookServiceImpl(AudiobookRepository audiobookRepository, AudiobookMapper audiobookMapper, AudiofileService audiofileService, CoverPhysicalScanService coverPhysicalScanService, CoverRepository coverRepository) {
         this.audiobookRepository = audiobookRepository;
         this.audiobookMapper = audiobookMapper;
-        this.audioFileService = audioFileService;
+        this.audiofileService = audiofileService;
         this.coverPhysicalScanService = coverPhysicalScanService;
         this.coverRepository = coverRepository;
     }
@@ -118,7 +118,7 @@ public class AudiobookServiceImpl implements AudiobookService {
     }
 
     @Transactional
-    public void scan(Path folderPath, List<Path> audioFilePaths, AudioLibrary audioLibrary) {
+    public void scan(Path folderPath, List<Path> audiofilePaths, AudioLibrary audioLibrary) {
 
         PathStringUtils pathUtils = new PathStringUtils(folderPath);
 
@@ -146,6 +146,6 @@ public class AudiobookServiceImpl implements AudiobookService {
 
         audiobook = audiobookRepository.save(audiobook);
 
-        audioFileService.scan(audioFilePaths, audiobook);
+        audiofileService.scan(audiofilePaths, audiobook);
     }
 }

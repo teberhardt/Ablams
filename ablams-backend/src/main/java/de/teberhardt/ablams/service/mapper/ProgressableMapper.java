@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
 public interface ProgressableMapper extends EntityMapper<ProgressableDTO, Progressable> {
 
 
-    @Mapping(target = "audioFiles", ignore = true)
+    @Mapping(target = "audiofiles", ignore = true)
     Progressable toEntity(ProgressableDTO progressableDTO);
 
     default Progressable fromId(Long id) {

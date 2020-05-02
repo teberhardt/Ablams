@@ -16,7 +16,7 @@ public interface AudiobookMapper extends EntityMapper<AudiobookDTO, Audiobook> {
     @Mapping(source = "author.id", target = "authorId")
     AudiobookDTO toDto(Audiobook audiobook);
 
-    @Mapping(target = "audioFiles", ignore = true)
+    @Mapping(target = "audiofiles", ignore = true)
     @Mapping(target = "cover", ignore = true)
     @Mapping(source = "audioLibraryId", target = "audioLibrary")
     @Mapping(source = "seriesId", target = "series")

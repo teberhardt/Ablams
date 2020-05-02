@@ -39,7 +39,7 @@ public class Audiobook implements LocalPersisted,Serializable  {
 
     @OneToMany(mappedBy = "audiobook", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private List<AudioFile> audioFiles = new ArrayList<>();
+    private List<Audiofile> audiofiles = new ArrayList<>();
     @OneToOne(mappedBy = "audiobook")
     @JsonIgnore
     private Cover cover;
@@ -103,29 +103,29 @@ public class Audiobook implements LocalPersisted,Serializable  {
         this.filePath = filePath;
     }
 
-    public List<AudioFile> getAudioFiles() {
-        return audioFiles;
+    public List<Audiofile> getAudiofiles() {
+        return audiofiles;
     }
 
-    public Audiobook audioFiles(List<AudioFile> audioFiles) {
-        this.audioFiles = audioFiles;
+    public Audiobook audiofiles(List<Audiofile> audiofiles) {
+        this.audiofiles = audiofiles;
         return this;
     }
 
-    public Audiobook addAudioFile(AudioFile audioFile) {
-        this.audioFiles.add(audioFile);
-        audioFile.setAudiobook(this);
+    public Audiobook addAudiofile(Audiofile audiofile) {
+        this.audiofiles.add(audiofile);
+        audiofile.setAudiobook(this);
         return this;
     }
 
-    public Audiobook removeAudioFile(AudioFile audioFile) {
-        this.audioFiles.remove(audioFile);
-        audioFile.setAudiobook(null);
+    public Audiobook removeAudiofile(Audiofile audiofile) {
+        this.audiofiles.remove(audiofile);
+        audiofile.setAudiobook(null);
         return this;
     }
 
-    public void setAudioFiles(List<AudioFile> audioFiles) {
-        this.audioFiles = audioFiles;
+    public void setAudiofiles(List<Audiofile> audiofiles) {
+        this.audiofiles = audiofiles;
     }
 
     public Cover getCover() {

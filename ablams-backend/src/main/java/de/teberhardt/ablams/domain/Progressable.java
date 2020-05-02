@@ -32,7 +32,7 @@ public class Progressable implements Serializable {
 
     @OneToMany(mappedBy = "progress")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<AudioFile> audioFiles = new HashSet<>();
+    private Set<Audiofile> audiofiles = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -68,29 +68,29 @@ public class Progressable implements Serializable {
         this.duration = duration;
     }
 
-    public Set<AudioFile> getAudioFiles() {
-        return audioFiles;
+    public Set<Audiofile> getAudiofiles() {
+        return audiofiles;
     }
 
-    public Progressable audioFiles(Set<AudioFile> audioFiles) {
-        this.audioFiles = audioFiles;
+    public Progressable audiofiles(Set<Audiofile> audiofiles) {
+        this.audiofiles = audiofiles;
         return this;
     }
 
-    public Progressable addAudioFile(AudioFile audioFile) {
-        this.audioFiles.add(audioFile);
-        audioFile.setProgress(this);
+    public Progressable addAudiofile(Audiofile audiofile) {
+        this.audiofiles.add(audiofile);
+        audiofile.setProgress(this);
         return this;
     }
 
-    public Progressable removeAudioFile(AudioFile audioFile) {
-        this.audioFiles.remove(audioFile);
-        audioFile.setProgress(null);
+    public Progressable removeAudiofile(Audiofile audiofile) {
+        this.audiofiles.remove(audiofile);
+        audiofile.setProgress(null);
         return this;
     }
 
-    public void setAudioFiles(Set<AudioFile> audioFiles) {
-        this.audioFiles = audioFiles;
+    public void setAudiofiles(Set<Audiofile> audiofiles) {
+        this.audiofiles = audiofiles;
     }
 
     @Override

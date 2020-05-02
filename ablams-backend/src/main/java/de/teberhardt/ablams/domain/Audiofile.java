@@ -12,12 +12,12 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
- * A AudioFile.
+ * A Audiofile.
  */
 @Entity
 @Table(name = "audio_file")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class AudioFile implements LocalPersisted, Serializable {
+public class Audiofile implements LocalPersisted, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,11 +34,11 @@ public class AudioFile implements LocalPersisted, Serializable {
     private String filePath;
 
     @ManyToOne
-    @JsonIgnoreProperties("audioFiles")
+    @JsonIgnoreProperties("audiofiles")
     private Audiobook audiobook;
 
     @ManyToOne
-    @JsonIgnoreProperties("audioFiles")
+    @JsonIgnoreProperties("audiofiles")
     private Progressable progress;
 
     @Transient
@@ -56,7 +56,7 @@ public class AudioFile implements LocalPersisted, Serializable {
         return fileType;
     }
 
-    public AudioFile fileType(FileType fileType) {
+    public Audiofile fileType(FileType fileType) {
         this.fileType = fileType;
         return this;
     }
@@ -69,7 +69,7 @@ public class AudioFile implements LocalPersisted, Serializable {
         return filePath;
     }
 
-    public AudioFile filePath(String filePath) {
+    public Audiofile filePath(String filePath) {
         this.filePath = filePath;
         return this;
     }
@@ -82,7 +82,7 @@ public class AudioFile implements LocalPersisted, Serializable {
         return audiobook;
     }
 
-    public AudioFile audiobook(Audiobook audiobook) {
+    public Audiofile audiobook(Audiobook audiobook) {
         this.audiobook = audiobook;
         return this;
     }
@@ -95,7 +95,7 @@ public class AudioFile implements LocalPersisted, Serializable {
         return progress;
     }
 
-    public AudioFile progress(Progressable progressable) {
+    public Audiofile progress(Progressable progressable) {
         this.progress = progressable;
         return this;
     }
@@ -112,11 +112,11 @@ public class AudioFile implements LocalPersisted, Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AudioFile audioFile = (AudioFile) o;
-        if (audioFile.getId() == null || getId() == null) {
+        Audiofile audiofile = (Audiofile) o;
+        if (audiofile.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), audioFile.getId());
+        return Objects.equals(getId(), audiofile.getId());
     }
 
     @Override
@@ -126,7 +126,7 @@ public class AudioFile implements LocalPersisted, Serializable {
 
     @Override
     public String toString() {
-        return "AudioFile{" +
+        return "Audiofile{" +
             "id=" + getId() +
             ", fileType='" + getFileType() + "'" +
             ", filePath='" + getFilePath() + "'" +

@@ -1,30 +1,30 @@
 package de.teberhardt.ablams.service.mapper;
 
-import de.teberhardt.ablams.domain.AudioFile;
-import de.teberhardt.ablams.web.dto.AudioFileDTO;
+import de.teberhardt.ablams.domain.Audiofile;
+import de.teberhardt.ablams.web.dto.AudiofileDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
- * Mapper for the entity AudioFile and its DTO AudioFileDTO.
+ * Mapper for the entity Audiofile and its DTO AudiofileDTO.
  */
 @Mapper(componentModel = "spring", uses = {AudiobookMapper.class, ProgressableMapper.class})
-public interface AudioFileMapper extends EntityMapper<AudioFileDTO, AudioFile> {
+public interface AudiofileMapper extends EntityMapper<AudiofileDTO, Audiofile> {
 
     @Mapping(source = "audiobook.id", target = "audiobookId")
     @Mapping(source = "progress.id", target = "progressId")
-    AudioFileDTO toDto(AudioFile audioFile);
+    AudiofileDTO toDto(Audiofile audiofile);
 
     @Mapping(source = "audiobookId", target = "audiobook")
     @Mapping(source = "progressId", target = "progress")
-    AudioFile toEntity(AudioFileDTO audioFileDTO);
+    Audiofile toEntity(AudiofileDTO audiofileDTO);
 
-    default AudioFile fromId(Long id) {
+    default Audiofile fromId(Long id) {
         if (id == null) {
             return null;
         }
-        AudioFile audioFile = new AudioFile();
-        audioFile.setId(id);
-        return audioFile;
+        Audiofile audiofile = new Audiofile();
+        audiofile.setId(id);
+        return audiofile;
     }
 }

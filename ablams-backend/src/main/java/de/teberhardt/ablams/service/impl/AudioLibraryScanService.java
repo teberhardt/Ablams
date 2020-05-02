@@ -42,7 +42,7 @@ public class AudioLibraryScanService {
             includedFilePaths = Files.walk(startPath)
                 .parallel()
                 .filter(e -> !Files.isDirectory(e))
-                .filter(this::isAudioFile)
+                .filter(this::isAudiofile)
                 .collect(groupingBy(Path::getParent));
         } catch (IOException e) {
             log.error("Error appeared when scanning AudioLibrary on Path {}", startPath.toString(), e);
@@ -59,7 +59,7 @@ public class AudioLibraryScanService {
             .forEach((key, value) -> audiobookService.scan(key, value, audioLibrary));
     }
 
-    private boolean isAudioFile(Path p)
+    private boolean isAudiofile(Path p)
     {
         String filename = FilenameUtils.getExtension(p.getFileName().toString());
         return isSupportedFilesuffix(filename);

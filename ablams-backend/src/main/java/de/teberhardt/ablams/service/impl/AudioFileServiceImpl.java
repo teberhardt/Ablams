@@ -114,6 +114,12 @@ public class AudioFileServiceImpl implements AudioFileService {
     }
 
     @Override
+    public List<AudioFileDTO> findbyAudiobook(Long aId) {
+        List<AudioFile> audioFilesE = audioFileRepository.findByAudioBookId(aId);
+        return audioFileMapper.toDto(audioFilesE);
+    }
+
+    @Override
     public void scan(Collection<Path> audioFilePaths, AudioBook relatedAudioBook) {
 
         //if there exist no audiofiles to check we can just insert

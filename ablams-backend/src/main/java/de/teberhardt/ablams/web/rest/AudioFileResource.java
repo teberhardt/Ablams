@@ -90,6 +90,18 @@ public class AudioFileResource {
     }
 
     /**
+     * GET  /audio-files : get all the audioFiles.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of audioFiles in body
+     */
+    @GetMapping("/audio-books/{aId}/audio-files")
+    @Timed
+    public List<AudioFileDTO> getAudioFilesOfAudiobook( @PathVariable Long aId) {
+        log.debug("REST request to get all AudioFiles");
+        return audioFileService.findbyAudiobook(aId);
+    }
+
+    /**
      * GET  /audio-files/:id : get the "id" audioFile.
      *
      * @param id the id of the audioFileDTO to retrieve

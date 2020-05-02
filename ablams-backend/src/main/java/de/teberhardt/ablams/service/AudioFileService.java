@@ -48,4 +48,6 @@ public interface AudioFileService {
     void scan(Collection<Path> audioFilePaths, AudioBook relatedAudioBook);
 
     AudioFile scan(Path audioFilePath, AudioBook relatedAudioBook);
+
+    List<AudioFileDTO> findbyAudiobook(Long aId);
 }

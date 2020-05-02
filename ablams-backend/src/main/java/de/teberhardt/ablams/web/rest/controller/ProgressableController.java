@@ -1,4 +1,4 @@
-package de.teberhardt.ablams.web.rest;
+package de.teberhardt.ablams.web.rest.controller;
 
 
 import de.teberhardt.ablams.service.ProgressableService;
@@ -23,15 +23,15 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class ProgressableResource {
+public class ProgressableController {
 
-    private final Logger log = LoggerFactory.getLogger(ProgressableResource.class);
+    private final Logger log = LoggerFactory.getLogger(ProgressableController.class);
 
     private static final String ENTITY_NAME = "progressable";
 
     private final ProgressableService progressableService;
 
-    public ProgressableResource(ProgressableService progressableService) {
+    public ProgressableController(ProgressableService progressableService) {
         this.progressableService = progressableService;
     }
 

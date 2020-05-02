@@ -1,4 +1,4 @@
-package de.teberhardt.ablams.web.rest;
+package de.teberhardt.ablams.web.rest.controller;
 
 import de.teberhardt.ablams.service.AudioBookService;
 import de.teberhardt.ablams.web.dto.AudioBookDTO;
@@ -21,15 +21,15 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class AudioBookResource {
+public class AudioBookController {
 
-    private final Logger log = LoggerFactory.getLogger(AudioBookResource.class);
+    private final Logger log = LoggerFactory.getLogger(AudioBookController.class);
 
     private static final String ENTITY_NAME = "audioBook";
 
     private final AudioBookService audioBookService;
 
-    public AudioBookResource(AudioBookService audioBookService) {
+    public AudioBookController(AudioBookService audioBookService) {
         this.audioBookService = audioBookService;
     }
 

@@ -1,4 +1,4 @@
-package de.teberhardt.ablams.web.rest;
+package de.teberhardt.ablams.web.rest.controller;
 
 
 import de.teberhardt.ablams.service.AuthorService;
@@ -23,15 +23,15 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class AuthorResource {
+public class AuthorController {
 
-    private final Logger log = LoggerFactory.getLogger(AuthorResource.class);
+    private final Logger log = LoggerFactory.getLogger(AuthorController.class);
 
     private static final String ENTITY_NAME = "author";
 
     private final AuthorService authorService;
 
-    public AuthorResource(AuthorService authorService) {
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 

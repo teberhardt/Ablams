@@ -1,4 +1,4 @@
-package de.teberhardt.ablams.web.rest;
+package de.teberhardt.ablams.web.rest.controller;
 
 
 import de.teberhardt.ablams.service.CoverService;
@@ -27,15 +27,15 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class CoverResource {
+public class CoverController {
 
-    private final Logger log = LoggerFactory.getLogger(CoverResource.class);
+    private final Logger log = LoggerFactory.getLogger(CoverController.class);
 
     private static final String ENTITY_NAME = "cover";
 
     private final CoverService coverService;
 
-    public CoverResource(CoverService coverService) {
+    public CoverController(CoverService coverService) {
         this.coverService = coverService;
     }
 

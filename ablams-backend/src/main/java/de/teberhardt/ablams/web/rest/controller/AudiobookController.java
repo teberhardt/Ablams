@@ -2,19 +2,20 @@ package de.teberhardt.ablams.web.rest.controller;
 
 import de.teberhardt.ablams.service.AudiobookService;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
-import de.teberhardt.ablams.util.ResponseUtil;
+import de.teberhardt.ablams.web.rest.assembler.AudiobookRepresentationModelAssembler;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Audiobook.
@@ -29,8 +30,11 @@ public class AudiobookController {
 
     private final AudiobookService audiobookService;
 
-    public AudiobookController(AudiobookService audiobookService) {
+    private final AudiobookRepresentationModelAssembler assembler;
+
+    public AudiobookController(AudiobookService audiobookService, AudiobookRepresentationModelAssembler audiobookRepresentationModelAssembler) {
         this.audiobookService = audiobookService;
+        this.assembler = audiobookRepresentationModelAssembler;
     }
 
     /**
@@ -100,10 +104,10 @@ public class AudiobookController {
      */
     @GetMapping("/audio-books/{id}")
     @Timed
-    public ResponseEntity<AudiobookDTO> getAudiobook(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<AudiobookDTO>> getAudiobook(@PathVariable Long id) {
         log.debug("REST request to get Audiobook : {}", id);
-        Optional<AudiobookDTO> audiobookDTO = audiobookService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(audiobookDTO);
+        return audiobookService.findOne(id).map(assembler::toModel).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+
     }
 
     /**

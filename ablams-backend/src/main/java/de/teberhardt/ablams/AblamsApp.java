@@ -12,6 +12,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -22,6 +23,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
+@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 public class AblamsApp {
 
     private static final Logger log = LoggerFactory.getLogger(AblamsApp.class);

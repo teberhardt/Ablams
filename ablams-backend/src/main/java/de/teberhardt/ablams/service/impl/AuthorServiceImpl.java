@@ -72,8 +72,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional(readOnly = true)
     public List<AuthorDTO> findAllWhereImageIsNull() {
         log.debug("Request to get all authors where Image is null");
-        return StreamSupport
-            .stream(authorRepository.findAll().spliterator(), false)
+        return authorRepository.findAll().stream()
             .filter(author -> author.getCover() == null)
             .map(authorMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));

@@ -8,6 +8,7 @@ import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 /**
  * REST controller for managing Audiobook.
  */
 @RestController
 @RequestMapping("/api")
+@ExposesResourceFor(AudiobookDTO.class)
 public class AudiobookController {
 
     private final Logger log = LoggerFactory.getLogger(AudiobookController.class);
@@ -87,13 +88,14 @@ public class AudiobookController {
      */
     @GetMapping("/audio-books")
     @Timed
-    public List<AudiobookDTO> getAllAudiobooks(@RequestParam(required = false) String filter) {
+    public CollectionModel<EntityModel<AudiobookDTO>> getAllAudiobooks(@RequestParam(required = false) String filter) {
         if ("image-is-null".equals(filter)) {
             log.debug("REST request to get all Audiobooks where image is null");
-            return audiobookService.findAllWhereImageIsNull();
+            return assembler.toCollectionModel(audiobookService.findAllWhereImageIsNull());
         }
         log.debug("REST request to get all Audiobooks");
-        return audiobookService.findAll();
+
+        return assembler.toCollectionModel(audiobookService.findAll());
     }
 
     /**

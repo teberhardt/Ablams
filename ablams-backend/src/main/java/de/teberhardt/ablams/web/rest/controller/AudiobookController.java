@@ -21,7 +21,7 @@ import java.net.URISyntaxException;
  * REST controller for managing Audiobook.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/audio-books")
 @ExposesResourceFor(AudiobookDTO.class)
 public class AudiobookController {
 
@@ -45,7 +45,7 @@ public class AudiobookController {
      * @return the ResponseEntity with status 201 (Created) and with body the new audiobookDTO, or with status 400 (Bad Request) if the audiobook has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/audio-books")
+    @PostMapping
     @Timed
     public ResponseEntity<AudiobookDTO> createAudiobook(@RequestBody AudiobookDTO audiobookDTO) throws URISyntaxException {
         log.debug("REST request to save Audiobook : {}", audiobookDTO);
@@ -67,7 +67,7 @@ public class AudiobookController {
      * or with status 500 (Internal Server Error) if the audiobookDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/audio-books")
+    @PutMapping
     @Timed
     public ResponseEntity<AudiobookDTO> updateAudiobook(@RequestBody AudiobookDTO audiobookDTO) throws URISyntaxException {
         log.debug("REST request to update Audiobook : {}", audiobookDTO);
@@ -86,7 +86,7 @@ public class AudiobookController {
      * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of audiobooks in body
      */
-    @GetMapping("/audio-books")
+    @GetMapping
     @Timed
     public CollectionModel<EntityModel<AudiobookDTO>> getAllAudiobooks(@RequestParam(required = false) String filter) {
         if ("image-is-null".equals(filter)) {
@@ -104,7 +104,7 @@ public class AudiobookController {
      * @param id the id of the audiobookDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the audiobookDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/audio-books/{id}")
+    @GetMapping("/{id}")
     @Timed
     public ResponseEntity<EntityModel<AudiobookDTO>> getAudiobook(@PathVariable Long id) {
         log.debug("REST request to get Audiobook : {}", id);
@@ -118,7 +118,7 @@ public class AudiobookController {
      * @param id the id of the audiobookDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/audio-books/{id}")
+    @DeleteMapping("/{id}")
     @Timed
     public ResponseEntity<Void> deleteAudiobook(@PathVariable Long id) {
         log.debug("REST request to delete Audiobook : {}", id);

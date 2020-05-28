@@ -2,6 +2,7 @@ package de.teberhardt.ablams.web.rest.controller;
 
 
 import de.teberhardt.ablams.service.ProgressableService;
+import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.web.dto.ProgressableDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
@@ -10,6 +11,7 @@ import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,8 @@ import java.util.Optional;
  * REST controller for managing Progressable.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/progressables")
+@ExposesResourceFor(ProgressableDTO.class)
 public class ProgressableController {
 
     private final Logger log = LoggerFactory.getLogger(ProgressableController.class);
@@ -42,7 +45,7 @@ public class ProgressableController {
      * @return the ResponseEntity with status 201 (Created) and with body the new progressableDTO, or with status 400 (Bad Request) if the progressable has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/progressables")
+    @PostMapping
     @Timed
     public ResponseEntity<ProgressableDTO> createProgressable(@RequestBody ProgressableDTO progressableDTO) throws URISyntaxException {
         log.debug("REST request to save Progressable : {}", progressableDTO);
@@ -64,7 +67,7 @@ public class ProgressableController {
      * or with status 500 (Internal Server Error) if the progressableDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/progressables")
+    @PutMapping
     @Timed
     public ResponseEntity<ProgressableDTO> updateProgressable(@RequestBody ProgressableDTO progressableDTO) throws URISyntaxException {
         log.debug("REST request to update Progressable : {}", progressableDTO);
@@ -82,7 +85,7 @@ public class ProgressableController {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of progressables in body
      */
-    @GetMapping("/progressables")
+    @GetMapping
     @Timed
     public List<ProgressableDTO> getAllProgressables() {
         log.debug("REST request to get all Progressables");
@@ -95,7 +98,7 @@ public class ProgressableController {
      * @param id the id of the progressableDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the progressableDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/progressables/{id}")
+    @GetMapping("/{id}")
     @Timed
     public ResponseEntity<ProgressableDTO> getProgressable(@PathVariable Long id) {
         log.debug("REST request to get Progressable : {}", id);
@@ -109,7 +112,7 @@ public class ProgressableController {
      * @param id the id of the progressableDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/progressables/{id}")
+    @DeleteMapping("/{id}")
     @Timed
     public ResponseEntity<Void> deleteProgressable(@PathVariable Long id) {
         log.debug("REST request to delete Progressable : {}", id);

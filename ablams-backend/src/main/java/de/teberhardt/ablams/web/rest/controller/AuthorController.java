@@ -2,6 +2,7 @@ package de.teberhardt.ablams.web.rest.controller;
 
 
 import de.teberhardt.ablams.service.AuthorService;
+import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.web.dto.AuthorDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
@@ -10,6 +11,7 @@ import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,8 @@ import java.util.Optional;
  * REST controller for managing Author.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/authors")
+@ExposesResourceFor(AuthorDTO.class)
 public class AuthorController {
 
     private final Logger log = LoggerFactory.getLogger(AuthorController.class);
@@ -42,7 +45,7 @@ public class AuthorController {
      * @return the ResponseEntity with status 201 (Created) and with body the new authorDTO, or with status 400 (Bad Request) if the author has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/authors")
+    @PostMapping
     @Timed
     public ResponseEntity<AuthorDTO> createAuthor(@RequestBody AuthorDTO authorDTO) throws URISyntaxException {
         log.debug("REST request to save Author : {}", authorDTO);
@@ -64,7 +67,7 @@ public class AuthorController {
      * or with status 500 (Internal Server Error) if the authorDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/authors")
+    @PutMapping
     @Timed
     public ResponseEntity<AuthorDTO> updateAuthor(@RequestBody AuthorDTO authorDTO) throws URISyntaxException {
         log.debug("REST request to update Author : {}", authorDTO);
@@ -83,7 +86,7 @@ public class AuthorController {
      * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of authors in body
      */
-    @GetMapping("/authors")
+    @GetMapping
     @Timed
     public List<AuthorDTO> getAllAuthors(@RequestParam(required = false) String filter) {
         if ("image-is-null".equals(filter)) {
@@ -100,7 +103,7 @@ public class AuthorController {
      * @param id the id of the authorDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the authorDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/authors/{id}")
+    @GetMapping("/{id}")
     @Timed
     public ResponseEntity<AuthorDTO> getAuthor(@PathVariable Long id) {
         log.debug("REST request to get Author : {}", id);
@@ -114,7 +117,7 @@ public class AuthorController {
      * @param id the id of the authorDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/authors/{id}")
+    @DeleteMapping("/{id}")
     @Timed
     public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
         log.debug("REST request to delete Author : {}", id);

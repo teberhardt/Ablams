@@ -2,6 +2,7 @@ package de.teberhardt.ablams.web.rest.controller;
 
 
 import de.teberhardt.ablams.service.CoverService;
+import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.web.dto.CoverDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
@@ -11,6 +12,7 @@ import io.micrometer.core.annotation.Timed;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,8 @@ import java.util.Optional;
  * REST controller for managing cover.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cover")
+@ExposesResourceFor(CoverDTO.class)
 public class CoverController {
 
     private final Logger log = LoggerFactory.getLogger(CoverController.class);
@@ -46,7 +49,7 @@ public class CoverController {
      * @return the ResponseEntity with status 201 (Created) and with body the new coverDTO, or with status 400 (Bad Request) if the cover has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/cover")
+    @PostMapping
     @Timed
     public ResponseEntity<CoverDTO> createCover(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
         log.debug("REST request to save cover : {}", coverDTO);
@@ -68,7 +71,7 @@ public class CoverController {
      * or with status 500 (Internal Server Error) if the coverDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/cover")
+    @PutMapping
     @Timed
     public ResponseEntity<CoverDTO> updateCover(@RequestBody CoverDTO coverDTO) throws URISyntaxException {
         log.debug("REST request to update cover : {}", coverDTO);
@@ -86,7 +89,7 @@ public class CoverController {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of cover in body
      */
-    @GetMapping("/cover")
+    @GetMapping
     @Timed
     public List<CoverDTO> getAllCovers() {
         log.debug("REST request to get all cover");
@@ -99,7 +102,7 @@ public class CoverController {
      * @param id the id of the coverDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the coverDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/cover/{id}")
+    @GetMapping("/{id}")
     @Timed
     public ResponseEntity<CoverDTO> getCover(@PathVariable Long id) {
         log.debug("REST request to get cover : {}", id);
@@ -134,7 +137,7 @@ public class CoverController {
      * @param id the id of the coverDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/cover/{id}")
+    @DeleteMapping("/{id}")
     @Timed
     public ResponseEntity<Void> deleteCover(@PathVariable Long id) {
         log.debug("REST request to delete cover : {}", id);

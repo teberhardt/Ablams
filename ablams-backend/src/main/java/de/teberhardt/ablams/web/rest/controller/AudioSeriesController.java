@@ -3,11 +3,13 @@ package de.teberhardt.ablams.web.rest.controller;
 import de.teberhardt.ablams.service.AudioSeriesService;
 import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
+import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,8 @@ import java.util.Optional;
  * REST controller for managing AudioSeries.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/audio-series")
+@ExposesResourceFor(AudioSeriesDTO.class)
 public class AudioSeriesController {
 
     private final Logger log = LoggerFactory.getLogger(AudioSeriesController.class);
@@ -40,7 +43,7 @@ public class AudioSeriesController {
      * @return the ResponseEntity with status 201 (Created) and with body the new audioSeriesDTO, or with status 400 (Bad Request) if the audioSeries has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/audio-series")
+    @PostMapping
     @Timed
     public ResponseEntity<AudioSeriesDTO> createAudioSeries(@RequestBody AudioSeriesDTO audioSeriesDTO) throws URISyntaxException {
         log.debug("REST request to save AudioSeries : {}", audioSeriesDTO);
@@ -80,7 +83,7 @@ public class AudioSeriesController {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of audioSeries in body
      */
-    @GetMapping("/audio-series")
+    @GetMapping
     @Timed
     public List<AudioSeriesDTO> getAllAudioSeries() {
         log.debug("REST request to get all AudioSeries");
@@ -93,7 +96,7 @@ public class AudioSeriesController {
      * @param id the id of the audioSeriesDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the audioSeriesDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/audio-series/{id}")
+    @GetMapping("/{id}")
     @Timed
     public ResponseEntity<AudioSeriesDTO> getAudioSeries(@PathVariable Long id) {
         log.debug("REST request to get AudioSeries : {}", id);
@@ -107,7 +110,7 @@ public class AudioSeriesController {
      * @param id the id of the audioSeriesDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/audio-series/{id}")
+    @DeleteMapping("/{id}")
     @Timed
     public ResponseEntity<Void> deleteAudioSeries(@PathVariable Long id) {
         log.debug("REST request to delete AudioSeries : {}", id);

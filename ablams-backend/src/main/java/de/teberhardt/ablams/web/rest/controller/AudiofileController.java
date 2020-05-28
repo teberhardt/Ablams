@@ -2,14 +2,14 @@ package de.teberhardt.ablams.web.rest.controller;
 
 
 import de.teberhardt.ablams.service.AudiofileService;
-import de.teberhardt.ablams.web.dto.AudiofileDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
+import de.teberhardt.ablams.web.dto.AudiofileDTO;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;
-
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,8 @@ import java.util.Optional;
  * REST controller for managing Audiofile.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/audio-files")
+@ExposesResourceFor(AudiofileDTO.class)
 public class AudiofileController {
 
     private final Logger log = LoggerFactory.getLogger(AudiofileController.class);
@@ -42,7 +43,7 @@ public class AudiofileController {
      * @return the ResponseEntity with status 201 (Created) and with body the new audiofileDTO, or with status 400 (Bad Request) if the audiofile has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/audio-files")
+    @PostMapping
     @Timed
     public ResponseEntity<AudiofileDTO> createAudiofile(@RequestBody AudiofileDTO audiofileDTO) throws URISyntaxException {
         log.debug("REST request to save Audiofile : {}", audiofileDTO);
@@ -64,7 +65,7 @@ public class AudiofileController {
      * or with status 500 (Internal Server Error) if the audiofileDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/audio-files")
+    @PutMapping
     @Timed
     public ResponseEntity<AudiofileDTO> updateAudiofile(@RequestBody AudiofileDTO audiofileDTO) throws URISyntaxException {
         log.debug("REST request to update Audiofile : {}", audiofileDTO);
@@ -82,7 +83,7 @@ public class AudiofileController {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of audiofiles in body
      */
-    @GetMapping("/audio-files")
+    @GetMapping
     @Timed
     public List<AudiofileDTO> getAllAudiofiles() {
         log.debug("REST request to get all Audiofiles");
@@ -94,7 +95,7 @@ public class AudiofileController {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of audiofiles in body
      */
-    @GetMapping("/audio-books/{aId}/audio-files")
+    @GetMapping("/{aId}/audio-files")
     @Timed
     public List<AudiofileDTO> getAudiofilesOfAudiobook(@PathVariable Long aId) {
         log.debug("REST request to get all Audiofiles");
@@ -107,7 +108,7 @@ public class AudiofileController {
      * @param id the id of the audiofileDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the audiofileDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/audio-files/{id}")
+    @GetMapping("/{id}")
     @Timed
     public ResponseEntity<AudiofileDTO> getAudiofile(@PathVariable Long id) {
         log.debug("REST request to get Audiofile : {}", id);
@@ -121,7 +122,7 @@ public class AudiofileController {
      * @param id the id of the audiofileDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/audio-files/{id}")
+    @DeleteMapping("/{id}")
     @Timed
     public ResponseEntity<Void> deleteAudiofile(@PathVariable Long id) {
         log.debug("REST request to delete Audiofile : {}", id);

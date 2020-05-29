@@ -100,7 +100,6 @@ public class AudiobookController {
     /**
      * GET  /audio-books : get all the audiobooks.
      *
-     * @param assembler assembler to create pagedmodel
      * @param pageable current page
      * @return the ResponseEntity with status 200 (OK) and the list of audiobooks in body
      */

@@ -3,16 +3,11 @@ package de.teberhardt.ablams.web.rest.assembler;
 import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
 import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
-import de.teberhardt.ablams.web.rest.controller.AudiobookController;
-import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.SimpleRepresentationModelAssembler;
 import org.springframework.stereotype.Component;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class AudiobookRepresentationModelAssembler implements SimpleRepresentationModelAssembler<AudiobookDTO> {

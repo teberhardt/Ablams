@@ -14,8 +14,7 @@
 # ===================================================================
 
 logging:
-    file: logs/application.log
-#    pattern:
+    #    pattern:
 #        console: "%d %-5level %logger : %msg%n"
 #        file: "%d %-5level [%thread] %logger : %msg%n"
     level:
@@ -29,6 +28,8 @@ logging:
         org.springframework.orm.jpa: INFO
         org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
         de.teberhardt.ablams.web: DEBUG
+    file:
+        name: logs/application.log
 
 
 spring:
@@ -52,7 +53,7 @@ spring:
                 generate_statistics: true
 
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: validate
     output:
         ansi:
             enabled: always

@@ -24,7 +24,7 @@ import java.util.Optional;
  * REST controller for managing Progressable.
  */
 @RestController
-@RequestMapping("/api/progressables")
+@RequestMapping("/api/progresses")
 @ExposesResourceFor(ProgressableDTO.class)
 public class ProgressableController {
 

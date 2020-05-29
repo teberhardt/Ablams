@@ -28,7 +28,7 @@ import java.util.Optional;
  * REST controller for managing cover.
  */
 @RestController
-@RequestMapping("/api/cover")
+@RequestMapping("/api/covers")
 @ExposesResourceFor(CoverDTO.class)
 public class CoverController {
 

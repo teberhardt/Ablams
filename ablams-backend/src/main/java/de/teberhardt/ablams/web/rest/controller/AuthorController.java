@@ -88,11 +88,8 @@ public class AuthorController {
      */
     @GetMapping
     @Timed
-    public List<AuthorDTO> getAllAuthors(@RequestParam(required = false) String filter) {
-        if ("image-is-null".equals(filter)) {
-            log.debug("REST request to get all Authors where image is null");
-            return authorService.findAllWhereImageIsNull();
-        }
+    public List<AuthorDTO> getAllAuthors() {
+
         log.debug("REST request to get all Authors");
         return authorService.findAll();
     }

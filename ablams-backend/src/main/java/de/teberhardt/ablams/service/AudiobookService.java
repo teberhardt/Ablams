@@ -2,6 +2,8 @@ package de.teberhardt.ablams.service;
 
 import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -24,8 +26,9 @@ public interface AudiobookService {
      * Get all the audiobooks.
      *
      * @return the list of entities
+     * @param pageable
      */
-    List<AudiobookDTO> findAll();
+    Page<AudiobookDTO> findAll(Pageable pageable);
     /**
      * Get all the AudiobookDTO where Image is null.
      *

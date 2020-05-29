@@ -1,10 +1,13 @@
 package de.teberhardt.ablams.web.rest.assembler;
 
+import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
+import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
-import de.teberhardt.ablams.web.rest.controller.AudioLibraryController;
-import de.teberhardt.ablams.web.rest.controller.AudioSeriesController;
 import de.teberhardt.ablams.web.rest.controller.AudiobookController;
-import org.springframework.hateoas.*;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.SimpleRepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +17,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class AudiobookRepresentationModelAssembler implements SimpleRepresentationModelAssembler<AudiobookDTO> {
 
+    EntityLinks entityLinks;
+
+    public AudiobookRepresentationModelAssembler(EntityLinks entityLinks) {
+        this.entityLinks = entityLinks;
+    }
+
     @Override
     public void addLinks(EntityModel<AudiobookDTO> resource) {
 
@@ -22,26 +31,24 @@ public class AudiobookRepresentationModelAssembler implements SimpleRepresentati
         if (abook != null) {
 
             resource.add(
-                linkTo(
-                    methodOn(AudiobookController.class)
-                        .getAudiobook(abook.getId())
-            ).withSelfRel());
+                    entityLinks
+                        .linkToItemResource(abook.getClass(), abook.getId())
+                        .withSelfRel()
+           );
 
             if (abook.getAudioLibraryId() != null) {
                 resource.add(
-                    linkTo(
-                        methodOn(AudioLibraryController.class)
-                            .getAudioLibrary(abook.getAudioLibraryId())
-                    ).withRel("audio-library")
+                    entityLinks
+                        .linkToItemResource(AudioLibraryDTO.class, abook.getAudioLibraryId())
+                        .withRel("audio-library")
                 );
             }
 
-            if (resource.getContent().getSeriesId() != null) {
+            if (abook.getSeriesId() != null) {
                 resource.add(
-                    linkTo(
-                        methodOn(AudioSeriesController.class)
-                            .getAudioSeries(abook.getSeriesId())
-                    ).withRel("audio-series")
+                    entityLinks
+                        .linkToItemResource(AudioSeriesDTO.class, abook.getSeriesId())
+                        .withRel("audio-series")
                 );
             }
         }
@@ -50,12 +57,6 @@ public class AudiobookRepresentationModelAssembler implements SimpleRepresentati
 
     @Override
     public void addLinks(CollectionModel<EntityModel<AudiobookDTO>> resources) {
-        resources.add(
-            linkTo(
-                methodOn(AudiobookController.class)
-                    .getAllAudiobooks(null)
-            ).withSelfRel()
-        );
 
     }
 }

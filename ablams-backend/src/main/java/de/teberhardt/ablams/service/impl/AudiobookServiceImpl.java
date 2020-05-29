@@ -12,6 +12,8 @@ import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.service.mapper.AudiobookMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,14 +68,15 @@ public class AudiobookServiceImpl implements AudiobookService {
      * Get all the audiobooks.
      *
      * @return the list of entities
+     * @param pageable
      */
     @Override
     @Transactional(readOnly = true)
-    public List<AudiobookDTO> findAll() {
+    public Page<AudiobookDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Audiobooks");
-        return audiobookRepository.findAll().stream()
-            .map(audiobookMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+
+        return audiobookRepository.findAll(pageable)
+            .map(audiobookMapper::toDto);
     }
 
 

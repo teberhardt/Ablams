@@ -8,14 +8,20 @@ import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 /**
  * REST controller for managing Audiobook.
@@ -33,9 +39,15 @@ public class AudiobookController {
 
     private final AudiobookRepresentationModelAssembler assembler;
 
-    public AudiobookController(AudiobookService audiobookService, AudiobookRepresentationModelAssembler audiobookRepresentationModelAssembler) {
+    private final PagedResourcesAssembler<AudiobookDTO> pagedAssembler;
+
+    private final EntityLinks entityLinks;
+
+    public AudiobookController(AudiobookService audiobookService, AudiobookRepresentationModelAssembler audiobookRepresentationModelAssembler, PagedResourcesAssembler<AudiobookDTO> pagedAssembler, EntityLinks entityLinks) {
         this.audiobookService = audiobookService;
         this.assembler = audiobookRepresentationModelAssembler;
+        this.pagedAssembler = pagedAssembler;
+        this.entityLinks = entityLinks;
     }
 
     /**
@@ -47,15 +59,18 @@ public class AudiobookController {
      */
     @PostMapping
     @Timed
-    public ResponseEntity<AudiobookDTO> createAudiobook(@RequestBody AudiobookDTO audiobookDTO) throws URISyntaxException {
+    public ResponseEntity<EntityModel<AudiobookDTO>> createAudiobook(@RequestBody AudiobookDTO audiobookDTO) throws URISyntaxException {
         log.debug("REST request to save Audiobook : {}", audiobookDTO);
         if (audiobookDTO.getId() != null) {
             throw new BadRequestAlertException("A new audiobook cannot already have an ID", ENTITY_NAME, "idexists");
         }
         AudiobookDTO result = audiobookService.save(audiobookDTO);
-        return ResponseEntity.created(new URI("/api/audio-books/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+
+       return Optional.of(result.getId()) //
+            .map(id -> ResponseEntity.created( //
+                linkTo(entityLinks.linkToItemResource(AudiobookDTO.class,id)).toUri()
+            ).body(assembler.toModel(result)))
+            .orElse(ResponseEntity.notFound().build());
     }
 
     /**
@@ -75,27 +90,27 @@ public class AudiobookController {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         AudiobookDTO result = audiobookService.save(audiobookDTO);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, audiobookDTO.getId().toString()))
             .body(result);
+
     }
 
     /**
      * GET  /audio-books : get all the audiobooks.
      *
-     * @param filter the filter of the request
+     * @param assembler assembler to create pagedmodel
+     * @param pageable current page
      * @return the ResponseEntity with status 200 (OK) and the list of audiobooks in body
      */
     @GetMapping
     @Timed
-    public CollectionModel<EntityModel<AudiobookDTO>> getAllAudiobooks(@RequestParam(required = false) String filter) {
-        if ("image-is-null".equals(filter)) {
-            log.debug("REST request to get all Audiobooks where image is null");
-            return assembler.toCollectionModel(audiobookService.findAllWhereImageIsNull());
-        }
+    public PagedModel<EntityModel<AudiobookDTO>> getAllAudiobooks(Pageable pageable) {
         log.debug("REST request to get all Audiobooks");
 
-        return assembler.toCollectionModel(audiobookService.findAll());
+        Page<AudiobookDTO> all = audiobookService.findAll(pageable);
+        return pagedAssembler.toModel(all);
     }
 
     /**
@@ -108,8 +123,14 @@ public class AudiobookController {
     @Timed
     public ResponseEntity<EntityModel<AudiobookDTO>> getAudiobook(@PathVariable Long id) {
         log.debug("REST request to get Audiobook : {}", id);
-        return audiobookService.findOne(id).map(assembler::toModel).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-
+        return audiobookService
+            .findOne(id)
+            .map(assembler::toModel)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity
+                .notFound()
+                .build()
+            );
     }
 
     /**
@@ -123,6 +144,9 @@ public class AudiobookController {
     public ResponseEntity<Void> deleteAudiobook(@PathVariable Long id) {
         log.debug("REST request to delete Audiobook : {}", id);
         audiobookService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString()))
+            .build();
     }
 }

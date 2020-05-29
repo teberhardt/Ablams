@@ -17,7 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class AudiobookRepresentationModelAssembler implements SimpleRepresentationModelAssembler<AudiobookDTO> {
 
-    EntityLinks entityLinks;
+    private final EntityLinks entityLinks;
 
     public AudiobookRepresentationModelAssembler(EntityLinks entityLinks) {
         this.entityLinks = entityLinks;

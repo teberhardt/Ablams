@@ -108,8 +108,8 @@ public class AudiobookController {
     public PagedModel<EntityModel<AudiobookDTO>> getAllAudiobooks(Pageable pageable) {
         log.debug("REST request to get all Audiobooks");
 
-        Page<AudiobookDTO> all = audiobookService.findAll(pageable);
-        return pagedAssembler.toModel(all);
+        Page<AudiobookDTO> currentPage = audiobookService.findAll(pageable);
+        return pagedAssembler.toModel(currentPage, assembler);
     }
 
     /**

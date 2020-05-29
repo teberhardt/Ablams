@@ -79,22 +79,6 @@ public class AudiobookServiceImpl implements AudiobookService {
             .map(audiobookMapper::toDto);
     }
 
-
-
-    /**
-     *  get all the audiobooks where Image is null.
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public List<AudiobookDTO> findAllWhereImageIsNull() {
-        log.debug("Request to get all audiobooks where Image is null");
-        return StreamSupport
-            .stream(audiobookRepository.findAll().spliterator(), false)
-            .filter(audiobook -> audiobook.getCover() == null)
-            .map(audiobookMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
-
     /**
      * Get one audiobook by id.
      *

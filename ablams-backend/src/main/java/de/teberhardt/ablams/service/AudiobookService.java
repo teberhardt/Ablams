@@ -29,12 +29,6 @@ public interface AudiobookService {
      * @param pageable
      */
     Page<AudiobookDTO> findAll(Pageable pageable);
-    /**
-     * Get all the AudiobookDTO where Image is null.
-     *
-     * @return the list of entities
-     */
-    List<AudiobookDTO> findAllWhereImageIsNull();
 
 
     /**

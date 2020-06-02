@@ -4,20 +4,21 @@ package de.teberhardt.ablams.web.rest.controller;
 import de.teberhardt.ablams.service.AudioLibraryService;
 import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
-import de.teberhardt.ablams.web.dto.AudiobookDTO;
+import de.teberhardt.ablams.web.rest.assembler.AudioLibraryRepresentationModelAssembler;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,8 +35,11 @@ public class AudioLibraryController {
 
     private final AudioLibraryService audioLibraryService;
 
-    public AudioLibraryController(AudioLibraryService audioLibraryService) {
+    private final AudioLibraryRepresentationModelAssembler modelAssembler;
+
+    public AudioLibraryController(AudioLibraryService audioLibraryService, AudioLibraryRepresentationModelAssembler modelAssembler) {
         this.audioLibraryService = audioLibraryService;
+        this.modelAssembler = modelAssembler;
     }
 
     /**
@@ -47,15 +51,16 @@ public class AudioLibraryController {
      */
     @PostMapping
     @Timed
-    public ResponseEntity<AudioLibraryDTO> createAudioLibrary(@RequestBody AudioLibraryDTO audioLibraryDTO) throws URISyntaxException {
+    public ResponseEntity<EntityModel<AudioLibraryDTO>> createAudioLibrary(@RequestBody AudioLibraryDTO audioLibraryDTO) throws URISyntaxException {
         log.debug("REST request to save AudioLibrary : {}", audioLibraryDTO);
         if (audioLibraryDTO.getId() != null) {
             throw new BadRequestAlertException("A new audioLibrary cannot already have an ID", ENTITY_NAME, "idexists");
         }
         AudioLibraryDTO result = audioLibraryService.save(audioLibraryDTO);
+
         return ResponseEntity.created(new URI("/api/audio-libraries/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+            .body(modelAssembler.toModel(result));
     }
 
     /**
@@ -69,7 +74,7 @@ public class AudioLibraryController {
      */
     @PutMapping
     @Timed
-    public ResponseEntity<AudioLibraryDTO> updateAudioLibrary(@RequestBody AudioLibraryDTO audioLibraryDTO) throws URISyntaxException {
+    public ResponseEntity<EntityModel<AudioLibraryDTO>> updateAudioLibrary(@RequestBody AudioLibraryDTO audioLibraryDTO) throws URISyntaxException {
         log.debug("REST request to update AudioLibrary : {}", audioLibraryDTO);
         if (audioLibraryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -77,7 +82,7 @@ public class AudioLibraryController {
         AudioLibraryDTO result = audioLibraryService.save(audioLibraryDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, audioLibraryDTO.getId().toString()))
-            .body(result);
+            .body(modelAssembler.toModel(result));
     }
 
     /**
@@ -87,9 +92,11 @@ public class AudioLibraryController {
      */
     @GetMapping
     @Timed
-    public List<AudioLibraryDTO> getAllAudioLibraries() {
+    public CollectionModel<EntityModel<AudioLibraryDTO>> getAllAudioLibraries() {
         log.debug("REST request to get all AudioLibraries");
-        return audioLibraryService.findAll();
+        return modelAssembler.toCollectionModel(
+            audioLibraryService.findAll()
+        );
     }
 
     /**

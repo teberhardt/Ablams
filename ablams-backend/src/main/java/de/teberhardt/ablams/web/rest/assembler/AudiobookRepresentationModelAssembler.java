@@ -4,6 +4,7 @@ import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
 import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.web.rest.controller.AudiobookController;
+import de.teberhardt.ablams.web.rest.controller.AudiofileController;
 import org.springframework.hateoas.Affordance;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -15,8 +16,7 @@ import org.springframework.stereotype.Component;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.afford;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @Component
 public class AudiobookRepresentationModelAssembler implements SimpleRepresentationModelAssembler<AudiobookDTO> {
@@ -35,8 +35,11 @@ public class AudiobookRepresentationModelAssembler implements SimpleRepresentati
         if (abook != null) {
 
             resource.add(
-                        selfReference(abook)
+                        selfReference(abook),
+                        audioFilesReference(abook)
            );
+
+
 
             if (abook.getAudioLibraryId() != null) {
                 resource.add(
@@ -53,6 +56,12 @@ public class AudiobookRepresentationModelAssembler implements SimpleRepresentati
         }
     }
 
+    private Link audioFilesReference(AudiobookDTO abook) {
+        return linkTo(methodOn(AudiofileController.class)
+            .getAudiofilesOfAudiobook(abook.getId()))
+            .withRel("audio-files");
+    }
+
     private Link seriesReference(Long seriesId) {
         return entityLinks
             .linkToItemResource(AudioSeriesDTO.class, seriesId)
@@ -63,7 +72,7 @@ public class AudiobookRepresentationModelAssembler implements SimpleRepresentati
     private Link selfReference(AudiobookDTO abook)
     {
         Link selfLink = entityLinks
-            .linkToItemResource(abook.getClass(), abook.getId());
+            .linkToItemResource(abook, AudiobookDTO::getId);
 
         Affordance get = afford(methodOn(AudiobookController.class).getAudiobook(abook.getId()));
 

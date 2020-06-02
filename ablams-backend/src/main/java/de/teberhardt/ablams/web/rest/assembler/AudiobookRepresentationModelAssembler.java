@@ -3,11 +3,20 @@ package de.teberhardt.ablams.web.rest.assembler;
 import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
 import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
+import de.teberhardt.ablams.web.rest.controller.AudiobookController;
+import org.springframework.hateoas.Affordance;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.SimpleRepresentationModelAssembler;
 import org.springframework.stereotype.Component;
+
+import java.net.URISyntaxException;
+import java.util.Arrays;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.afford;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class AudiobookRepresentationModelAssembler implements SimpleRepresentationModelAssembler<AudiobookDTO> {
@@ -26,28 +35,63 @@ public class AudiobookRepresentationModelAssembler implements SimpleRepresentati
         if (abook != null) {
 
             resource.add(
-                    entityLinks
-                        .linkToItemResource(abook.getClass(), abook.getId())
-                        .withSelfRel()
+                        selfReference(abook)
            );
 
             if (abook.getAudioLibraryId() != null) {
                 resource.add(
-                    entityLinks
-                        .linkToItemResource(AudioLibraryDTO.class, abook.getAudioLibraryId())
-                        .withRel("audio-library")
+                    audioLibraryReference(abook.getAudioLibraryId())
                 );
             }
 
             if (abook.getSeriesId() != null) {
                 resource.add(
-                    entityLinks
-                        .linkToItemResource(AudioSeriesDTO.class, abook.getSeriesId())
-                        .withRel("audio-series")
+                    seriesReference(abook.getSeriesId())
                 );
             }
+
+        }
+    }
+
+    private Link seriesReference(Long seriesId) {
+        return entityLinks
+            .linkToItemResource(AudioSeriesDTO.class, seriesId)
+            .withRel("audio-series");
+    }
+
+
+    private Link selfReference(AudiobookDTO abook)
+    {
+        Link selfLink = entityLinks
+            .linkToItemResource(abook.getClass(), abook.getId());
+
+        Affordance get = afford(methodOn(AudiobookController.class).getAudiobook(abook.getId()));
+
+        Affordance deletion = afford(
+            methodOn(AudiobookController.class).deleteAudiobook(abook.getId())
+        );
+
+        Affordance update = null;
+        try {
+            update = afford(
+               methodOn(AudiobookController.class).updateAudiobook(abook)
+           );
+        } catch (URISyntaxException e) {
+            // ignored
         }
 
+        return selfLink
+            .andAffordances(Arrays.asList( get,update, deletion))
+            .withSelfRel();
+
+
+    }
+
+    private Link audioLibraryReference(Long audioLibraryId)
+    {
+        return entityLinks
+            .linkToItemResource(AudioLibraryDTO.class, audioLibraryId )
+            .withRel("audio-library");
     }
 
     @Override

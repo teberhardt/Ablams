@@ -23,7 +23,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
+@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL_FORMS)
 public class AblamsApp {
 
     private static final Logger log = LoggerFactory.getLogger(AblamsApp.class);

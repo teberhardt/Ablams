@@ -84,7 +84,7 @@ public class AudiobookController {
      */
     @PutMapping
     @Timed
-    public ResponseEntity<AudiobookDTO> updateAudiobook(@RequestBody AudiobookDTO audiobookDTO) throws URISyntaxException {
+    public ResponseEntity<EntityModel<AudiobookDTO>> updateAudiobook(@RequestBody AudiobookDTO audiobookDTO) throws URISyntaxException {
         log.debug("REST request to update Audiobook : {}", audiobookDTO);
         if (audiobookDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -93,7 +93,7 @@ public class AudiobookController {
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, audiobookDTO.getId().toString()))
-            .body(result);
+            .body(assembler.toModel(result));
 
     }
 
@@ -105,11 +105,11 @@ public class AudiobookController {
      */
     @GetMapping
     @Timed
-    public PagedModel<EntityModel<AudiobookDTO>> getAllAudiobooks(Pageable pageable) {
+    public ResponseEntity<PagedModel<EntityModel<AudiobookDTO>>> getAllAudiobooks(Pageable pageable) {
         log.debug("REST request to get all Audiobooks");
 
         Page<AudiobookDTO> currentPage = audiobookService.findAll(pageable);
-        return pagedAssembler.toModel(currentPage, assembler);
+        return ResponseEntity.ok(pagedAssembler.toModel(currentPage, assembler));
     }
 
     /**
@@ -126,7 +126,8 @@ public class AudiobookController {
             .findOne(id)
             .map(assembler::toModel)
             .map(ResponseEntity::ok)
-            .orElse(ResponseEntity
+            .orElse(
+                ResponseEntity
                 .notFound()
                 .build()
             );

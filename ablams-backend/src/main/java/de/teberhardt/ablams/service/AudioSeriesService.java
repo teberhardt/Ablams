@@ -1,8 +1,9 @@
 package de.teberhardt.ablams.service;
 
 import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,8 +23,9 @@ public interface AudioSeriesService {
      * Get all the audioSeries.
      *
      * @return the list of entities
+     * @param pageable
      */
-    List<AudioSeriesDTO> findAll();
+    Page<AudioSeriesDTO> findAll(Pageable pageable);
 
 
     /**

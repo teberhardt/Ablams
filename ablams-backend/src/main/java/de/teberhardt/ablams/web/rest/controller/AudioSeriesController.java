@@ -3,19 +3,22 @@ package de.teberhardt.ablams.web.rest.controller;
 import de.teberhardt.ablams.service.AudioSeriesService;
 import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
-import de.teberhardt.ablams.web.dto.AudiobookDTO;
+import de.teberhardt.ablams.web.rest.assembler.AudioSeriesRepresentationModelAssembler;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,8 +35,15 @@ public class AudioSeriesController {
 
     private final AudioSeriesService audioSeriesService;
 
-    public AudioSeriesController(AudioSeriesService audioSeriesService) {
+    private final AudioSeriesRepresentationModelAssembler modelAssembler;
+
+    private final PagedResourcesAssembler<AudioSeriesDTO> pagedAssembler;
+
+
+    public AudioSeriesController(AudioSeriesService audioSeriesService, AudioSeriesRepresentationModelAssembler modelAssembler, PagedResourcesAssembler<AudioSeriesDTO> pagedResourcesAssembler) {
         this.audioSeriesService = audioSeriesService;
+        this.modelAssembler = modelAssembler;
+        this.pagedAssembler = pagedResourcesAssembler;
     }
 
     /**
@@ -45,15 +55,16 @@ public class AudioSeriesController {
      */
     @PostMapping
     @Timed
-    public ResponseEntity<AudioSeriesDTO> createAudioSeries(@RequestBody AudioSeriesDTO audioSeriesDTO) throws URISyntaxException {
+    public ResponseEntity<EntityModel<AudioSeriesDTO>> createAudioSeries(@RequestBody AudioSeriesDTO audioSeriesDTO) throws URISyntaxException {
         log.debug("REST request to save AudioSeries : {}", audioSeriesDTO);
         if (audioSeriesDTO.getId() != null) {
             throw new BadRequestAlertException("A new audioSeries cannot already have an ID", ENTITY_NAME, "idexists");
         }
         AudioSeriesDTO result = audioSeriesService.save(audioSeriesDTO);
+
         return ResponseEntity.created(new URI("/api/audio-series/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+            .body(modelAssembler.toModel(result));
     }
 
     /**
@@ -67,15 +78,18 @@ public class AudioSeriesController {
      */
     @PutMapping("/audio-series")
     @Timed
-    public ResponseEntity<AudioSeriesDTO> updateAudioSeries(@RequestBody AudioSeriesDTO audioSeriesDTO) throws URISyntaxException {
+    public ResponseEntity<EntityModel<AudioSeriesDTO>> updateAudioSeries(@RequestBody AudioSeriesDTO audioSeriesDTO) throws URISyntaxException {
         log.debug("REST request to update AudioSeries : {}", audioSeriesDTO);
         if (audioSeriesDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
         AudioSeriesDTO result = audioSeriesService.save(audioSeriesDTO);
+
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, audioSeriesDTO.getId().toString()))
-            .body(result);
+            .body(modelAssembler.toModel(result));
     }
 
     /**
@@ -85,9 +99,9 @@ public class AudioSeriesController {
      */
     @GetMapping
     @Timed
-    public List<AudioSeriesDTO> getAllAudioSeries() {
+    public PagedModel<EntityModel<AudioSeriesDTO>> getAllAudioSeries(Pageable pageable) {
         log.debug("REST request to get all AudioSeries");
-        return audioSeriesService.findAll();
+        return pagedAssembler.toModel(audioSeriesService.findAll(pageable), modelAssembler);
     }
 
     /**
@@ -98,10 +112,13 @@ public class AudioSeriesController {
      */
     @GetMapping("/{id}")
     @Timed
-    public ResponseEntity<AudioSeriesDTO> getAudioSeries(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<AudioSeriesDTO>> getAudioSeries(@PathVariable Long id) {
         log.debug("REST request to get AudioSeries : {}", id);
         Optional<AudioSeriesDTO> audioSeriesDTO = audioSeriesService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(audioSeriesDTO);
+        return ResponseUtil
+            .wrapOrNotFound(
+                audioSeriesDTO.map(modelAssembler::toModel)
+            );
     }
 
     /**

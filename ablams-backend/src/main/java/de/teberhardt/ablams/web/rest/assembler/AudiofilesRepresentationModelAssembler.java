@@ -1,6 +1,5 @@
 package de.teberhardt.ablams.web.rest.assembler;
 
-import de.teberhardt.ablams.domain.Progressable;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
 import de.teberhardt.ablams.web.dto.ProgressableDTO;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AudiofilesRepresentationModelAssembler implements SimpleRepresentationModelAssembler<AudiofileDTO> {
 
-    EntityLinks entityLinks;
+    private final EntityLinks entityLinks;
 
     public AudiofilesRepresentationModelAssembler(EntityLinks entityLinks) {
         this.entityLinks = entityLinks;

@@ -4,18 +4,23 @@ package de.teberhardt.ablams.web.rest.controller;
 import de.teberhardt.ablams.service.AudiofileService;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
+import de.teberhardt.ablams.web.rest.assembler.AudiofilesRepresentationModelAssembler;
 import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
 import de.teberhardt.ablams.web.rest.util.HeaderUtil;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,8 +37,14 @@ public class AudiofileController {
 
     private final AudiofileService audiofileService;
 
-    public AudiofileController(AudiofileService audiofileService) {
+    private final AudiofilesRepresentationModelAssembler modelAssembler;
+
+    private final PagedResourcesAssembler<AudiofileDTO> pageAssembler;
+
+    public AudiofileController(AudiofileService audiofileService, AudiofilesRepresentationModelAssembler modelAssembler, PagedResourcesAssembler<AudiofileDTO> pageAssembler) {
         this.audiofileService = audiofileService;
+        this.modelAssembler = modelAssembler;
+        this.pageAssembler = pageAssembler;
     }
 
     /**
@@ -45,7 +56,7 @@ public class AudiofileController {
      */
     @PostMapping
     @Timed
-    public ResponseEntity<AudiofileDTO> createAudiofile(@RequestBody AudiofileDTO audiofileDTO) throws URISyntaxException {
+    public ResponseEntity<EntityModel<AudiofileDTO>> createAudiofile(@RequestBody AudiofileDTO audiofileDTO) throws URISyntaxException {
         log.debug("REST request to save Audiofile : {}", audiofileDTO);
         if (audiofileDTO.getId() != null) {
             throw new BadRequestAlertException("A new audiofile cannot already have an ID", ENTITY_NAME, "idexists");
@@ -53,7 +64,7 @@ public class AudiofileController {
         AudiofileDTO result = audiofileService.save(audiofileDTO);
         return ResponseEntity.created(new URI("/api/audio-files/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+            .body(modelAssembler.toModel(result));
     }
 
     /**
@@ -67,15 +78,16 @@ public class AudiofileController {
      */
     @PutMapping
     @Timed
-    public ResponseEntity<AudiofileDTO> updateAudiofile(@RequestBody AudiofileDTO audiofileDTO) throws URISyntaxException {
+    public ResponseEntity<EntityModel<AudiofileDTO>> updateAudiofile(@RequestBody AudiofileDTO audiofileDTO) throws URISyntaxException {
         log.debug("REST request to update Audiofile : {}", audiofileDTO);
         if (audiofileDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         AudiofileDTO result = audiofileService.save(audiofileDTO);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, audiofileDTO.getId().toString()))
-            .body(result);
+            .body(modelAssembler.toModel(result));
     }
 
     /**
@@ -85,9 +97,9 @@ public class AudiofileController {
      */
     @GetMapping
     @Timed
-    public List<AudiofileDTO> getAllAudiofiles() {
+    public PagedModel<EntityModel<AudiofileDTO>> getAllAudiofiles(Pageable pageable) {
         log.debug("REST request to get all Audiofiles");
-        return audiofileService.findAll();
+        return pageAssembler.toModel(audiofileService.findAll(pageable), modelAssembler);
     }
 
     /**
@@ -97,9 +109,9 @@ public class AudiofileController {
      */
     @GetMapping("/{aId}/audio-files")
     @Timed
-    public List<AudiofileDTO> getAudiofilesOfAudiobook(@PathVariable Long aId) {
+    public CollectionModel<EntityModel<AudiofileDTO>> getAudiofilesOfAudiobook(@PathVariable Long aId) {
         log.debug("REST request to get all Audiofiles");
-        return audiofileService.findbyAudiobook(aId);
+        return modelAssembler.toCollectionModel(audiofileService.findbyAudiobook(aId));
     }
 
     /**
@@ -110,10 +122,14 @@ public class AudiofileController {
      */
     @GetMapping("/{id}")
     @Timed
-    public ResponseEntity<AudiofileDTO> getAudiofile(@PathVariable Long id) {
+    public ResponseEntity<EntityModel<AudiofileDTO>> getAudiofile(@PathVariable Long id) {
         log.debug("REST request to get Audiofile : {}", id);
         Optional<AudiofileDTO> audiofileDTO = audiofileService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(audiofileDTO);
+
+        return ResponseUtil
+            .wrapOrNotFound(
+                audiofileDTO.map(modelAssembler::toModel)
+            );
     }
 
     /**

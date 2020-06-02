@@ -3,6 +3,8 @@ package de.teberhardt.ablams.service;
 import de.teberhardt.ablams.domain.Audiobook;
 import de.teberhardt.ablams.domain.Audiofile;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -26,8 +28,9 @@ public interface AudiofileService {
      * Get all the audiofiles.
      *
      * @return the list of entities
+     * @param pageable
      */
-    List<AudiofileDTO> findAll();
+    Page<AudiofileDTO> findAll(Pageable pageable);
 
 
     /**

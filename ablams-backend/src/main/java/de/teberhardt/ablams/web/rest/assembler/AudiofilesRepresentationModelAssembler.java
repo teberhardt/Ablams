@@ -27,7 +27,7 @@ public class AudiofilesRepresentationModelAssembler implements SimpleRepresentat
         if (content != null)
         {
             resource.add(
-                entityLinks.linkToItemResource(AudiofileDTO.class, content.getId())
+                entityLinks.linkToItemResource(content, AudiofileDTO::getId)
                     .withSelfRel()
             );
 

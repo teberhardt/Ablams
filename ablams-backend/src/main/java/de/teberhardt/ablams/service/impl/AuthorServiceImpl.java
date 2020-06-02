@@ -7,6 +7,8 @@ import de.teberhardt.ablams.web.dto.AuthorDTO;
 import de.teberhardt.ablams.service.mapper.AuthorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing Author.
@@ -53,14 +54,14 @@ public class AuthorServiceImpl implements AuthorService {
      * Get all the authors.
      *
      * @return the list of entities
+     * @param pageable
      */
     @Override
     @Transactional(readOnly = true)
-    public List<AuthorDTO> findAll() {
+    public Page<AuthorDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Authors");
-        return authorRepository.findAll().stream()
-            .map(authorMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return authorRepository.findAll(pageable)
+            .map(authorMapper::toDto);
     }
 
 

@@ -1,6 +1,8 @@
 package de.teberhardt.ablams.service;
 
 import de.teberhardt.ablams.web.dto.AuthorDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +24,9 @@ public interface AuthorService {
      * Get all the authors.
      *
      * @return the list of entities
+     * @param pageable
      */
-    List<AuthorDTO> findAll();
+    Page<AuthorDTO> findAll(Pageable pageable);
     /**
      * Get all the AuthorDTO where Image is null.
      *

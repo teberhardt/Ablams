@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.34.976 on 2022-01-16 00:14:40.
+// Generated using typescript-generator version 2.34.976 on 2022-01-16 00:58:11.
 
 export interface AudioLibraryDTO extends Serializable {
     id?: number;
@@ -50,7 +50,7 @@ export interface ProgressableDTO extends Serializable {
     userId: number;
     abookId: number;
     afileId: number;
-    minutesInto: number;
+    secondsInto: number;
 }
 
 export interface Serializable {

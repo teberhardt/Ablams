@@ -1,32 +1,31 @@
 package de.teberhardt.ablams.service.impl;
 
-import de.teberhardt.ablams.domain.Audiobook;
 import de.teberhardt.ablams.domain.AudioLibrary;
+import de.teberhardt.ablams.domain.Audiobook;
 import de.teberhardt.ablams.domain.Cover;
 import de.teberhardt.ablams.repository.AudiobookRepository;
 import de.teberhardt.ablams.repository.CoverRepository;
 import de.teberhardt.ablams.service.AudiobookService;
 import de.teberhardt.ablams.service.AudiofileService;
+import de.teberhardt.ablams.service.mapper.AudiobookMapper;
 import de.teberhardt.ablams.util.PathStringUtils;
 import de.teberhardt.ablams.web.dto.AudiobookDTO;
-import de.teberhardt.ablams.service.mapper.AudiobookMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing Audiobook.
  */
-@Service
+@Singleton
 @Transactional
 public class AudiobookServiceImpl implements AudiobookService {
 
@@ -58,7 +57,7 @@ public class AudiobookServiceImpl implements AudiobookService {
         log.debug("Request to save Audiobook : {}", audiobookDTO);
 
         Audiobook audiobook = audiobookMapper.toEntity(audiobookDTO);
-        audiobook = audiobookRepository.save(audiobook);
+        audiobookRepository.persist(audiobook);
         return audiobookMapper.toDto(audiobook);
     }
 
@@ -68,12 +67,21 @@ public class AudiobookServiceImpl implements AudiobookService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public List<AudiobookDTO> findAll() {
         log.debug("Request to get all Audiobooks");
         return audiobookRepository.findAll().stream()
-            .map(audiobookMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+            .map(audiobookMapper::toDto).toList();
+
+/*        AudiobookDTO adto = new AudiobookDTO();
+        adto.setId(1L);
+        adto.setFilePath("blubb");
+        adto.setLanguage("de");
+        adto.setAuthorId(1L);
+        adto.setSeriesId(-1L);
+        adto.setName("");
+
+        return new List.of()*/
     }
 
 
@@ -82,11 +90,10 @@ public class AudiobookServiceImpl implements AudiobookService {
      *  get all the audiobooks where Image is null.
      *  @return the list of entities
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public List<AudiobookDTO> findAllWhereImageIsNull() {
         log.debug("Request to get all audiobooks where Image is null");
-        return StreamSupport
-            .stream(audiobookRepository.findAll().spliterator(), false)
+        return audiobookRepository.findAll().stream()
             .filter(audiobook -> audiobook.getCover() == null)
             .map(audiobookMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
@@ -99,11 +106,10 @@ public class AudiobookServiceImpl implements AudiobookService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public Optional<AudiobookDTO> findOne(Long id) {
         log.debug("Request to get Audiobook : {}", id);
-        return audiobookRepository.findById(id)
-            .map(audiobookMapper::toDto);
+        return Optional.of(audiobookMapper.toDto(audiobookRepository.findById(id)));
     }
 
     /**
@@ -136,7 +142,7 @@ public class AudiobookServiceImpl implements AudiobookService {
             if(cover != null)
             {
                 cover.setAudiobook(audiobook);
-                coverRepository.save(cover);
+                coverRepository.persist(cover);
             }
             audiobook.setCover(cover);
 
@@ -144,7 +150,7 @@ public class AudiobookServiceImpl implements AudiobookService {
             log.error("Could not Scan Cover in Audiobook {}, due to" ,audiobook.getId(), e);
         }
 
-        audiobook = audiobookRepository.save(audiobook);
+        audiobookRepository.persist(audiobook);
 
         audiofileService.scan(audiofilePaths, audiobook);
     }

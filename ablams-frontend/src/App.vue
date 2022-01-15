@@ -23,6 +23,7 @@
 import Vue from 'vue';
 import Appbar from '@/components/Appbar.vue';
 import NavigationDrawer from '@/components/NavigationDrawer.vue';
+import PlayBar from '@/components/PlayBar.vue';
 import axios from 'axios';
 
 Vue.prototype.$http = axios;
@@ -32,6 +33,7 @@ export default Vue.extend({
   components: {
       Appbar,
       NavigationDrawer,
+      PlayBar,
   },
   data: () => ({
     //

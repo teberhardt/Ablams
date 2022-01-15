@@ -1,7 +1,7 @@
-import {AudioLibraryDTO} from 'ablams-js-dto/src/domain/models';
+import {AudioLibraryDTO} from 'ablams-communication/ablams/communication';
 import {AbstractRestResource} from '@/rest/AbstractRestResource';
 
-export default new class AudioLibraryResource extends AbstractRestResource<AudioLibraryDTO> {
+class AudioLibraryResource extends AbstractRestResource<AudioLibraryDTO> {
 
     constructor() {
         super('/api/audio-libraries');
@@ -12,4 +12,7 @@ export default new class AudioLibraryResource extends AbstractRestResource<Audio
         aLib.id = undefined;
         return aLib;
     }
-};
+}
+
+export default new AudioLibraryResource();
+

@@ -16,17 +16,10 @@
         <v-card-text>{{abook.name}}</v-card-text>
 
         <v-card-actions class="card-actions" >
-            <v-btn
-                color="orange"
-                text
-            >
+            <v-btn color="orange" text onclick="initPlay()">
                 Play
             </v-btn>
-
-            <v-btn
-                color="orange"
-                text
-            >
+            <v-btn color="orange" text>
                 Details
             </v-btn>
         </v-card-actions>
@@ -34,7 +27,7 @@
 </template>
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import {AudiobookDTO} from 'ablams-js-dto/src/domain/models';
+    import {AudiobookDTO} from 'ablams-communication/ablams/communication';
 
     @Component ({
         props: {
@@ -52,7 +45,11 @@
         }
 
         public getImageSrcUrl(): string{
-            return `/api/audio-books/${this.$props.abook.id}/cover/raw`
+            return `/api/audio-books/${this.$props.abook.id}/cover/raw`;
+        }
+
+        public initPlay(){
+          this.$root.$emit("initPlay", this.$props.abook.id)
         }
     }
 </script>

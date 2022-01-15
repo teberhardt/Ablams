@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity AudioLibrary and its DTO AudioLibraryDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "cdi", uses = {})
 public interface AudioLibraryMapper extends EntityMapper<AudioLibraryDTO, AudioLibrary> {
 
 

@@ -1,8 +1,6 @@
 <template>
     <div>
         <v-subheader>Alle Audiobooks</v-subheader>
-
-
         <v-container fluid>
             <v-row justify="start">
                 <v-col cols="10"
@@ -23,7 +21,7 @@
 </template>
 
 <script lang="ts">
-    import {AudiobookDTO} from 'ablams-js-dto/src/domain/models';
+    import {AudiobookDTO} from 'ablams-communication/ablams/communication';
     import {Component, Vue} from 'vue-property-decorator';
     import AudioBookResource from "@/rest/AudioBookResource";
     import AudiobookCard from "@/components/AudiobookCard.vue";

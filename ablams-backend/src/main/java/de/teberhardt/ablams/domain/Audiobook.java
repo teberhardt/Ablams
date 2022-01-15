@@ -56,6 +56,10 @@ public class Audiobook implements LocalPersisted,Serializable  {
     @JsonIgnoreProperties("audiobooks")
     private Author author;
 
+    @ManyToOne
+    @JsonIgnoreProperties("audiofiles")
+    private Progressable progress;
+
     public Long getId() {
         return id;
     }

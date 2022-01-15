@@ -59,8 +59,7 @@
     <v-subheader>Neu</v-subheader>
     <v-sheet
         elevation="7"
-        class="ma-0 pa-0"
-      >
+        class="ma-0 pa-0">
         <v-slide-group
           v-model="model"
           class="ma-0"
@@ -69,9 +68,7 @@
           :multiple="multiple"
           :mandatory="mandatory"
           :show-arrows="showArrows"
-          :center-active="centerActive"
-
-        >
+          :center-active="centerActive">
         
           <v-slide-item
             v-for="n in 15"
@@ -114,11 +111,9 @@ export default Vue.extend({
   data: () => ({
             TopCarouselItems: [
               { src: 'https://steamuserimages-a.akamaihd.net/ugc/866240102625297315/AA2C1F9CD9F438CAEEA3882398054BCBA441DE24/'},
-               
-                { src: 'https://medienbewusst.de/cms/wp-content/uploads/pics/Ressort_Musik/fragezeichen.jpg'},
-                { src: 'https://www.heldenderfreizeit.com/wp-content/uploads/2014/03/Ursula-Poznanski-Erebos-Aufmacherfoto-1200x800_c.jpg'},
-                 ],
-                
+              { src: 'https://medienbewusst.de/cms/wp-content/uploads/pics/Ressort_Musik/fragezeichen.jpg'},
+              { src: 'https://www.heldenderfreizeit.com/wp-content/uploads/2014/03/Ursula-Poznanski-Erebos-Aufmacherfoto-1200x800_c.jpg'},
+              ],
         }),
         methods: {
         },

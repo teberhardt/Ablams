@@ -7,9 +7,9 @@ import de.teberhardt.ablams.web.dto.AuthorDTO;
 import de.teberhardt.ablams.service.mapper.AuthorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import java.util.stream.StreamSupport;
 /**
  * Service Implementation for managing Author.
  */
-@Service
+@Singleton
 @Transactional
 public class AuthorServiceImpl implements AuthorService {
 
@@ -45,7 +45,7 @@ public class AuthorServiceImpl implements AuthorService {
         log.debug("Request to save Author : {}", authorDTO);
 
         Author author = authorMapper.toEntity(authorDTO);
-        author = authorRepository.save(author);
+        authorRepository.persist(author);
         return authorMapper.toDto(author);
     }
 
@@ -55,7 +55,7 @@ public class AuthorServiceImpl implements AuthorService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<AuthorDTO> findAll() {
         log.debug("Request to get all Authors");
         return authorRepository.findAll().stream()
@@ -69,11 +69,10 @@ public class AuthorServiceImpl implements AuthorService {
      *  get all the authors where Image is null.
      *  @return the list of entities
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public List<AuthorDTO> findAllWhereImageIsNull() {
         log.debug("Request to get all authors where Image is null");
-        return StreamSupport
-            .stream(authorRepository.findAll().spliterator(), false)
+        return authorRepository.findAll().stream()
             .filter(author -> author.getCover() == null)
             .map(authorMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
@@ -86,11 +85,11 @@ public class AuthorServiceImpl implements AuthorService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<AuthorDTO> findOne(Long id) {
         log.debug("Request to get Author : {}", id);
-        return authorRepository.findById(id)
-            .map(authorMapper::toDto);
+        return Optional.of(authorMapper.toDto(authorRepository.findById(id)));
+
     }
 
     /**

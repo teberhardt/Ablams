@@ -1,0 +1,25 @@
+apply plugin: 'cz.habarta.typescript-generator'
+apply plugin: 'java'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'cz.habarta.typescript-generator', name: 'typescript-generator-gradle-plugin', version: '2.34.976'
+    }
+}
+
+dependencies {
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+}
+
+generateTypeScript {
+    jsonLibrary = 'jackson2'
+    classPatterns = [
+            'de.teberhardt.ablams.web.dto.*'
+    ]
+    outputFile = 'src/generated-ts/ablams/communication.d.ts'
+    outputKind = 'module'
+    optionalAnnotations = ['javax.annotation.Nullable']
+}

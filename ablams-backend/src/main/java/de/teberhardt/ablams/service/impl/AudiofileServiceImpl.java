@@ -7,12 +7,18 @@ import de.teberhardt.ablams.service.AudiofileService;
 import de.teberhardt.ablams.service.mapper.AudiofileMapper;
 import de.teberhardt.ablams.util.PathStringUtils;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
+import javax.ws.rs.core.StreamingOutput;
+import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * Service Implementation for managing Audiofile.
  */
-@Service
+@Singleton
 @Transactional
 public class AudiofileServiceImpl implements AudiofileService {
 
@@ -48,7 +54,7 @@ public class AudiofileServiceImpl implements AudiofileService {
         log.debug("Request to save Audiofile : {}", audiofileDTO);
 
         Audiofile audiofile = audiofileMapper.toEntity(audiofileDTO);
-        audiofile = audiofileRepository.save(audiofile);
+        audiofileRepository.persist(audiofile);
         return audiofileMapper.toDto(audiofile);
     }
 
@@ -58,7 +64,7 @@ public class AudiofileServiceImpl implements AudiofileService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<AudiofileDTO> findAll() {
         log.debug("Request to get all Audiofiles");
         return audiofileRepository.findAll().stream()
@@ -74,11 +80,10 @@ public class AudiofileServiceImpl implements AudiofileService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<AudiofileDTO> findOne(Long id) {
         log.debug("Request to get Audiofile : {}", id);
-        return audiofileRepository.findById(id)
-            .map(audiofileMapper::toDto);
+        return Optional.of(audiofileMapper.toDto(audiofileRepository.findById(id)));
     }
 
     /**
@@ -110,13 +115,30 @@ public class AudiofileServiceImpl implements AudiofileService {
                 .findAny()
             .orElseGet(() -> new Audiofile().filePath(relPathString).audiobook(relatedAudiobook));
 
-        return audiofileRepository.save(audiofile);
+        audiofileRepository.persist(audiofile);
+        return audiofile;
     }
 
     @Override
     public List<AudiofileDTO> findbyAudiobook(Long aId) {
         List<Audiofile> audiofilesE = audiofileRepository.findByAudiobookId(aId);
         return audiofileMapper.toDto(audiofilesE);
+    }
+
+    @Override
+    public StreamingOutput streamFile(Long id) {
+
+/*        Optional<AudiofileDTO> one = findOne(id);
+        String filePath = one.orElseThrow().getFilePath();*/
+
+        String filePath = "F:\\hörbucher\\Andrzej Sapkowski - The Witcher - Band 5 - Die Dame vom See\\11 Die Dame vom See.mp3";
+
+        return out -> {
+            try (InputStream input = Files.newInputStream(Paths.get(filePath))) {
+                IOUtils.copy(input, out);
+            }
+        };
+
     }
 
     @Override
@@ -130,7 +152,7 @@ public class AudiofileServiceImpl implements AudiofileService {
                 PathStringUtils pathStringUtils = new PathStringUtils(filePath);
                 String relPathString = pathStringUtils.getRelativeString(relatedAudiobook.getPath());
 
-                audiofileRepository.save(new Audiofile().filePath(relPathString).audiobook(relatedAudiobook));
+                audiofileRepository.persist(new Audiofile().filePath(relPathString).audiobook(relatedAudiobook));
             }
         }
         else

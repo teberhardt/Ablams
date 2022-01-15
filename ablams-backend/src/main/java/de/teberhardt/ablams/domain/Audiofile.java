@@ -37,10 +37,6 @@ public class Audiofile implements LocalPersisted, Serializable {
     @JsonIgnoreProperties("audiofiles")
     private Audiobook audiobook;
 
-    @ManyToOne
-    @JsonIgnoreProperties("audiofiles")
-    private Progressable progress;
-
     @Transient
     private AudioCharacteristics audioCharacteristics = new AudioCharacteristics();
 
@@ -89,19 +85,6 @@ public class Audiofile implements LocalPersisted, Serializable {
 
     public void setAudiobook(Audiobook audiobook) {
         this.audiobook = audiobook;
-    }
-
-    public Progressable getProgress() {
-        return progress;
-    }
-
-    public Audiofile progress(Progressable progressable) {
-        this.progress = progressable;
-        return this;
-    }
-
-    public void setProgress(Progressable progressable) {
-        this.progress = progressable;
     }
 
     @Override

@@ -2,14 +2,14 @@ package de.teberhardt.ablams.service.impl;
 
 import de.teberhardt.ablams.domain.Cover;
 import de.teberhardt.ablams.service.CoverService;
-import org.springframework.stereotype.Service;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
-@Service
+@Singleton
 public class CoverPhysicalScanService {
 
     CoverService coverService;

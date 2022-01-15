@@ -3,13 +3,13 @@ package de.teberhardt.ablams.service.impl;
 import de.teberhardt.ablams.domain.Progressable;
 import de.teberhardt.ablams.repository.ProgressableRepository;
 import de.teberhardt.ablams.service.ProgressableService;
-import de.teberhardt.ablams.web.dto.ProgressableDTO;
 import de.teberhardt.ablams.service.mapper.ProgressableMapper;
+import de.teberhardt.ablams.web.dto.ProgressableDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * Service Implementation for managing Progressable.
  */
-@Service
+@Singleton
 @Transactional
 public class ProgressableServiceImpl implements ProgressableService {
 
@@ -44,7 +44,7 @@ public class ProgressableServiceImpl implements ProgressableService {
         log.debug("Request to save Progressable : {}", progressableDTO);
 
         Progressable progressable = progressableMapper.toEntity(progressableDTO);
-        progressable = progressableRepository.save(progressable);
+        progressableRepository.persist(progressable);
         return progressableMapper.toDto(progressable);
     }
 
@@ -54,7 +54,7 @@ public class ProgressableServiceImpl implements ProgressableService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<ProgressableDTO> findAll() {
         log.debug("Request to get all Progressables");
         return progressableRepository.findAll().stream()
@@ -70,11 +70,10 @@ public class ProgressableServiceImpl implements ProgressableService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<ProgressableDTO> findOne(Long id) {
         log.debug("Request to get Progressable : {}", id);
-        return progressableRepository.findById(id)
-            .map(progressableMapper::toDto);
+        return Optional.of(progressableMapper.toDto(progressableRepository.findById(id)));
     }
 
     /**

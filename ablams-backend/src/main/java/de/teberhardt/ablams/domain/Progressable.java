@@ -5,9 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A Progressable.
@@ -24,15 +22,20 @@ public class Progressable implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "progress")
-    private Float progress;
+    @Column(name = "userId")
+    private Long userId;
 
-    @Column(name = "duration")
-    private Float duration;
-
-    @OneToMany(mappedBy = "progress")
+    @OneToOne
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Audiofile> audiofiles = new HashSet<>();
+    private Audiobook audiobook;
+
+    @OneToOne
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Audiofile audiofile;
+
+    @Column(name = "secondsInto")
+    private Float secondsInto;
+
 
     public Long getId() {
         return id;
@@ -42,55 +45,36 @@ public class Progressable implements Serializable {
         this.id = id;
     }
 
-    public Float getProgress() {
-        return progress;
+    public Long getUserId() {
+        return userId;
     }
 
-    public Progressable progress(Float progress) {
-        this.progress = progress;
-        return this;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public void setProgress(Float progress) {
-        this.progress = progress;
+    public Audiobook getAudiobook() {
+        return audiobook;
     }
 
-    public Float getDuration() {
-        return duration;
+    public void setAudiobook(Audiobook audiobook) {
+        this.audiobook = audiobook;
     }
 
-    public Progressable duration(Float duration) {
-        this.duration = duration;
-        return this;
+    public Audiofile getAudiofile() {
+        return audiofile;
     }
 
-    public void setDuration(Float duration) {
-        this.duration = duration;
+    public void setAudiofile(Audiofile audiofile) {
+        this.audiofile = audiofile;
     }
 
-    public Set<Audiofile> getAudiofiles() {
-        return audiofiles;
+    public Float getSecondsInto() {
+        return secondsInto;
     }
 
-    public Progressable audiofiles(Set<Audiofile> audiofiles) {
-        this.audiofiles = audiofiles;
-        return this;
-    }
-
-    public Progressable addAudiofile(Audiofile audiofile) {
-        this.audiofiles.add(audiofile);
-        audiofile.setProgress(this);
-        return this;
-    }
-
-    public Progressable removeAudiofile(Audiofile audiofile) {
-        this.audiofiles.remove(audiofile);
-        audiofile.setProgress(null);
-        return this;
-    }
-
-    public void setAudiofiles(Set<Audiofile> audiofiles) {
-        this.audiofiles = audiofiles;
+    public void setSecondsInto(Float minutesInto) {
+        this.secondsInto = minutesInto;
     }
 
     @Override
@@ -116,9 +100,11 @@ public class Progressable implements Serializable {
     @Override
     public String toString() {
         return "Progressable{" +
-            "id=" + getId() +
-            ", progress=" + getProgress() +
-            ", duration=" + getDuration() +
-            "}";
+                "id=" + id +
+                ", userId=" + userId +
+                ", audiobook=" + audiobook +
+                ", audiofile=" + audiofile +
+                ", minutesInto=" + secondsInto +
+                '}';
     }
 }

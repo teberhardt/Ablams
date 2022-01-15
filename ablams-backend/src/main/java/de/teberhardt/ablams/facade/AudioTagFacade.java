@@ -10,13 +10,13 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.TagField;
-import org.springframework.stereotype.Service;
 
+import javax.inject.Singleton;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-@Service
+@Singleton
 public class AudioTagFacade {
 
     private final AudioFileIO audioFileIO;

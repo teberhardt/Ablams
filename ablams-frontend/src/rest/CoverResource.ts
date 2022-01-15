@@ -1,5 +1,5 @@
 import {AbstractRestResource} from '@/rest/AbstractRestResource';
-import {CoverDTO} from 'ablams-js-dto/src/domain/models';
+import {CoverDTO} from 'ablams-communication/ablams/communication';
 
 export default new class CoverResourceResource extends AbstractRestResource<CoverDTO> {
 

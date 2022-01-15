@@ -7,9 +7,9 @@ import de.teberhardt.ablams.service.mapper.CoverMapper;
 import de.teberhardt.ablams.web.dto.CoverDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * Service Implementation for managing Image.
  */
-@Service
+@Singleton
 @Transactional
 public class CoverServiceImpl implements CoverService {
 
@@ -48,7 +48,7 @@ public class CoverServiceImpl implements CoverService {
         log.debug("Request to save Cover : {}", coverDTO);
 
         Cover cover = coverMapper.toEntity(coverDTO);
-        cover = coverRepository.save(cover);
+        coverRepository.persist(cover);
         return coverMapper.toDto(cover);
     }
 
@@ -58,7 +58,7 @@ public class CoverServiceImpl implements CoverService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<CoverDTO> findAll() {
         log.debug("Request to get all Covers");
         return coverRepository.findAll().stream()
@@ -74,11 +74,10 @@ public class CoverServiceImpl implements CoverService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<CoverDTO> findOne(Long id) {
         log.debug("Request to get Cover : {}", id);
-        return coverRepository.findById(id)
-            .map(coverMapper::toDto);
+        return Optional.of(coverMapper.toDto(coverRepository.findById(id)));
     }
 
     /**

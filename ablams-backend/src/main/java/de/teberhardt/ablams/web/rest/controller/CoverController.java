@@ -4,6 +4,7 @@ package de.teberhardt.ablams.web.rest.controller;
 import de.teberhardt.ablams.service.CoverService;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.dto.CoverDTO;
+import de.teberhardt.ablams.web.rest.util.RestStream;
 import io.micrometer.core.annotation.Timed;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -111,14 +113,15 @@ public class CoverController {
      * @param aId the id of the coverDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the coverDTO, or with status 404 (Not Found)
      */
-    @Path("/audio-books/{aId}/cover/raw")
+    @Produces("*/*")
+    @Path("/audio-books/{aId}/cover/image")
     @GET
     @Timed
-    public Object getCoverAsByteByAudiobook( Long aId) throws IOException {
+    public Response getCoverAsByteByAudiobook(@PathParam("aId") Long aId) {
         log.debug("REST request to get cover as byte array of audiobook {}", aId);
-        Optional<InputStream> coverStream = coverService.getCoverAsBytestreamForAudiobookId(aId);
-        if (coverStream.isPresent()) {
-            return IOUtils.toByteArray(coverStream.get());
+        RestStream restStream = coverService.streamCoverForAudiobook(aId);
+        if (restStream != null) {
+            return Response.ok(restStream.getStreamingOutput(), restStream.getMimetype()).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

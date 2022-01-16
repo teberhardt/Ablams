@@ -4,6 +4,7 @@ package de.teberhardt.ablams.web.rest.controller;
 import de.teberhardt.ablams.service.AudiofileService;
 import de.teberhardt.ablams.util.ResponseUtil;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
+import de.teberhardt.ablams.web.rest.util.RestStream;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,10 +121,9 @@ public class AudiofileController {
 
     @GET
     @Path("/audio-files/{id}/stream")
-    @Produces("audio/mpeg")
     public Response streamAudioFile(@PathParam("id") Long id) {
-
-        return Response.ok(audiofileService.streamFile(id)).build();
+        RestStream restStream = audiofileService.streamFile(id);
+        return Response.ok(restStream.getStreamingOutput(), restStream.getMimetype()).build();
     }
 
 

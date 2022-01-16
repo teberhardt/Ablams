@@ -16,7 +16,7 @@
         <v-card-text>{{abook.name}}</v-card-text>
 
         <v-card-actions class="card-actions" >
-            <v-btn color="orange" text onclick="initPlay()">
+            <v-btn color="orange" text v-on:click="initPlay">
                 Play
             </v-btn>
             <v-btn color="orange" text>
@@ -28,28 +28,37 @@
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {AudiobookDTO} from 'ablams-communication/ablams/communication';
+    import PlayService from "@/service/PlayService";
 
-    @Component ({
+    @Component({
         props: {
             abook: Object as () => AudiobookDTO
         }
     })
     export default class AudiobookCard extends Vue {
 
-        protected created(): void {
-            this.initialize();
+/*
+        protected mounted(): void {
+            this.$root.$on('playAudiobook',
+                    (audiobookDTO: AudiobookDTO) => {
+                        console.log("initPlay")
+                        const audio = new Audio();
+                        PlayService.play(audiobookDTO, audio);
+                    });
         }
+*/
 
         protected initialize(): void {
 
         }
 
         public getImageSrcUrl(): string{
-            return `/api/audio-books/${this.$props.abook.id}/cover/raw`;
+            return `/api/audio-books/${this.$props.abook.id}/cover/image`;
         }
 
         public initPlay(){
-          this.$root.$emit("initPlay", this.$props.abook.id)
+            console.log("heeeeeeeeeeeeeeeeeeeeeeeelo")
+          this.$root.$root.$emit('playAudiobook', this.$props.abook)
         }
     }
 </script>

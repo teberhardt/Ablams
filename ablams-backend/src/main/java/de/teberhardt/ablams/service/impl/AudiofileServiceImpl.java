@@ -7,6 +7,7 @@ import de.teberhardt.ablams.service.AudiofileService;
 import de.teberhardt.ablams.service.mapper.AudiofileMapper;
 import de.teberhardt.ablams.util.PathStringUtils;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
+import de.teberhardt.ablams.web.rest.util.RestStream;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
-import javax.ws.rs.core.StreamingOutput;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -126,19 +126,11 @@ public class AudiofileServiceImpl implements AudiofileService {
     }
 
     @Override
-    public StreamingOutput streamFile(Long id) {
-
-/*        Optional<AudiofileDTO> one = findOne(id);
-        String filePath = one.orElseThrow().getFilePath();*/
+    public RestStream streamFile(Long id) {
 
         String filePath = "F:\\hörbucher\\Andrzej Sapkowski - The Witcher - Band 5 - Die Dame vom See\\11 Die Dame vom See.mp3";
 
-        return out -> {
-            try (InputStream input = Files.newInputStream(Paths.get(filePath))) {
-                IOUtils.copy(input, out);
-            }
-        };
-
+        return RestStream.of(Paths.get(filePath));
     }
 
     @Override

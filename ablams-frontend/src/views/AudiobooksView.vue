@@ -25,6 +25,7 @@
     import {Component, Vue} from 'vue-property-decorator';
     import AudioBookResource from "@/rest/AudioBookResource";
     import AudiobookCard from "@/components/AudiobookCard.vue";
+    import store from "@/store";
 
 
     @Component({
@@ -34,10 +35,12 @@
 
         private aBooks: AudiobookDTO[] = [];
 
+
+
         protected created(): void {
             this.initialize();
-        }
 
+        }
 
         protected initialize(): void {
             AudioBookResource.fetchAll().then((value) => {

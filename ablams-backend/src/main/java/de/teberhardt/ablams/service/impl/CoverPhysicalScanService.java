@@ -34,7 +34,7 @@ public class CoverPhysicalScanService {
 
     private boolean isCover(Path f) {
         // TODO: think about a better way to do this
-       return f.getFileName().toString().endsWith(".jpg") && f.getFileName().toString().contains("Cover");
+       return f.getFileName().toString().endsWith(".jpg") || f.getFileName().toString().contains("Cover") || f.getFileName().toString().contains("cover");
     }
 
 }

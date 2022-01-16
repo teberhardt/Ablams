@@ -6,12 +6,13 @@ import {AudiobookDTO} from 'ablams-communication/ablams/communication';
 
 
 class PlayService {
-    public play(abook: AudiobookDTO, audio: HTMLAudioElement){
-         ProgressRessource.fetchByAudioBookId(abook.id).then( e => {
-             let abookProgress = e.data;
-             audio.src = AudiofileResource.getStreamEndpointForAudioFile(abookProgress.afileId);
-             audio.currentTime = abookProgress.minutesInto;
-             }  );
+    public play( audio: HTMLAudioElement, abook: AudiobookDTO){
+        ProgressRessource.fetchByAudioBookId(abook.id).then(e => {
+            let abookProgress = e.data;
+            audio.src = AudiofileResource.getStreamEndpointForAudioFile(abookProgress.afileId);
+            audio.currentTime = abookProgress.secondsInto;
+            return audio.play()
+        });
     }
 }
 

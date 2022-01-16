@@ -15,7 +15,7 @@ import java.util.Optional;
 public class CoverRepository implements PanacheRepository<Cover> {
 
     public Optional<Cover> findCoverByAudiobookId(Long audiobookId){
-        return Optional.empty();
+        return find("audiobook_id", audiobookId).stream().findAny();
     }
 
 }

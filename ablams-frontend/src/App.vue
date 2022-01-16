@@ -15,6 +15,8 @@
                     <!-- If using vue-router -->
                     <router-view></router-view>
             </v-content>
+
+            <PlayBar></PlayBar>
         </v-app>
     </main>
 </template>

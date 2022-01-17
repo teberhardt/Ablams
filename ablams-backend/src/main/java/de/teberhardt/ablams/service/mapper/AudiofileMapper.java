@@ -11,18 +11,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "cdi", uses = {AudiobookMapper.class, ProgressableMapper.class})
 public interface AudiofileMapper extends EntityMapper<AudiofileDTO, Audiofile> {
 
-    @Mapping(source = "audiobook.id", target = "audiobookId")
+    @Mapping(source = "audiobookId", target = "audiobookId")
     AudiofileDTO toDto(Audiofile audiofile);
 
-    @Mapping(source = "audiobookId", target = "audiobook")
+    @Mapping(source = "audiobookId", target = "audiobookId")
     Audiofile toEntity(AudiofileDTO audiofileDTO);
-
-    default Audiofile fromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Audiofile audiofile = new Audiofile();
-        audiofile.setId(id);
-        return audiofile;
-    }
 }

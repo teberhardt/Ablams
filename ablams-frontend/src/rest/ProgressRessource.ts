@@ -12,8 +12,8 @@ class ProgressResource extends AbstractRestResource<ProgressableDTO> {
         return progressableDTO;
     }
 
-    public fetchByAudioBookId(id: number | undefined): Promise<AxiosResponse<ProgressableDTO>> {
-        return axios.get(this.ENDPOINT_URL);
+    public fetchByAudioBookId(id: number): Promise<AxiosResponse<ProgressableDTO>> {
+        return axios.post(this.ENDPOINT_URL + `/${id}/start`);
     }
 }
 export default new ProgressResource();

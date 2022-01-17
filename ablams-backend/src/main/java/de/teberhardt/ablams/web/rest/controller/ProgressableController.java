@@ -40,13 +40,10 @@ public class ProgressableController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @POST
+    @Path("/{aid}/start")
     @Timed
-    public Response createProgressable( ProgressableDTO progressableDTO) throws URISyntaxException {
-        log.debug("REST request to save Progressable : {}", progressableDTO);
-        if (progressableDTO.getId() != null) {
-            throw new IllegalArgumentException("A new progressable cannot already have an ID on " +   ENTITY_NAME+ ": idexists");
-        }
-        ProgressableDTO result = progressableService.save(progressableDTO);
+    public Response createProgressable( @PathParam("aid") Long aId) throws URISyntaxException {
+        ProgressableDTO result = progressableService.startOrProceedProgress(aId);
         return Response.created(new URI("/api/progressables/" + result.getId()))
             //.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .entity(result).build();

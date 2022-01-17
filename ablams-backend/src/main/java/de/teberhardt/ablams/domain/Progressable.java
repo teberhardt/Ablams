@@ -5,7 +5,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A Progressable.
@@ -25,17 +24,14 @@ public class Progressable implements Serializable {
     @Column(name = "userId")
     private Long userId;
 
-    @OneToOne
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Audiobook audiobook;
+    @Column(name = "audiobook_id")
+    private Long audiobookId;
 
-    @OneToOne
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Audiofile audiofile;
+    @Column(name = "trackNr")
+    private Integer trackNr;
 
     @Column(name = "secondsInto")
     private Float secondsInto;
-
 
     public Long getId() {
         return id;
@@ -53,58 +49,38 @@ public class Progressable implements Serializable {
         this.userId = userId;
     }
 
-    public Audiobook getAudiobook() {
-        return audiobook;
+    public Long getAudiobookId() {
+        return audiobookId;
     }
 
-    public void setAudiobook(Audiobook audiobook) {
-        this.audiobook = audiobook;
+    public void setAudiobookId(Long audiobook_id) {
+        this.audiobookId = audiobook_id;
     }
 
-    public Audiofile getAudiofile() {
-        return audiofile;
+    public Integer getTrackNr() {
+        return trackNr;
     }
 
-    public void setAudiofile(Audiofile audiofile) {
-        this.audiofile = audiofile;
+    public void setTrackNr(Integer trackNr) {
+        this.trackNr = trackNr;
     }
 
     public Float getSecondsInto() {
         return secondsInto;
     }
 
-    public void setSecondsInto(Float minutesInto) {
-        this.secondsInto = minutesInto;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Progressable progressable = (Progressable) o;
-        if (progressable.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), progressable.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
+    public void setSecondsInto(Float secondsInto) {
+        this.secondsInto = secondsInto;
     }
 
     @Override
     public String toString() {
         return "Progressable{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", audiobook=" + audiobook +
-                ", audiofile=" + audiofile +
-                ", minutesInto=" + secondsInto +
-                '}';
+            "id=" + id +
+            ", userId=" + userId +
+            ", audiobook_id=" + audiobookId +
+            ", trackNr=" + trackNr +
+            ", secondsInto=" + secondsInto +
+            '}';
     }
 }

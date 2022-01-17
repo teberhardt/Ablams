@@ -8,14 +8,12 @@ import de.teberhardt.ablams.service.mapper.AudiofileMapper;
 import de.teberhardt.ablams.util.PathStringUtils;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
 import de.teberhardt.ablams.web.rest.util.RestStream;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
-import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -98,11 +96,8 @@ public class AudiofileServiceImpl implements AudiofileService {
     }
 
     @Transactional
-    public Audiofile scan(Path audiofilePath, Audiobook relatedAudiobook)
-    {
-        // performance issue with nio in java 8, so switch to old io
-        if (!audiofilePath.toFile().exists())
-        {
+    public Audiofile scan(Path audiofilePath, Audiobook relatedAudiobook) {
+        if (!Files.exists(audiofilePath)) {
             throw new IllegalArgumentException(String.format("Given Path %s does not Exists", audiofilePath.toString()));
         }
 
@@ -113,7 +108,7 @@ public class AudiofileServiceImpl implements AudiofileService {
             .stream()
                 .filter(e -> e.getFilePath().equals(relPathString))
                 .findAny()
-            .orElseGet(() -> new Audiofile().filePath(relPathString).audiobook(relatedAudiobook));
+            .orElseGet(() -> new Audiofile().filePath(relPathString));
 
         audiofileRepository.persist(audiofile);
         return audiofile;
@@ -134,21 +129,29 @@ public class AudiofileServiceImpl implements AudiofileService {
     }
 
     @Override
+    public Optional<Audiofile> findFirstAudioFileOfAudioBook(Long aId, int userId) {
+        return audiofileRepository.find("audiobook_id = ?1 and trackNr = ?2", aId, userId).firstResultOptional();
+    }
+
+    @Override
     public void scan(Collection<Path> audiofilePaths, Audiobook relatedAudiobook) {
 
         //if there exist no audiofiles to check we can just insert
-        if (relatedAudiobook.getAudiofiles().isEmpty())
-        {
-            for (Path filePath: audiofilePaths)
-            {
+        if (relatedAudiobook.getAudiofiles().isEmpty()) {
+            int trackNr = 1;
+            for (Path filePath: audiofilePaths) {
                 PathStringUtils pathStringUtils = new PathStringUtils(filePath);
                 String relPathString = pathStringUtils.getRelativeString(relatedAudiobook.getPath());
 
-                audiofileRepository.persist(new Audiofile().filePath(relPathString).audiobook(relatedAudiobook));
+                Audiofile audiofile = new Audiofile().filePath(relPathString);
+                audiofile.setTrackNr(trackNr);
+                audiofile.setAudiobookId(relatedAudiobook.getId());
+
+                audiofileRepository.persist(audiofile);
+
+                trackNr++;
             }
-        }
-        else
-        {
+        } else {
             audiofilePaths.forEach( path -> scan(path, relatedAudiobook));
         }
     }

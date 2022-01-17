@@ -11,12 +11,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "cdi", uses = {})
 public interface ProgressableMapper extends EntityMapper<ProgressableDTO, Progressable> {
 
-    @Mapping(source = "afileId", target = "audiofile.id")
-    @Mapping(source = "abookId", target = "audiobook.id")
     Progressable toEntity(ProgressableDTO progressableDTO);
 
-    @Mapping(source = "audiofile.id", target = "afileId")
-    @Mapping(source = "audiobook.id", target = "abookId")
     ProgressableDTO toDto(Progressable progressable);
 
     default Progressable fromId(Long id) {

@@ -9,8 +9,8 @@ public class ProgressableDTO implements Serializable {
 
     private Long id;
     private Long userId;
-    private Long abookId;
-    private Long afileId;
+    private Long audiobookId;
+    private Integer trackNr;
     private Float secondsInto;
 
     public Long getId() {
@@ -29,20 +29,20 @@ public class ProgressableDTO implements Serializable {
         this.userId = userId;
     }
 
-    public Long getAbookId() {
-        return abookId;
+    public Long getAudiobookId() {
+        return audiobookId;
     }
 
-    public void setAbookId(Long abookId) {
-        this.abookId = abookId;
+    public void setAudiobookId(Long audiobookId) {
+        this.audiobookId = audiobookId;
     }
 
-    public Long getAfileId() {
-        return afileId;
+    public Integer getTrackNr() {
+        return trackNr;
     }
 
-    public void setAfileId(Long afileId) {
-        this.afileId = afileId;
+    public void setTrackNr(Integer trackNr) {
+        this.trackNr = trackNr;
     }
 
     public Float getSecondsInto() {

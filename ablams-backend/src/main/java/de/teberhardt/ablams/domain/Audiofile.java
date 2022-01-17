@@ -16,15 +16,18 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "audio_file")
+@IdClass(BookTracknrCK.class)
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Audiofile implements LocalPersisted, Serializable {
+public class Audiofile implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private int trackNr;
+
+    @Id
+    @Column(name = "audiobook_id")
+    private long audiobookId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "file_type")
@@ -33,20 +36,8 @@ public class Audiofile implements LocalPersisted, Serializable {
     @Column(name = "file_path")
     private String filePath;
 
-    @ManyToOne
-    @JsonIgnoreProperties("audiofiles")
-    private Audiobook audiobook;
-
     @Transient
     private AudioCharacteristics audioCharacteristics = new AudioCharacteristics();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public FileType getFileType() {
         return fileType;
@@ -70,56 +61,30 @@ public class Audiofile implements LocalPersisted, Serializable {
         return this;
     }
 
+    public Audiofile trackNr(int trackNr) {
+        this.trackNr = trackNr;
+        return this;
+    }
+
+
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
-    public Audiobook getAudiobook() {
-        return audiobook;
+    public long getAudiobookId() {
+        return audiobookId;
     }
 
-    public Audiofile audiobook(Audiobook audiobook) {
-        this.audiobook = audiobook;
-        return this;
+    public void setAudiobookId(long audiobookId) {
+        this.audiobookId = audiobookId;
     }
 
-    public void setAudiobook(Audiobook audiobook) {
-        this.audiobook = audiobook;
+    public void setTrackNr(int trackNr) {
+        this.trackNr = trackNr;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Audiofile audiofile = (Audiofile) o;
-        if (audiofile.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), audiofile.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "Audiofile{" +
-            "id=" + getId() +
-            ", fileType='" + getFileType() + "'" +
-            ", filePath='" + getFilePath() + "'" +
-            "}";
-    }
-
-    @Transient
-    @Override
-    public Path getPath() {
-        return Paths.get(getAudiobook().getAudioLibrary().getFilepath(), getAudiobook().getFilePath(), getFilePath());
+    public int getTrackNr() {
+        return trackNr;
     }
 
     public AudioCharacteristics getAudioCharacteristics() {

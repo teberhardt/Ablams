@@ -12,7 +12,7 @@ class AudiofileResource extends AbstractRestResource<AudiofileDTO> {
     }
 
     public getStreamEndpointForAudioFile(afileId: Number): string{
-        return `/api/audio-files/{afileId}/stream`;
+        return `/api/audio-files/${afileId}/stream`;
     }
 }
 export default  new AudiofileResource();

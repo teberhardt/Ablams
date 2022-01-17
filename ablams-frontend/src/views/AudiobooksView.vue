@@ -35,8 +35,6 @@
 
         private aBooks: AudiobookDTO[] = [];
 
-
-
         protected created(): void {
             this.initialize();
 

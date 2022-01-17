@@ -28,8 +28,8 @@
 
                 <v-list-item-icon :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
                     <v-btn icon>
-                        <v-icon v-if="isPaused">mdi-pause</v-icon>
-                        <v-icon v-else>mdi-play</v-icon>
+                        <v-icon v-if="isPaused" v-on:click="pause">mdi-pause</v-icon>
+                        <v-icon v-else v-on:click="play">mdi-play</v-icon>
                     </v-btn>
                 </v-list-item-icon>
 
@@ -63,7 +63,8 @@ export default class PlayBar extends Vue {
     protected mounted(): void {
         this.$root.$on('playAudiobook',(audiobookDTO: AudiobookDTO) => {
                 this.currentAudiobook = audiobookDTO;
-                console.log(this.currentAudiobook)
+                console.log(this.currentAudiobook);
+                this.play();
             });
     }
 
@@ -74,7 +75,7 @@ export default class PlayBar extends Vue {
         }
     }
 
-    private resume() {
+    private pause() {
         this.audio.pause()
     }
 

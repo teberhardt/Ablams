@@ -53,4 +53,6 @@ public interface AudiofileService {
     List<AudiofileDTO> findbyAudiobook(Long aId);
 
     RestStream streamFile(Long id);
+
+    Optional<Audiofile> findFirstAudioFileOfAudioBook(Long aId, int userId);
 }

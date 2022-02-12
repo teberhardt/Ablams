@@ -1,4 +1,4 @@
-import {AudioLibraryDTO} from 'ablams-communication/ablams/communication';
+import {AudioLibraryDTO} from 'ablams-models/ablams/communication';
 import {AbstractRestResource} from '@/rest/AbstractRestResource';
 
 class AudioLibraryResource extends AbstractRestResource<AudioLibraryDTO> {

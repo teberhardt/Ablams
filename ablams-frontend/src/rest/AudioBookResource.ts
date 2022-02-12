@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import {AudiobookDTO} from 'ablams-communication/ablams/communication';
+import {AudiobookDTO} from 'ablams-models/ablams/communication';
 import {AbstractRestResource} from '@/rest/AbstractRestResource';
 
 export default new class AudioBookResource extends AbstractRestResource<AudiobookDTO> {
@@ -14,7 +14,7 @@ export default new class AudioBookResource extends AbstractRestResource<Audioboo
         return abook;
     }
 
-    public fetchById(aId: Number): Promise<AxiosResponse<AudiobookDTO>> {
+    public fetchById(aId: number): Promise<AxiosResponse<AudiobookDTO>> {
         return axios.get(this.ENDPOINT_URL + `/${aId}`);
     }
 

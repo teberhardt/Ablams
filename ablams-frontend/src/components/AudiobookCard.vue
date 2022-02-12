@@ -9,7 +9,8 @@
         <v-img contain
                align-center
                justify-center
-               :src="getImageSrcUrl()"
+               :src="imageSrcUrl"
+               v-on:error="onImgError"
         />
         <v-progress-linear value="10" color="green"></v-progress-linear>
 
@@ -26,9 +27,9 @@
     </v-card>
 </template>
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
-    import {AudiobookDTO} from 'ablams-communication/ablams/communication';
-    import PlayService from "@/service/PlayService";
+    import {AudiobookDTO} from 'ablams-models/ablams/communication';
+    import Component from 'vue-class-component';
+    import Vue from 'vue';
 
     @Component({
         props: {
@@ -37,28 +38,18 @@
     })
     export default class AudiobookCard extends Vue {
 
-/*
-        protected mounted(): void {
-            this.$root.$on('playAudiobook',
-                    (audiobookDTO: AudiobookDTO) => {
-                        console.log("initPlay")
-                        const audio = new Audio();
-                        PlayService.play(audiobookDTO, audio);
-                    });
-        }
-*/
+        imageSrcUrl: string|undefined  = `/api/audio-books/${this.$props.abook.id}/cover/image`;
 
-        protected initialize(): void {
-
+        public onImgError(){
+            console.log(`Cover for ${this.$props.abook.id} not available`);
+            this.imageSrcUrl = undefined;
         }
 
-        public getImageSrcUrl(): string{
-            return `/api/audio-books/${this.$props.abook.id}/cover/image`;
-        }
+
 
         public initPlay(){
             console.log("heeeeeeeeeeeeeeeeeeeeeeeelo")
-          this.$root.$root.$emit('playAudiobook', this.$props.abook)
+          this.$root.$emit('playAudiobook', this.$props.abook)
         }
     }
 </script>

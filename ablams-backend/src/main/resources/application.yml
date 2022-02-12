@@ -5,7 +5,7 @@ quarkus:
         password: password
         devservices:
             enabled: true
-            port: 50614
+            port: 50615
 
 #    datasource:
 #        db-kind: h2

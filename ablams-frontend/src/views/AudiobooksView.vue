@@ -11,8 +11,7 @@
 
                     v-for="abook in aBooks"
                     :key="abook.id"
-                    :cols="abook.name"
-                >
+                    :cols="abook.name">
                   <AudioBookCard :abook="abook"></AudioBookCard>
                 </v-col>
             </v-row>
@@ -21,12 +20,10 @@
 </template>
 
 <script lang="ts">
-    import {AudiobookDTO} from 'ablams-communication/ablams/communication';
+    import {AudiobookDTO} from 'ablams-models/ablams/communication';
     import {Component, Vue} from 'vue-property-decorator';
     import AudioBookResource from "@/rest/AudioBookResource";
     import AudiobookCard from "@/components/AudiobookCard.vue";
-    import store from "@/store";
-
 
     @Component({
         components: {AudioBookCard: AudiobookCard}

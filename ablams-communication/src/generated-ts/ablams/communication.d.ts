@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.34.976 on 2022-01-18 00:26:54.
+// Generated using typescript-generator version 2.34.976 on 2022-01-24 21:59:49.
 
 export interface AudioLibraryDTO extends Serializable {
     id?: number;

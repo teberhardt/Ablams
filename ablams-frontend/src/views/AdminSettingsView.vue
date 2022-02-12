@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-    import {AudioLibraryDTO} from 'ablams-communication/ablams/communication';
+    import {AudioLibraryDTO} from 'ablams-models/ablams/communication';
     import {Component, Vue} from 'vue-property-decorator';
     import AudioLibraryResource from '@/rest/AudioLibraryResource';
 

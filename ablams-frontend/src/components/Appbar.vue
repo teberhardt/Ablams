@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
-    import Searchfield from '@/components/Searchfield.vue';
+import Vue from 'vue';
+import Searchfield from '@/components/Searchfield.vue';
 
     export default Vue.extend({
         name: 'Appbar',

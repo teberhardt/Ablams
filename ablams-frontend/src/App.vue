@@ -1,22 +1,14 @@
 <template>
     <main>
         <v-app>
-<!--            <v-navigation-drawer app>
-                &lt;!&ndash; &ndash;&gt;
-            </v-navigation-drawer>-->
-
             <Appbar/>
-
             <NavigationDrawer/>
-
             <!-- Sizes your content based upon application components -->
-            <v-content>
+            <v-content app>
                 <!-- Provides the application the proper gutter -->
-                    <!-- If using vue-router -->
-                    <router-view></router-view>
+                <router-view/>
             </v-content>
-
-            <PlayBar></PlayBar>
+            <AudioBookPlayer class="bottombar"></AudioBookPlayer>
         </v-app>
     </main>
 </template>
@@ -25,8 +17,8 @@
 import Vue from 'vue';
 import Appbar from '@/components/Appbar.vue';
 import NavigationDrawer from '@/components/NavigationDrawer.vue';
-import PlayBar from '@/components/PlayBar.vue';
 import axios from 'axios';
+import AudioBookPlayer from '@/components/AudioBookPlayer.vue';
 
 Vue.prototype.$http = axios;
 
@@ -35,7 +27,7 @@ export default Vue.extend({
   components: {
       Appbar,
       NavigationDrawer,
-      PlayBar,
+      AudioBookPlayer,
   },
   data: () => ({
     //
@@ -44,3 +36,12 @@ export default Vue.extend({
   },
 });
 </script>
+<style lang="scss">
+.bottombar {
+    position: fixed !important;
+    bottom: 0;
+    left: 5%;
+    right: 1%;
+}
+</style>
+

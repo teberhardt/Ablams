@@ -1,8 +1,8 @@
 <template>
     <v-navigation-drawer
         v-model="drawer"
-        app
         clipped
+        app
         expand-on-hover
         dark
         class="#344955"

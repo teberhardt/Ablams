@@ -2,7 +2,7 @@ import {Component} from "vue-property-decorator";
 import AudiofileResource from "@/rest/AudiofileResource";
 import ProgressRessource from "@/rest/ProgressRessource";
 import AudioBookResource from "@/rest/AudioBookResource";
-import {AudiobookDTO} from 'ablams-communication/ablams/communication';
+import {AudiobookDTO} from 'ablams-models/ablams/communication';
 
 
 class PlayService {

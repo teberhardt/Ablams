@@ -1,5 +1,6 @@
-import {AudiofileDTO} from 'ablams-communication/ablams/communication';
+
 import {AbstractRestResource} from '@/rest/AbstractRestResource';
+import {AudiofileDTO} from 'ablams-models/ablams/communication';
 
 class AudiofileResource extends AbstractRestResource<AudiofileDTO> {
 
@@ -15,4 +16,4 @@ class AudiofileResource extends AbstractRestResource<AudiofileDTO> {
         return `/api/audio-files/${afileId}/stream`;
     }
 }
-export default  new AudiofileResource();
+export default new AudiofileResource();

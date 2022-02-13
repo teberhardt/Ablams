@@ -19,7 +19,11 @@ generateTypeScript {
     classPatterns = [
             'de.teberhardt.ablams.web.dto.*'
     ]
-    outputFile = 'src/generated-ts/ablams/communication.d.ts'
+    outputFile = 'src/generated-ts/ablams/communication.ts'
+
+    mapClasses = 'asClasses'
+    outputFileType = 'implementationFile'
+    generateConstructors = true
     outputKind = 'module'
     optionalAnnotations = ['javax.annotation.Nullable']
 }

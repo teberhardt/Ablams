@@ -41,6 +41,11 @@
                             class="d-block text-uppercase font-weight-bold"
                             style="letter-spacing: 0.05em"
                         ></span>
+                        <span
+                            v-text="abookProgress.trackNr"
+                            class="d-block text-uppercase font-weight-bold"
+                            style="letter-spacing: 0.05em"
+                        ></span>
                     </div>
                 </v-col>
                 <v-col sm="2">
@@ -52,7 +57,7 @@
                     class="d-flex"
                 >
 
-                    <div :class="mx-2">
+                    <div class="mx-2">
                         <v-btn
                             icon
                             :disabled="!audioDownloaded || !allowPrevious"
@@ -62,7 +67,7 @@
                         </v-btn>
                     </div>
 
-                    <div :class="mx-2">
+                    <div class="mx-2">
                         <v-btn
                             icon
                             :disabled="!audioDownloaded"
@@ -72,7 +77,7 @@
                         </v-btn>
                     </div>
 
-                    <div :class="mx-3">
+                    <div class="mx-3">
                         <v-btn
                             icon
                             :disabled="!audioDownloaded"
@@ -85,13 +90,13 @@
                         </v-btn>
                     </div>
 
-                    <div :class="mx-2">
+                    <div class="mx-2">
                         <v-btn icon :disabled="!audioDownloaded" @click="forwardSeconds(5)">
                             <v-icon size="20">mdi-fast-forward-5</v-icon>
                         </v-btn>
                     </div>
 
-                    <div :class="mx-2">
+                    <div class="mx-2">
                         <v-btn
                             icon
                             :disabled="!audioDownloaded || !allowNext"
@@ -130,7 +135,7 @@
 import {AudiobookDTO, ProgressableDTO} from 'ablams-models/ablams/communication';
 import ProgressRessource from '@/rest/ProgressRessource';
 import AudiofileResource from '@/rest/AudiofileResource';
-import { Vue, Watch, Component } from 'vue-property-decorator';
+import {Vue, Watch, Component, Prop, PropSync} from 'vue-property-decorator';
 
 class ProgressableUpdate implements ProgressableDTO {
     audiobookId = -1;
@@ -140,28 +145,16 @@ class ProgressableUpdate implements ProgressableDTO {
     userId = -1;
 }
 
-class AudiobookStub implements AudiobookDTO {
-    audioLibraryId = -1;
-    authorId = -1;
-    filePath = "";
-    language = "";
-    name = "";
-    seriesId = -1;
-
-}
-
 @Component
 export default class AudioBookPlayer extends Vue {
 
-    showPlayer = false;
-    autoplay = true;
+    @Prop(AudiobookDTO) readonly audiobook!: AudiobookDTO
 
+    autoplay = true;
     audio!: HTMLAudioElement;
-    currentAudiobook : AudiobookDTO = new AudiobookStub();
     abookProgress = new ProgressableUpdate();
 
     albumArt = "";
-
 
     allowPrevious = false;
     allowNext = false;
@@ -187,20 +180,15 @@ export default class AudioBookPlayer extends Vue {
     }
 
     get trackTitle(){
-        return this.currentAudiobook?.name;
+        return this.audiobook?.name;
     }
 
     get trackSubtitle(){
-        return this.currentAudiobook?.authorId;
+        return this.audiobook?.authorId;
     }
 
     mounted() {
         this.audio = this.$refs.audio as HTMLAudioElement;
-
-        this.$root.$on('playAudiobook', (audiobookDTO: AudiobookDTO) => {
-            console.log("receiving event to play audiobook " + audiobookDTO.name)
-            this.playAudiobook(audiobookDTO);
-        });
 
         this.keydownListener = (event: any) => {
             if (event.keyCode === 32 && this.seekerFocused) {
@@ -212,23 +200,13 @@ export default class AudioBookPlayer extends Vue {
 
         this.audio.volume = this.volume / 100;
         this.muted = this.audio.muted;
-    }
 
-    playAudiobook(newAudiobookDTO: AudiobookDTO) {
-        console.log("play " + newAudiobookDTO.name)
-
-        if(this.currentAudiobook instanceof AudiobookStub){
-            this.currentAudiobook = newAudiobookDTO;
-            this.albumArt = `/api/audio-books/${this.currentAudiobook?.id}/cover/image`
-            this.fetchAndApplyLastProgress();
-        } else {
-            // chaneg from one audiobook to another
-        }
+        this.onAudiobook();
     }
 
     fetchAndApplyLastProgress(){
-        if(this.currentAudiobook?.id != undefined) {
-            ProgressRessource.fetchByAudioBookId(this.currentAudiobook.id).then(e => {
+        if(this.audiobook?.id != undefined) {
+            ProgressRessource.fetchByAudioBookId(this.audiobook.id).then(e => {
                 this.abookProgress = e.data
                 this.audio!.src = AudiofileResource.getStreamEndpointForAudioFile(this.abookProgress.trackNr);
                 this.audio!.currentTime = this.abookProgress.secondsInto;
@@ -241,10 +219,10 @@ export default class AudioBookPlayer extends Vue {
     }
 
     saveCurrentProgress(){
-        if(this.currentAudiobook?.id != undefined) {
+        if(this.audiobook?.id != undefined) {
 
             let p = new ProgressableUpdate;
-            p.audiobookId = this.currentAudiobook.id;
+            p.audiobookId = this.audiobook.id;
             p.secondsInto = this.currentTime;
             p.trackNr = this.abookProgress.trackNr;
             p.userId = -1;
@@ -296,6 +274,16 @@ export default class AudioBookPlayer extends Vue {
 
     beforeDestroy() {
         document.removeEventListener("keydown", this.keydownListener);
+    }
+
+    public playAudiobook() {
+            this.albumArt = `/api/audio-books/${this.audiobook?.id}/cover/image`
+            this.fetchAndApplyLastProgress();
+    }
+
+    onAudiobook() {
+        this.albumArt = `/api/audio-books/${this.audiobook?.id}/cover/image`
+        this.fetchAndApplyLastProgress();
     }
 
     @Watch('playing')

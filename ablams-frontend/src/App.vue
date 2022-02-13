@@ -8,7 +8,7 @@
                 <!-- Provides the application the proper gutter -->
                 <router-view/>
             </v-content>
-            <AudioBookPlayer class="bottombar"></AudioBookPlayer>
+            <Bottombar class="bottombar"></Bottombar>
         </v-app>
     </main>
 </template>
@@ -18,7 +18,7 @@ import Vue from 'vue';
 import Appbar from '@/components/Appbar.vue';
 import NavigationDrawer from '@/components/NavigationDrawer.vue';
 import axios from 'axios';
-import AudioBookPlayer from '@/components/AudioBookPlayer.vue';
+import Bottombar from '@/components/Bottombar.vue';
 
 Vue.prototype.$http = axios;
 
@@ -27,8 +27,7 @@ export default Vue.extend({
   components: {
       Appbar,
       NavigationDrawer,
-      AudioBookPlayer,
-  },
+      Bottombar},
   data: () => ({
     //
   }),

@@ -1,0 +1,15 @@
+plugins {
+    id ("org.siouan.frontend-jdk11") version "6.0.0"
+}
+
+frontend {
+    nodeVersion = '16.13.1'
+    // See 'scripts' section in your 'package.json file'
+    cleanScript = 'run clean'
+    assembleScript = 'run build'
+    checkScript = 'run check'
+}
+
+task runDevserver(type: Exec) {
+    commandLine 'node/npm', 'run', 'serve'
+}

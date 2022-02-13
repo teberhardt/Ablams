@@ -5,7 +5,7 @@ module.exports = {
     assetsDir: 'static',
     productionSourceMap: false,
     configureWebpack: {
-        "devtool": "eval-source-map"
+        "devtool": "source-map"
     },
 
     devServer: {

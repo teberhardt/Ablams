@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity Author and its DTO AuthorDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "cdi", uses = {})
 public interface AuthorMapper extends EntityMapper<AuthorDTO, Author> {
 
 

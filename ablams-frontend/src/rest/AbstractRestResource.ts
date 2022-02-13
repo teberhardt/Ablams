@@ -2,7 +2,7 @@ import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 export abstract class AbstractRestResource<T> {
 
-    private readonly ENDPOINT_URL: string;
+    protected readonly ENDPOINT_URL: string;
 
     protected constructor(endpointUrl: string) {
         this.ENDPOINT_URL = endpointUrl;

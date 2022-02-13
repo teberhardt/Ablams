@@ -1,7 +1,6 @@
 package de.teberhardt.ablams.domain;
 
-import org.springframework.data.annotation.Transient;
-
+import javax.persistence.Transient;
 import java.nio.file.Path;
 
 public interface LocalPersisted {

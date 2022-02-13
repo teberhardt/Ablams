@@ -3,22 +3,22 @@ package de.teberhardt.ablams.service.impl;
 import de.teberhardt.ablams.domain.AudioLibrary;
 import de.teberhardt.ablams.repository.AudioLibraryRepository;
 import de.teberhardt.ablams.service.AudioLibraryService;
-import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
+
 import de.teberhardt.ablams.service.mapper.AudioLibraryMapper;
+import de.teberhardt.ablams.web.dto.AudioLibraryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.groupingBy;
 
 /**
  * Service Implementation for managing AudioLibrary.
  */
-@Service
+@Singleton
 @Transactional
 public class AudioLibraryServiceImpl implements AudioLibraryService {
 
@@ -48,7 +48,10 @@ public class AudioLibraryServiceImpl implements AudioLibraryService {
 
         AudioLibrary existingLibrary = audioLibraryRepository
             .findByFilepath(createdLibrary.getFilepath())
-            .orElseGet(() -> audioLibraryRepository.save(createdLibrary));
+            .orElseGet(() -> {
+                audioLibraryRepository.persist(createdLibrary);
+                return createdLibrary;
+            });
 
         audioLibraryScanService.scan(existingLibrary);
         return audioLibraryMapper.toDto(existingLibrary);
@@ -60,7 +63,7 @@ public class AudioLibraryServiceImpl implements AudioLibraryService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<AudioLibraryDTO> findAll() {
         log.debug("Request to get all AudioLibraries");
         return audioLibraryRepository.findAll().stream()
@@ -76,11 +79,10 @@ public class AudioLibraryServiceImpl implements AudioLibraryService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<AudioLibraryDTO> findOne(Long id) {
         log.debug("Request to get AudioLibrary : {}", id);
-        return audioLibraryRepository.findById(id)
-            .map(audioLibraryMapper::toDto);
+        return Optional.of(audioLibraryMapper.toDto(audioLibraryRepository.findById(id)));
     }
 
     /**

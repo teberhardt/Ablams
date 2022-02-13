@@ -5,12 +5,13 @@ import de.teberhardt.ablams.repository.CoverRepository;
 import de.teberhardt.ablams.service.CoverService;
 import de.teberhardt.ablams.service.mapper.CoverMapper;
 import de.teberhardt.ablams.web.dto.CoverDTO;
+import de.teberhardt.ablams.web.rest.util.RestStream;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 /**
  * Service Implementation for managing Image.
  */
-@Service
+@Singleton
 @Transactional
 public class CoverServiceImpl implements CoverService {
 
@@ -48,7 +49,7 @@ public class CoverServiceImpl implements CoverService {
         log.debug("Request to save Cover : {}", coverDTO);
 
         Cover cover = coverMapper.toEntity(coverDTO);
-        cover = coverRepository.save(cover);
+        coverRepository.persist(cover);
         return coverMapper.toDto(cover);
     }
 
@@ -58,7 +59,7 @@ public class CoverServiceImpl implements CoverService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<CoverDTO> findAll() {
         log.debug("Request to get all Covers");
         return coverRepository.findAll().stream()
@@ -74,11 +75,10 @@ public class CoverServiceImpl implements CoverService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<CoverDTO> findOne(Long id) {
         log.debug("Request to get Cover : {}", id);
-        return coverRepository.findById(id)
-            .map(coverMapper::toDto);
+        return Optional.of(coverMapper.toDto(coverRepository.findById(id)));
     }
 
     /**
@@ -94,25 +94,24 @@ public class CoverServiceImpl implements CoverService {
 
     @Override
     public Optional<CoverDTO> findCoverForAudiobookId(Long aId) {
+       // return coverRepository.findCoverByAudiobookId(aId).map(coverMapper::toDto);
+/*        CoverDTO cdto = new CoverDTO();
+        cdto.setAudiobookId(aId);
+        cdto.setAuthorId(1L);
+        cdto.setFilePath("F:\\hörbucher\\Band 4 - Die Stürme des Zorns\\cover.jpg");
+
+        return Optional.of(cdto);*/
         return coverRepository.findCoverByAudiobookId(aId).map(coverMapper::toDto);
     }
 
     @Override
-    public Optional<InputStream> getCoverAsBytestreamForAudiobookId(Long aId){
+    public RestStream streamCoverForAudiobook(Long aId){
         Optional<CoverDTO> potentialCover = findCoverForAudiobookId(aId);
-        if (potentialCover.isPresent())
-        {
+        if (potentialCover.isPresent()){
             CoverDTO coverDTO = potentialCover.get();
-            try {
-                return Optional.of(Files.newInputStream(Paths.get(coverDTO.getFilePath())));
-            } catch (IOException e) {
-                log.warn("IOException when accessing cover of Audiobook {} :", aId, e);
-                return Optional.empty();
-            }
-        }
-        else
-        {
-            return Optional.empty();
+            return RestStream.of(Paths.get(coverDTO.getFilePath()));
+        } else {
+            return null;
         }
     }
 }

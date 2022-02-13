@@ -1,8 +1,8 @@
 package de.teberhardt.ablams.service;
 
 import de.teberhardt.ablams.web.dto.CoverDTO;
+import de.teberhardt.ablams.web.rest.util.RestStream;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +44,5 @@ public interface CoverService {
 
     Optional<CoverDTO> findCoverForAudiobookId(Long aId);
 
-    Optional<InputStream> getCoverAsBytestreamForAudiobookId(Long aId);
+    RestStream streamCoverForAudiobook(Long aId);
 }

@@ -1,16 +1,14 @@
 package de.teberhardt.ablams.web.rest.controller;
 
 import de.teberhardt.ablams.service.AudiobookService;
-import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import de.teberhardt.ablams.util.ResponseUtil;
-import de.teberhardt.ablams.web.rest.errors.BadRequestAlertException;
-import de.teberhardt.ablams.web.rest.util.HeaderUtil;
+import de.teberhardt.ablams.web.dto.AudiobookDTO;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -19,8 +17,7 @@ import java.util.Optional;
 /**
  * REST controller for managing Audiobook.
  */
-@RestController
-@RequestMapping("/api")
+@Path("/api")
 public class AudiobookController {
 
     private final Logger log = LoggerFactory.getLogger(AudiobookController.class);
@@ -40,17 +37,18 @@ public class AudiobookController {
      * @return the ResponseEntity with status 201 (Created) and with body the new audiobookDTO, or with status 400 (Bad Request) if the audiobook has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/audio-books")
+    @POST
+    @Path("/audio-books")
     @Timed
-    public ResponseEntity<AudiobookDTO> createAudiobook(@RequestBody AudiobookDTO audiobookDTO) throws URISyntaxException {
+    public Response createAudiobook(AudiobookDTO audiobookDTO) throws URISyntaxException {
         log.debug("REST request to save Audiobook : {}", audiobookDTO);
         if (audiobookDTO.getId() != null) {
-            throw new BadRequestAlertException("A new audiobook cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new IllegalArgumentException("A new audiobook cannot already have an ID on" + ENTITY_NAME +": idexists");
         }
         AudiobookDTO result = audiobookService.save(audiobookDTO);
-        return ResponseEntity.created(new URI("/api/audio-books/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return Response.created(new URI("/api/audio-books/" + result.getId()))
+            //.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .entity(result).build();
     }
 
     /**
@@ -62,17 +60,18 @@ public class AudiobookController {
      * or with status 500 (Internal Server Error) if the audiobookDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/audio-books")
+    @PUT
+    @Path("/audio-books")
     @Timed
-    public ResponseEntity<AudiobookDTO> updateAudiobook(@RequestBody AudiobookDTO audiobookDTO) throws URISyntaxException {
+    public Response updateAudiobook( AudiobookDTO audiobookDTO) throws URISyntaxException {
         log.debug("REST request to update Audiobook : {}", audiobookDTO);
         if (audiobookDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new IllegalArgumentException("Invalid id on "+ENTITY_NAME+ ":idnull");
         }
         AudiobookDTO result = audiobookService.save(audiobookDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, audiobookDTO.getId().toString()))
-            .body(result);
+        return Response.ok()
+            //.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, audiobookDTO.getId().toString()))
+            .entity(result).build();
     }
 
     /**
@@ -81,9 +80,10 @@ public class AudiobookController {
      * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of audiobooks in body
      */
-    @GetMapping("/audio-books")
+    @GET
+    @Path("/audio-books")
     @Timed
-    public List<AudiobookDTO> getAllAudiobooks(@RequestParam(required = false) String filter) {
+    public List<AudiobookDTO> getAllAudiobooks(String filter) {
         if ("image-is-null".equals(filter)) {
             log.debug("REST request to get all Audiobooks where image is null");
             return audiobookService.findAllWhereImageIsNull();
@@ -98,9 +98,10 @@ public class AudiobookController {
      * @param id the id of the audiobookDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the audiobookDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/audio-books/{id}")
+    @Path("/audio-books/{id}")
+    @GET
     @Timed
-    public ResponseEntity<AudiobookDTO> getAudiobook(@PathVariable Long id) {
+    public Response getAudiobook( Long id) {
         log.debug("REST request to get Audiobook : {}", id);
         Optional<AudiobookDTO> audiobookDTO = audiobookService.findOne(id);
         return ResponseUtil.wrapOrNotFound(audiobookDTO);
@@ -112,11 +113,14 @@ public class AudiobookController {
      * @param id the id of the audiobookDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/audio-books/{id}")
+    @Path("/audio-books/{id}")
+    @DELETE
     @Timed
-    public ResponseEntity<Void> deleteAudiobook(@PathVariable Long id) {
+    public Response deleteAudiobook( Long id) {
         log.debug("REST request to delete Audiobook : {}", id);
         audiobookService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return Response.ok()
+                //.headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString()))
+                .build();
     }
 }

@@ -1,6 +1,7 @@
 package de.teberhardt.ablams.facade;
 
 import de.teberhardt.ablams.domain.AudioCharacteristics;
+import de.teberhardt.ablams.domain.Audiobook;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
@@ -10,13 +11,14 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.TagField;
-import org.springframework.stereotype.Service;
 
+import javax.inject.Singleton;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
-@Service
+@Singleton
 public class AudioTagFacade {
 
     private final AudioFileIO audioFileIO;
@@ -25,12 +27,12 @@ public class AudioTagFacade {
         this.audioFileIO = audioFileIO;
     }
 
-    public void scanAudioFileForTags(de.teberhardt.ablams.domain.Audiofile domainAudioFile) throws IOException {
+    public void scanAudioFileForTags(Audiobook abook, de.teberhardt.ablams.domain.Audiofile domainAudioFile) throws IOException {
 
-        File file = domainAudioFile.getPath().toFile();
+        Path file = Paths.get(abook.getFilePath(), domainAudioFile.getFilePath());
 
         try {
-            AudioFile jaudioFile = audioFileIO.readFile(file);
+            AudioFile jaudioFile = audioFileIO.readFile(file.toFile());
 
             enrichAudioCharacteristicsFromHeader(jaudioFile.getAudioHeader(), domainAudioFile.getAudioCharacteristics());
 

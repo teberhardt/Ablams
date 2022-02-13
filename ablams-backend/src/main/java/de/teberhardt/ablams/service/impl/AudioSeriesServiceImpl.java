@@ -3,13 +3,13 @@ package de.teberhardt.ablams.service.impl;
 import de.teberhardt.ablams.domain.AudioSeries;
 import de.teberhardt.ablams.repository.AudioSeriesRepository;
 import de.teberhardt.ablams.service.AudioSeriesService;
-import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 import de.teberhardt.ablams.service.mapper.AudioSeriesMapper;
+import de.teberhardt.ablams.web.dto.AudioSeriesDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * Service Implementation for managing AudioSeries.
  */
-@Service
+@Singleton
 @Transactional
 public class AudioSeriesServiceImpl implements AudioSeriesService {
 
@@ -44,7 +44,7 @@ public class AudioSeriesServiceImpl implements AudioSeriesService {
         log.debug("Request to save AudioSeries : {}", audioSeriesDTO);
 
         AudioSeries audioSeries = audioSeriesMapper.toEntity(audioSeriesDTO);
-        audioSeries = audioSeriesRepository.save(audioSeries);
+        audioSeriesRepository.persist(audioSeries);
         return audioSeriesMapper.toDto(audioSeries);
     }
 
@@ -54,7 +54,7 @@ public class AudioSeriesServiceImpl implements AudioSeriesService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<AudioSeriesDTO> findAll() {
         log.debug("Request to get all AudioSeries");
         return audioSeriesRepository.findAll().stream()
@@ -70,11 +70,10 @@ public class AudioSeriesServiceImpl implements AudioSeriesService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<AudioSeriesDTO> findOne(Long id) {
         log.debug("Request to get AudioSeries : {}", id);
-        return audioSeriesRepository.findById(id)
-            .map(audioSeriesMapper::toDto);
+        return Optional.of(audioSeriesMapper.toDto(audioSeriesRepository.findById(id)));
     }
 
     /**

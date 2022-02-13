@@ -7,12 +7,16 @@ import de.teberhardt.ablams.service.AudiofileService;
 import de.teberhardt.ablams.service.mapper.AudiofileMapper;
 import de.teberhardt.ablams.util.PathStringUtils;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
+import de.teberhardt.ablams.web.rest.util.RestStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +26,7 @@ import java.util.stream.Collectors;
 /**
  * Service Implementation for managing Audiofile.
  */
-@Service
+@Singleton
 @Transactional
 public class AudiofileServiceImpl implements AudiofileService {
 
@@ -48,7 +52,7 @@ public class AudiofileServiceImpl implements AudiofileService {
         log.debug("Request to save Audiofile : {}", audiofileDTO);
 
         Audiofile audiofile = audiofileMapper.toEntity(audiofileDTO);
-        audiofile = audiofileRepository.save(audiofile);
+        audiofileRepository.persist(audiofile);
         return audiofileMapper.toDto(audiofile);
     }
 
@@ -58,7 +62,7 @@ public class AudiofileServiceImpl implements AudiofileService {
      * @return the list of entities
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<AudiofileDTO> findAll() {
         log.debug("Request to get all Audiofiles");
         return audiofileRepository.findAll().stream()
@@ -74,11 +78,10 @@ public class AudiofileServiceImpl implements AudiofileService {
      * @return the entity
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<AudiofileDTO> findOne(Long id) {
         log.debug("Request to get Audiofile : {}", id);
-        return audiofileRepository.findById(id)
-            .map(audiofileMapper::toDto);
+        return Optional.of(audiofileMapper.toDto(audiofileRepository.findById(id)));
     }
 
     /**
@@ -93,11 +96,8 @@ public class AudiofileServiceImpl implements AudiofileService {
     }
 
     @Transactional
-    public Audiofile scan(Path audiofilePath, Audiobook relatedAudiobook)
-    {
-        // performance issue with nio in java 8, so switch to old io
-        if (!audiofilePath.toFile().exists())
-        {
+    public Audiofile scan(Path audiofilePath, Audiobook relatedAudiobook) {
+        if (!Files.exists(audiofilePath)) {
             throw new IllegalArgumentException(String.format("Given Path %s does not Exists", audiofilePath.toString()));
         }
 
@@ -108,9 +108,10 @@ public class AudiofileServiceImpl implements AudiofileService {
             .stream()
                 .filter(e -> e.getFilePath().equals(relPathString))
                 .findAny()
-            .orElseGet(() -> new Audiofile().filePath(relPathString).audiobook(relatedAudiobook));
+            .orElseGet(() -> new Audiofile().filePath(relPathString));
 
-        return audiofileRepository.save(audiofile);
+        audiofileRepository.persist(audiofile);
+        return audiofile;
     }
 
     @Override
@@ -120,21 +121,37 @@ public class AudiofileServiceImpl implements AudiofileService {
     }
 
     @Override
+    public RestStream streamFile(Long id) {
+
+        String filePath = "F:\\hörbucher\\Andrzej Sapkowski - The Witcher - Band 5 - Die Dame vom See\\11 Die Dame vom See.mp3";
+
+        return RestStream.of(Paths.get(filePath));
+    }
+
+    @Override
+    public Optional<Audiofile> findFirstAudioFileOfAudioBook(Long aId, int userId) {
+        return audiofileRepository.find("audiobook_id = ?1 and trackNr = ?2", aId, userId).firstResultOptional();
+    }
+
+    @Override
     public void scan(Collection<Path> audiofilePaths, Audiobook relatedAudiobook) {
 
         //if there exist no audiofiles to check we can just insert
-        if (relatedAudiobook.getAudiofiles().isEmpty())
-        {
-            for (Path filePath: audiofilePaths)
-            {
+        if (relatedAudiobook.getAudiofiles().isEmpty()) {
+            int trackNr = 1;
+            for (Path filePath: audiofilePaths) {
                 PathStringUtils pathStringUtils = new PathStringUtils(filePath);
                 String relPathString = pathStringUtils.getRelativeString(relatedAudiobook.getPath());
 
-                audiofileRepository.save(new Audiofile().filePath(relPathString).audiobook(relatedAudiobook));
+                Audiofile audiofile = new Audiofile().filePath(relPathString);
+                audiofile.setTrackNr(trackNr);
+                audiofile.setAudiobookId(relatedAudiobook.getId());
+
+                audiofileRepository.persist(audiofile);
+
+                trackNr++;
             }
-        }
-        else
-        {
+        } else {
             audiofilePaths.forEach( path -> scan(path, relatedAudiobook));
         }
     }

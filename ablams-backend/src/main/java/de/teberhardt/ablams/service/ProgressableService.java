@@ -18,6 +18,8 @@ public interface ProgressableService {
      */
     ProgressableDTO save(ProgressableDTO progressableDTO);
 
+    ProgressableDTO startOrProceedProgress(Long aId);
+
     /**
      * Get all the progressables.
      *

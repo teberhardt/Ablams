@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity AudioSeries and its DTO AudioSeriesDTO.
  */
-@Mapper(componentModel = "spring", uses = {AuthorMapper.class})
+@Mapper(componentModel = "cdi", uses = {AuthorMapper.class})
 public interface AudioSeriesMapper extends EntityMapper<AudioSeriesDTO, AudioSeries> {
 
     @Mapping(source = "author.id", target = "authorId")

@@ -8,12 +8,12 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity Progressable and its DTO ProgressableDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "cdi", uses = {})
 public interface ProgressableMapper extends EntityMapper<ProgressableDTO, Progressable> {
 
-
-    @Mapping(target = "audiofiles", ignore = true)
     Progressable toEntity(ProgressableDTO progressableDTO);
+
+    ProgressableDTO toDto(Progressable progressable);
 
     default Progressable fromId(Long id) {
         if (id == null) {

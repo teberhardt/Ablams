@@ -3,6 +3,7 @@ package de.teberhardt.ablams.service;
 import de.teberhardt.ablams.domain.Audiobook;
 import de.teberhardt.ablams.domain.Audiofile;
 import de.teberhardt.ablams.web.dto.AudiofileDTO;
+import de.teberhardt.ablams.web.rest.util.RestStream;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -50,4 +51,8 @@ public interface AudiofileService {
     Audiofile scan(Path audiofilePath, Audiobook relatedAudiobook);
 
     List<AudiofileDTO> findbyAudiobook(Long aId);
+
+    RestStream streamFile(Long id);
+
+    Optional<Audiofile> findFirstAudioFileOfAudioBook(Long aId, int userId);
 }

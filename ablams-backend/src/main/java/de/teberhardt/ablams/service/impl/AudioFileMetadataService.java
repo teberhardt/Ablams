@@ -6,12 +6,12 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.springframework.stereotype.Service;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Path;
 
-@Service
+@Singleton
 public class AudioFileMetadataService {
 
     void readAllMetadata(Path p) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {

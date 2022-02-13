@@ -2,14 +2,14 @@ package de.teberhardt.ablams.service.impl;
 
 import de.teberhardt.ablams.domain.Cover;
 import de.teberhardt.ablams.service.CoverService;
-import org.springframework.stereotype.Service;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
-@Service
+@Singleton
 public class CoverPhysicalScanService {
 
     CoverService coverService;
@@ -34,7 +34,7 @@ public class CoverPhysicalScanService {
 
     private boolean isCover(Path f) {
         // TODO: think about a better way to do this
-       return f.getFileName().toString().endsWith(".jpg") && f.getFileName().toString().contains("Cover");
+       return f.getFileName().toString().endsWith(".jpg") || f.getFileName().toString().contains("Cover") || f.getFileName().toString().contains("cover");
     }
 
 }

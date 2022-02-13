@@ -37,8 +37,9 @@ public class Audiobook implements LocalPersisted,Serializable  {
     @Column(name = "file_path")
     private String filePath;
 
-    @OneToMany(mappedBy = "audiobook", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinColumn(name = "audiobook_id")
     private List<Audiofile> audiofiles = new ArrayList<>();
     @OneToOne(mappedBy = "audiobook")
     @JsonIgnore
@@ -114,13 +115,13 @@ public class Audiobook implements LocalPersisted,Serializable  {
 
     public Audiobook addAudiofile(Audiofile audiofile) {
         this.audiofiles.add(audiofile);
-        audiofile.setAudiobook(this);
+        audiofile.setAudiobookId(this.getId());
         return this;
     }
 
     public Audiobook removeAudiofile(Audiofile audiofile) {
         this.audiofiles.remove(audiofile);
-        audiofile.setAudiobook(null);
+        audiofile.setAudiobookId(-1);
         return this;
     }
 

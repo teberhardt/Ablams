@@ -1,16 +1,19 @@
-import {AxiosResponse} from 'axios';
-import {AudiobookDTO} from 'ablams-js-dto/src/domain/models';
-import {AbstractRestResource} from '@/rest/AbstractRestResource';
 
-export default new class AudioBookResource extends AbstractRestResource<AudiobookDTO> {
+import {AbstractRestResource} from '@/rest/AbstractRestResource';
+import {AudiofileDTO} from 'ablams-models/ablams/communication';
+
+class AudiofileResource extends AbstractRestResource<AudiofileDTO> {
 
     constructor() {
         super('/api/audio-books/{aId}/audio-files');
     }
 
-    public prepareForPost(abook: AudiobookDTO): AudiobookDTO {
-        // set id to undefined because a post request with an id will not be accepted by the backend
-        abook.id = undefined;
-        return abook;
+    prepareForPost(newAudioLibrary: AudiofileDTO): AudiofileDTO {
+        return newAudioLibrary;
     }
-};
+
+    public getStreamEndpointForAudioFile(afileId: Number): string{
+        return `/api/audio-files/${afileId}/stream`;
+    }
+}
+export default new AudiofileResource();

@@ -6,8 +6,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.jaudiotagger.audio.SupportedFileFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.groupingBy;
 
-@Service
+@Singleton
 public class AudioLibraryScanService {
 
     private final Logger log = LoggerFactory.getLogger(AudioLibraryScanService.class);

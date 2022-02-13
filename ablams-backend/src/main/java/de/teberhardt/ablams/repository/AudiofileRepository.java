@@ -2,10 +2,9 @@ package de.teberhardt.ablams.repository;
 
 import de.teberhardt.ablams.domain.Audiobook;
 import de.teberhardt.ablams.domain.Audiofile;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
+import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,11 +13,14 @@ import java.util.Optional;
  * Spring Data  repository for the Audiofile entity.
  */
 @SuppressWarnings("unused")
-@Repository
-public interface AudiofileRepository extends JpaRepository<Audiofile, Long> {
+@Singleton
+public class AudiofileRepository implements PanacheRepository<Audiofile> {
 
-    Optional<Audiofile> findByFilePathAndAudiobook(String filePath, Audiobook relatedAudiobook);
+    Optional<Audiofile> findByFilePathAndAudiobook(String filePath, Audiobook relatedAudiobook) {
+        return find("file_path = :f and aid = :aid ", filePath,relatedAudiobook.getId()).firstResultOptional();
+    }
 
-    @Query ("Select a from Audiofile a where a.audiobook.id = :aId order by a.filePath")
-    List<Audiofile> findByAudiobookId(Long aId);
+    public List<Audiofile> findByAudiobookId(Long aId) {
+        return find("aid", aId).list();
+    }
 }

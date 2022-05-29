@@ -10,6 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
@@ -24,6 +25,7 @@ import java.util.Optional;
  * REST controller for managing cover.
  */
 @Path("/api")
+@RolesAllowed("user")
 public class CoverController {
 
     private final Logger log = LoggerFactory.getLogger(CoverController.class);

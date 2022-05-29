@@ -9,6 +9,7 @@ import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -20,6 +21,8 @@ import java.util.Optional;
  * REST controller for managing AudioLibrary.
  */
 @Path("/api/audio-libraries")
+@RolesAllowed("user")
+
 public class AudioLibraryController {
 
     private final Logger log = LoggerFactory.getLogger(AudioLibraryController.class);

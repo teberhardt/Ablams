@@ -35,6 +35,7 @@
         props: {
             abook: Object as () => AudiobookDTO
         }
+
     })
     export default class AudiobookCard extends Vue {
 

@@ -8,6 +8,7 @@ import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -19,6 +20,7 @@ import java.util.Optional;
  * REST controller for managing Author.
  */
 @Path("/api")
+@RolesAllowed("user")
 public class AuthorController {
 
     private final Logger log = LoggerFactory.getLogger(AuthorController.class);

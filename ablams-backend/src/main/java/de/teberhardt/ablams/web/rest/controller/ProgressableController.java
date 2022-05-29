@@ -9,6 +9,7 @@ import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -20,6 +21,7 @@ import java.util.Optional;
  * REST controller for managing Progressable.
  */
 @Path("/api/progressables")
+@RolesAllowed("user")
 public class ProgressableController {
 
     private final Logger log = LoggerFactory.getLogger(ProgressableController.class);
@@ -35,7 +37,7 @@ public class ProgressableController {
     /**
      * POST  /progressables : Create a new progressable.
      *
-     * @param progressableDTO the progressableDTO to create
+     * @param aId the progressableDTO id to create
      * @return the ResponseEntity with status 201 (Created) and with body the new progressableDTO, or with status 400 (Bad Request) if the progressable has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */

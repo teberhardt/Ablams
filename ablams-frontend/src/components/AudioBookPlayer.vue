@@ -29,7 +29,7 @@
         <v-container class="grey lighten-5">
             <v-row no-gutters>
                 <v-col sm="4">
-                    <v-avatar tile class="d-inline-block" v-if="albumArt">
+                    <v-avatar size="80" tile class="d-inline-block" v-if="albumArt">
                         <v-img :src="albumArt" aspect-ratio="1"></v-img>
                     </v-avatar>
                     <div
@@ -49,7 +49,7 @@
                     </div>
                 </v-col>
                 <v-col sm="2">
-                        <span>{{currentTime}}/{{duration}}</span>
+                        <span>{{formatSecondsToTime(currentTime)}}/{{formatSecondsToTime(duration)}}</span>
                 </v-col>
                 <v-spacer cols="2"></v-spacer>
                 <v-col
@@ -132,10 +132,11 @@
 </template>
 
 <script lang="ts">
-import {AudiobookDTO, ProgressableDTO} from 'ablams-models/ablams/communication';
+import {AudiobookDTO, AuthorDTO, ProgressableDTO} from 'ablams-models/ablams/communication';
 import ProgressRessource from '@/rest/ProgressRessource';
 import AudiofileResource from '@/rest/AudiofileResource';
 import {Vue, Watch, Component, Prop, PropSync} from 'vue-property-decorator';
+import AuthorResource from '@/rest/AuthorResource';
 
 class ProgressableUpdate implements ProgressableDTO {
     audiobookId = -1;
@@ -252,6 +253,12 @@ export default class AudioBookPlayer extends Vue {
         this.audio.currentTime = newTimestamp;
     }
 
+    formatSecondsToTime(seconds: number) {
+        const date = new Date(0);
+        date.setSeconds(seconds); // specify value for SECONDS here
+        return date.toISOString().substring(11, 19);
+    }
+
     setDuration() {
         this.$data.duration = (this.audio as HTMLAudioElement).duration;
     }
@@ -284,7 +291,24 @@ export default class AudioBookPlayer extends Vue {
     onAudiobook() {
         this.albumArt = `/api/audio-books/${this.audiobook?.id}/cover/image`
         this.fetchAndApplyLastProgress();
+       // this.fetchAuthor();
     }
+
+/*    private fetchAuthor() {
+        AuthorResource.getById(this.audiobook.authorId).then(e => {
+            this.author = e.data;
+        }).catch(e => {
+            console.log("error starting progress" + e)
+        });
+
+    }*/
+
+
+    @Watch('audiobook')
+    onAudioBookChanged(){
+
+    }
+
 
     @Watch('playing')
     onPlaying(playing: boolean) {

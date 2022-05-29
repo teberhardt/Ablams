@@ -1,13 +1,10 @@
 package de.teberhardt.ablams.repository;
 
-import de.teberhardt.ablams.domain.Audiobook;
-import de.teberhardt.ablams.domain.Audiofile;
 import de.teberhardt.ablams.domain.User;
+import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.inject.Singleton;
-import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -17,5 +14,17 @@ import java.util.Optional;
 @Singleton
 public class UserRepository implements PanacheRepository<User> {
 
-
+    /**
+     * Adds a new user in the database
+     * @param username the user name
+     * @param password the unencrypted password (it will be encrypted with bcrypt)
+     * @param role the comma-separated roles
+     */
+    public void add(String username, String password, String role) {
+        User user = new User();
+        user.username = username;
+        user.password = BcryptUtil.bcryptHash(password);
+        user.role = role;
+        persist(user);
+    }
 }

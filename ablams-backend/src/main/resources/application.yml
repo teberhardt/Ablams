@@ -6,32 +6,15 @@ quarkus:
         devservices:
             enabled: true
             port: 50616
-
-#    datasource:
-#        db-kind: h2
-#        jdbc.url: jdbc:h2:mem:testdb
-#        jdbc.driver: org.h2.Driver
-#        username: admin
     log:
         level: DEBUG
     hibernate-orm:
         database:
             generation: drop-and-create
-    #    security:
-#      jdbc:
-#          enabled: true
-#          principal-query:
-#              sql: "SELECT u.password, u.role FROM test_user u WHERE u.username=?"
-#              clear-password-mapper:
-#                  enabled: true
-#                  password-index: 1
-#              attribute-mappings:
-#                  0:
-#                      index: 2
-#                      to: groups
     http:
       auth:
           basic: true
+      cors: true
     flyway:
         migrate-at-start: true
         locations: "classpath:db/migration"

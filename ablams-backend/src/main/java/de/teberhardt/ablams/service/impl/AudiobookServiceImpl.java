@@ -34,9 +34,9 @@ public class AudiobookServiceImpl implements AudiobookService {
     private final AudiobookRepository audiobookRepository;
 
     private final AudiobookMapper audiobookMapper;
-    private AudiofileService audiofileService;
-    private CoverPhysicalScanService coverPhysicalScanService;
-    private CoverRepository coverRepository;
+    private final AudiofileService audiofileService;
+    private final CoverPhysicalScanService coverPhysicalScanService;
+    private final CoverRepository coverRepository;
 
     public AudiobookServiceImpl(AudiobookRepository audiobookRepository, AudiobookMapper audiobookMapper, AudiofileService audiofileService, CoverPhysicalScanService coverPhysicalScanService, CoverRepository coverRepository) {
         this.audiobookRepository = audiobookRepository;

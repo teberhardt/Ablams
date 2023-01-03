@@ -1,23 +1,21 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import AuthUser from '@/auth/AuthUser';
 const API_URL = 'http://localhost:8080/api/user/';
 
 const LOCALSTORAGE_ID = 'user';
 
 class AuthService {
-    public login(user: AuthUser) {
-        localStorage.setItem(LOCALSTORAGE_ID, JSON.stringify(user));
+    public login(user: AuthUser): Promise<AxiosResponse<any>> {
         return axios
-            .post(API_URL + 'login')
+            .post(API_URL + 'login', {}, {
+                auth: {
+                    username: user.username,
+                    password: user.password,
+                }})
             .then(response => {
-                if (response.data) {
-                    console.log('loginresponse = ' + response.data);
-                }
-                return response.data;
-            })
-            .catch( error => {
-                console.log('loginresponse = ' + error.data);
-                });
+                localStorage.setItem(LOCALSTORAGE_ID, JSON.stringify(user));
+                return response;
+            });
     }
     public isLoggedIn(): boolean {
         const item = localStorage.getItem(LOCALSTORAGE_ID);
@@ -26,7 +24,7 @@ class AuthService {
         }
         let authUser = JSON.parse(item) as AuthUser;
         if (authUser.username != undefined && authUser.password != undefined) {
-            return false; //iuohnäöoiuhäoijhoi
+            return true; //iuohnäöoiuhäoijhoi
         } else {
             return false;
         }

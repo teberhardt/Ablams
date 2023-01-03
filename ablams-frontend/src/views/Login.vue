@@ -9,6 +9,10 @@
                                 <v-toolbar-title>Login form</v-toolbar-title>
                             </v-toolbar>
                             <v-card-text>
+                                <template v-if="loginFailure">
+                                    <p style="color: red">login error: {{loginError}}</p>
+                                </template>
+                                <p></p>
                                 <v-form>
                                     <v-text-field
                                         prepend-icon="mdi-account"
@@ -43,6 +47,7 @@
 import {Component, Vue} from "vue-property-decorator";
 import AuthService from "@/auth/auth.service";
 import AuthUser from "@/auth/AuthUser";
+import router from "@/router";
 
 @Component
 export default class Login extends Vue {
@@ -50,13 +55,23 @@ export default class Login extends Vue {
     userName = ''
     password = ''
 
-    login(){
-        let user = new AuthUser(this.userName, this.password);
-        AuthService.login(user).then(() =>
-            {
+    loginFailure = false;
+    loginError ='';
 
-            }
-        )
+    login() {
+        let user = new AuthUser(this.userName, this.password);
+        console.log("login")
+        AuthService.login(user)
+            .then(
+                (response) => {
+                    console.log("loggedIn" + response)
+                    router.push('home')
+                }
+            ).catch(error => {
+                console.log('loginresponse = ' + error.message);
+                this.loginFailure = true;
+                this.loginError = error.message;
+        });
     }
 
 }
